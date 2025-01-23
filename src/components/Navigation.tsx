@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { connectWallet, checkWalletStatus } from "@/utils/wallet";
 import { useToast } from "@/hooks/use-toast";
+import { cn } from "@/lib/utils";
 import WalletModal from "./WalletModal";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "./AppSidebar";
