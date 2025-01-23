@@ -178,20 +178,18 @@ const Index = () => {
     setMessage("");
   };
 
-  // ... keep existing code (JSX for the main layout and chat interface)
-
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-4 py-8 bg-background-base min-h-screen">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         className="text-center mb-8 space-y-4 mt-[100px]"
       >
-        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent tracking-tight leading-tight">
+        <h1 className="text-4xl md:text-5xl font-bold bg-primary-gradient bg-clip-text text-transparent tracking-tight leading-tight">
           Building the Future of AI-Powered Trading on Sui Network
         </h1>
-        <p className="text-gray-400 text-lg tracking-wide">
+        <p className="text-text-secondary text-lg tracking-wide">
           Building the Future of AI-Powered Trading on Sui Network
         </p>
       </motion.div>
@@ -204,22 +202,22 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             onClick={feature.onClick}
-            className="bg-[#151822] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-xl border border-white/5"
+            className="bg-background-surface rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-background-elevated transition-all duration-normal cursor-pointer transform hover:scale-105 hover:shadow-medium border border-border-subtle"
           >
-            <feature.icon className="w-6 h-6 text-[#FB7402]" />
-            <h3 className="font-medium text-white">{feature.title}</h3>
+            <feature.icon className="w-6 h-6 text-primary" />
+            <h3 className="font-medium text-text-primary">{feature.title}</h3>
             {feature.comingSoon && (
-              <span className="text-sm text-gray-400">(Coming Soon)</span>
+              <span className="text-sm text-text-tertiary">(Coming Soon)</span>
             )}
           </motion.div>
         ))}
       </div>
 
       <Dialog open={showApiKeyDialog} onOpenChange={setShowApiKeyDialog}>
-        <DialogContent>
+        <DialogContent className="bg-background-elevated border-border-strong">
           <DialogHeader>
-            <DialogTitle>Enter Birdeye API Key</DialogTitle>
-            <DialogDescription>
+            <DialogTitle className="text-text-primary">Enter Birdeye API Key</DialogTitle>
+            <DialogDescription className="text-text-secondary">
               Please enter your Birdeye API key to access trading data.
               You can get your API key from the Birdeye website.
             </DialogDescription>
@@ -230,8 +228,12 @@ const Index = () => {
               onChange={(e) => setApiKey(e.target.value)}
               placeholder="Enter your Birdeye API key"
               type="password"
+              className="bg-background-surface border-border-subtle text-text-primary placeholder:text-text-disabled"
             />
-            <Button onClick={handleSaveApiKey} className="w-full">
+            <Button 
+              onClick={handleSaveApiKey} 
+              className="w-full bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white transition-colors duration-normal"
+            >
               Save API Key
             </Button>
           </div>
@@ -242,7 +244,7 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-[#151822] rounded-[16px] p-4 min-h-[500px] flex flex-col border border-white/5"
+        className="bg-background-surface rounded-[16px] p-4 min-h-[500px] flex flex-col border border-border-subtle shadow-medium"
       >
         <div className="flex-1 space-y-4 overflow-y-auto mb-4 p-4">
           {messages.map((msg, i) => (
@@ -258,9 +260,9 @@ const Index = () => {
               <div
                 className={`max-w-[80%] rounded-[16px] p-4 ${
                   msg.type === "user"
-                    ? "bg-[#FB7402] text-white hover:bg-opacity-90"
-                    : "bg-[#151822] text-white border border-white/5"
-                } transition-all duration-300 shadow-lg`}
+                    ? "bg-primary text-white hover:bg-primary-hover"
+                    : "bg-background-elevated text-text-primary border border-border-subtle"
+                } transition-all duration-normal shadow-medium`}
               >
                 {msg.content}
               </div>
@@ -269,17 +271,17 @@ const Index = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="relative mt-auto">
-          <div className="flex gap-2 items-center bg-[#151822] rounded-[16px] p-2 border border-white/5 shadow-lg">
+          <div className="flex gap-2 items-center bg-background-elevated rounded-[16px] p-2 border border-border-subtle shadow-medium">
             <Textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               placeholder="Ask about crypto markets..."
-              className="flex-1 bg-transparent border-none focus:ring-0 resize-none text-white placeholder:text-gray-400 rounded-[16px]"
+              className="flex-1 bg-transparent border-none focus:ring-0 resize-none text-text-primary placeholder:text-text-disabled rounded-[16px]"
               rows={1}
             />
             <Button
               type="submit"
-              className="bg-[#FB7402] hover:bg-opacity-90 transition-all duration-300 rounded-[16px]"
+              className="bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white transition-colors duration-normal rounded-[16px]"
             >
               Send
             </Button>
