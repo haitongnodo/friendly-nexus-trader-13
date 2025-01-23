@@ -20,7 +20,7 @@ const CreateAgent = () => {
   ];
 
   return (
-    <div className="container mx-auto px-6 py-8 max-w-6xl space-y-8">
+    <div className="container mx-auto px-6 py-8 max-w-6xl space-y-10 md:space-y-12">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -28,18 +28,18 @@ const CreateAgent = () => {
         className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8"
       >
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FF7A0F] to-[#FFB366] bg-clip-text text-transparent">
+          <h1 className="font-display text-title bg-gradient-to-r from-[#FF7A0F] to-[#FFB366] bg-clip-text text-transparent">
             Create Your Agent
           </h1>
-          <p className="text-text-secondary text-lg">Set up your AI trading agent with advanced parameters</p>
+          <p className="text-text-secondary font-display text-label">Set up your AI trading agent with advanced parameters</p>
         </div>
         
-        <div className="flex items-center gap-4 bg-background-surface p-4 rounded-lg border border-border-subtle">
-          <div className="flex items-center gap-2">
+        <div className="flex items-center gap-4 bg-background-surface/30 backdrop-blur-lg p-6 rounded-xl border border-border-subtle">
+          <div className="flex items-center gap-3">
             <NodoLogo className="w-6 h-6 animate-neon-pulse" />
-            <span className="text-text-secondary">Balance</span>
+            <span className="text-text-secondary font-display text-label">Balance</span>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <Button 
               variant="outline" 
               className="font-mono text-lg hover:shadow-neon-sm transition-all duration-300"
@@ -47,7 +47,7 @@ const CreateAgent = () => {
               5,000 <span className="text-primary ml-1">◎</span>
             </Button>
             <Button 
-              className="bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white px-6 rounded-md transition-all duration-300 hover:shadow-neon"
+              className="bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white px-6 rounded-lg h-12 transition-all duration-300 hover:shadow-neon transform hover:scale-[1.02] active:scale-[0.98]"
             >
               Buy $NODO
             </Button>
@@ -62,16 +62,21 @@ const CreateAgent = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="bg-background-surface/30 backdrop-blur-lg border border-border-subtle rounded-xl p-6 hover:shadow-neon-sm hover:border-primary/50 transition-all duration-300 cursor-pointer group"
+            className={cn(
+              "bg-[rgba(20,20,24,0.6)] backdrop-blur-lg border border-[rgba(255,255,255,0.03)]",
+              "rounded-xl p-5 transition-all duration-200",
+              "hover:transform hover:-translate-y-1 hover:shadow-stats",
+              "group cursor-pointer"
+            )}
           >
             <div className="flex items-center gap-3 mb-3">
               <span className="text-2xl">{stat.icon}</span>
-              <p className="text-text-secondary">{stat.label}</p>
+              <p className="font-display text-label text-text-secondary">{stat.label}</p>
             </div>
             <div className="flex items-end justify-between">
-              <span className="text-2xl font-bold font-mono">{stat.value}</span>
+              <span className="text-2xl font-mono font-bold">{stat.value}</span>
               <span className={cn(
-                "text-sm font-medium",
+                "font-display text-label",
                 stat.change.startsWith("+") ? "text-semantic-success" : "text-semantic-error"
               )}>{stat.change}</span>
             </div>
@@ -113,9 +118,9 @@ const CreateAgent = () => {
         </div>
       </Card>
 
-      <Card className="bg-background-surface/30 backdrop-blur-lg border-border-subtle rounded-xl overflow-hidden">
-        <div className="p-8 space-y-6">
-          <h2 className="text-xl font-semibold flex items-center gap-2">
+      <Card className="bg-[rgba(20,20,24,0.8)] backdrop-blur-lg border-[rgba(255,255,255,0.03)] rounded-xl overflow-hidden">
+        <div className="p-6 space-y-8">
+          <h2 className="font-display text-section flex items-center gap-2">
             <input 
               type="checkbox" 
               className="rounded border-border focus:border-primary focus:ring-primary focus:ring-offset-background-surface"
@@ -126,9 +131,14 @@ const CreateAgent = () => {
             <div className="relative">
               <Input 
                 placeholder="Enter wallet address to copy trades from" 
-                className="h-12 bg-background-surface border-border-subtle hover:border-primary/50 focus:border-primary focus:shadow-neon-sm font-mono transition-all duration-300" 
+                className={cn(
+                  "h-12 bg-[rgba(0,0,0,0.2)] border-[rgba(255,255,255,0.1)]",
+                  "hover:border-primary/50 focus:border-[rgba(255,122,15,0.4)]",
+                  "focus:shadow-input-focus font-mono transition-all duration-200",
+                  "placeholder:text-[rgba(255,255,255,0.3)] placeholder:text-label"
+                )}
               />
-              <Copy className="absolute right-3 top-3 text-text-tertiary hover:text-primary cursor-pointer transition-colors duration-200" />
+              <Copy className="absolute right-4 top-3.5 text-text-tertiary hover:text-primary cursor-pointer transition-colors duration-200" />
             </div>
             <div className="relative">
               <Input 
@@ -244,10 +254,16 @@ const CreateAgent = () => {
         </div>
       </Card>
 
-      <div className="flex justify-center pt-6">
+      <div className="flex justify-center pt-8">
         <Button 
           size="lg" 
-          className="bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white px-8 rounded-xl hover:shadow-neon active:shadow-neon-lg transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+          className={cn(
+            "bg-primary hover:bg-primary-hover active:bg-primary-pressed",
+            "text-white px-8 h-12 rounded-xl",
+            "hover:shadow-neon active:shadow-neon-lg",
+            "transition-all duration-300 transform",
+            "hover:scale-[1.02] active:scale-[0.98]"
+          )}
         >
           <Plus className="mr-2" /> CREATE AGENT
         </Button>
