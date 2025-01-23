@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Upload, Copy, Wallet, User, Bot } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { NodoLogo } from "@/components/NodoLogo";
 import { cn } from "@/lib/utils";
 
 const CreateAgent = () => {
@@ -27,14 +28,26 @@ const CreateAgent = () => {
         className="flex justify-between items-center mt-[100px]"
       >
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold text-text-primary">Create Your Agent</h1>
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent">
+            Create Your Agent
+          </h1>
           <p className="text-muted-foreground">Set up your AI trading agent by configuring its personality and trading parameters.</p>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-muted-foreground">My Balance</span>
-          <Button variant="outline" className="gap-2 glass hover:bg-overlay-hover hover:shadow-glow-sm active:bg-overlay-active active:shadow-glow-sm active:border-primary transition-all duration-200">
-            5000 <span className="text-primary">◎</span>
-          </Button>
+          <div className="flex items-center gap-2">
+            <NodoLogo />
+            <span className="text-muted-foreground">My $NODO Balance</span>
+          </div>
+          <div className="flex items-center gap-2">
+            <Button variant="outline" className="gap-2 glass hover:bg-overlay-hover hover:shadow-glow-sm active:bg-overlay-active active:shadow-glow-sm active:border-primary transition-all duration-200">
+              5000 <span className="text-primary">◎</span>
+            </Button>
+            <Button 
+              className="bg-[#FF7A0F] hover:bg-[#FF8D2E] text-white px-4 rounded-md transition-colors duration-200"
+            >
+              Buy $NODO
+            </Button>
+          </div>
         </div>
       </motion.div>
 
@@ -62,7 +75,16 @@ const CreateAgent = () => {
             <span className="text-blue-400">⬡</span> Token Integration
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <Button className="h-24 bg-gradient-to-r from-[#FB7402] to-[#FB7402] hover:opacity-90 rounded-[16px]">
+            <Button 
+              className={cn(
+                "h-24 rounded-[16px] transition-all duration-200",
+                "hover:bg-[rgba(255,122,15,0.15)] hover:border-[#FF7A0F] hover:text-[#FFB366]",
+                "hover:shadow-[0_0_0_1px_rgba(255,122,15,0.3),0_0_4px_rgba(255,122,15,0.2),0_0_8px_rgba(255,122,15,0.1)]",
+                "active:bg-[rgba(255,122,15,0.15)] active:border-[#FF7A0F] active:text-[#FFB366]",
+                "active:shadow-[0_0_0_1px_rgba(255,122,15,0.3),0_0_4px_rgba(255,122,15,0.2),0_0_8px_rgba(255,122,15,0.1)]",
+                "bg-gradient-to-r from-[#FB7402] to-[#FB7402]"
+              )}
+            >
               <Plus className="mr-3" />
               <div className="space-y-1 text-left">
                 <div className="font-semibold">Launch a New Agent</div>
