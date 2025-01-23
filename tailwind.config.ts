@@ -23,10 +23,12 @@ export default {
         display: ["SF Pro Display", "Inter", "sans-serif"],
       },
       fontSize: {
-        "title": ["32px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "700" }],
+        "title": ["28px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
         "section": ["20px", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600" }],
         "label": ["14px", { lineHeight: "1.4", fontWeight: "500" }],
         "helper": ["13px", { lineHeight: "1.4", fontWeight: "400" }],
+        "mono-lg": ["24px", { lineHeight: "1.2", fontFamily: "SF Mono, monospace" }],
+        "mono-base": ["14px", { lineHeight: "1.4", fontFamily: "SF Mono, monospace" }],
       },
       backgroundImage: {
         'primary-gradient': 'linear-gradient(to right, #FF7A0F, #FFB366)',
@@ -102,10 +104,15 @@ export default {
             transform: "translateY(0) scale(1)"
           }
         },
+        "number-transition": {
+          "0%": { transform: "translateY(100%)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" }
+        }
       },
       animation: {
         "neon-pulse": "neon-pulse 2s ease-in-out infinite",
         "fade-up": "fade-up 0.3s ease-out forwards",
+        "number-transition": "number-transition 0.3s ease-out"
       },
     },
   },
