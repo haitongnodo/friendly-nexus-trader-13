@@ -94,10 +94,10 @@ const Index = () => {
         transition={{ duration: 0.6 }}
         className="text-center mb-12 space-y-3"
       >
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent">
+        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent tracking-tight">
           NODO: Democratizing DeFi Trading with AI
         </h1>
-        <p className="text-gray-400">
+        <p className="text-gray-400 text-lg tracking-wide">
           Building the Future of AI-Powered Trading on Sui Network
         </p>
       </motion.div>
@@ -110,7 +110,7 @@ const Index = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
             onClick={feature.onClick}
-            className="bg-gradient-to-[45deg] from-[#212121] to-[#060606] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-white/5 transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-lg"
+            className="bg-[#151822] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-xl border border-white/5"
           >
             <feature.icon className="w-6 h-6 text-[#FB7402]" />
             <h3 className="font-medium text-white">{feature.title}</h3>
@@ -125,7 +125,7 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-gradient-to-[45deg] from-[#212121] to-[#060606] rounded-[16px] p-4 min-h-[500px] flex flex-col"
+        className="bg-[#151822] rounded-[16px] p-4 min-h-[500px] flex flex-col border border-white/5"
       >
         <div className="flex-1 space-y-4 overflow-y-auto mb-4 p-4">
           {messages.map((msg, i) => (
@@ -139,11 +139,11 @@ const Index = () => {
               }`}
             >
               <div
-                className={`max-w-[80%] rounded-[16px] p-3 ${
+                className={`max-w-[80%] rounded-[16px] p-4 ${
                   msg.type === "user"
                     ? "bg-[#FB7402] text-white hover:bg-opacity-90"
-                    : "bg-white/5 text-white hover:bg-white/10"
-                } transition-all duration-300`}
+                    : "bg-[#151822] text-white border border-white/5"
+                } transition-all duration-300 shadow-lg`}
               >
                 {msg.content}
               </div>
@@ -152,7 +152,7 @@ const Index = () => {
         </div>
 
         <form onSubmit={handleSubmit} className="relative mt-auto">
-          <div className="flex gap-2 items-center bg-white/5 rounded-[16px] p-2 hover:bg-white/10 transition-all duration-300">
+          <div className="flex gap-2 items-center bg-[#151822] rounded-[16px] p-2 border border-white/5 shadow-lg">
             <Textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
