@@ -44,15 +44,18 @@ export default {
         'card-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',
         'hover-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))',
         'page-gradient': `
-          linear-gradient(180deg, 
-            rgba(8, 8, 12, 0.95) 0%,
-            rgba(12, 12, 18, 0.85) 40%,
-            rgba(20, 20, 24, 0.75) 100%
+          radial-gradient(
+            circle at bottom,
+            rgba(255, 144, 70, 0.3) 0%,
+            rgba(128, 0, 255, 0.2) 20%,
+            rgba(0, 102, 255, 0.15) 40%,
+            rgba(255, 0, 128, 0.1) 60%,
+            rgba(0, 0, 0, 0.4) 90%
           ),
-          linear-gradient(180deg,
+          linear-gradient(
+            180deg,
             transparent 0%,
-            rgba(255, 122, 15, 0.03) 60%,
-            rgba(255, 122, 15, 0.08) 100%
+            rgba(255, 144, 70, 0.1) 100%
           )
         `,
       },
