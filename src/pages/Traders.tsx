@@ -246,73 +246,45 @@ export default function Traders() {
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent border-border-subtle">
-                <TableHead className="text-text-primary px-6">AGENT</TableHead>
-                <TableHead className="text-text-primary px-6">STRATEGY</TableHead>
-                <TableHead className="text-text-primary px-6">PAIRS</TableHead>
-                <TableHead className="text-text-primary px-6 text-right">WIN RATE</TableHead>
-                <TableHead className="text-text-primary px-6 text-right">24H PNL</TableHead>
-                <TableHead className="text-text-primary px-6 text-right">4D PNL</TableHead>
-                <TableHead className="text-text-primary px-6 text-right">VOLUME</TableHead>
-                <TableHead className="text-text-primary px-6 text-right">COPIERS</TableHead>
-                <TableHead className="text-text-primary px-6">ACTION</TableHead>
+                <TableHead className="text-text-primary">AGENT</TableHead>
+                <TableHead className="text-text-primary">STRATEGY</TableHead>
+                <TableHead className="text-text-primary">PAIRS</TableHead>
+                <TableHead className="text-text-primary">WIN RATE</TableHead>
+                <TableHead className="text-text-primary">24H PNL</TableHead>
+                <TableHead className="text-text-primary">4D PNL</TableHead>
+                <TableHead className="text-text-primary">VOLUME</TableHead>
+                <TableHead className="text-text-primary">COPIERS</TableHead>
+                <TableHead className="text-text-primary">ACTION</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {paginatedTraders.map((trader) => (
-                <TableRow 
-                  key={trader.id} 
-                  className="group h-[72px] hover:bg-[rgba(255,255,255,0.02)] transition-colors duration-200 border-[rgba(255,255,255,0.05)]"
-                >
-                  <TableCell className="px-6 py-3">
+                <TableRow key={trader.id} className="group hover:bg-background-elevated transition-colors duration-normal border-border-subtle">
+                  <TableCell className="font-medium">
                     <div className="flex flex-col">
-                      <span className="text-[18px] font-semibold group-hover:text-primary transition-colors duration-normal">
-                        {trader.agent}
-                      </span>
-                      <span className="text-[14px] font-normal text-text-tertiary font-mono">
-                        {trader.address}
-                      </span>
+                      <span className="group-hover:text-primary transition-colors duration-normal">{trader.agent}</span>
+                      <span className="text-sm text-text-tertiary">{trader.address}</span>
                     </div>
                   </TableCell>
-                  <TableCell className="px-6 py-3">
-                    <span className="text-[16px] font-medium text-text-secondary">
-                      {trader.strategy}
-                    </span>
+                  <TableCell className="text-text-secondary">{trader.strategy}</TableCell>
+                  <TableCell className="text-text-secondary">{trader.pairs.join(", ")}</TableCell>
+                  <TableCell>
+                    <span className="text-semantic-success">{trader.winRate}</span>
                   </TableCell>
-                  <TableCell className="px-6 py-3">
-                    <span className="text-[16px] font-medium text-text-secondary">
-                      {trader.pairs.join(", ")}
-                    </span>
-                  </TableCell>
-                  <TableCell className="px-6 py-3 text-right">
-                    <span className="text-[16px] font-semibold text-[#22C55E]">
-                      {trader.winRate}
-                    </span>
-                  </TableCell>
-                  <TableCell className={`px-6 py-3 text-right text-[16px] font-semibold ${
-                    trader.pnl24h.includes('+') ? 'text-[#22C55E]' : 'text-[#EF4444]'
-                  }`}>
+                  <TableCell className={trader.pnl24h.includes('+') ? 'text-semantic-success' : 'text-semantic-error'}>
                     {trader.pnl24h}
                   </TableCell>
-                  <TableCell className={`px-6 py-3 text-right text-[16px] font-semibold ${
-                    trader.pnl4d.includes('+') ? 'text-[#22C55E]' : 'text-[#EF4444]'
-                  }`}>
+                  <TableCell className={trader.pnl4d.includes('+') ? 'text-semantic-success' : 'text-semantic-error'}>
                     {trader.pnl4d}
                   </TableCell>
-                  <TableCell className="px-6 py-3 text-right">
-                    <span className="text-[15px] font-medium text-text-secondary">
-                      {Number(trader.volume.replace(/[^0-9.-]+/g,"")).toLocaleString('en-US', {
-                        style: 'currency',
-                        currency: 'USD'
-                      })}
-                    </span>
-                  </TableCell>
-                  <TableCell className="px-6 py-3">
-                    <div className="flex items-center justify-end gap-1 text-[15px] font-medium text-text-secondary">
-                      {Number(trader.copiers).toLocaleString()}
-                      <span className="text-primary text-lg">🔥</span>
+                  <TableCell className="text-text-secondary">{trader.volume}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1 text-text-secondary">
+                      {trader.copiers}
+                      <span className="text-primary animate-pulse">🔥</span>
                     </div>
                   </TableCell>
-                  <TableCell className="px-6 py-3">
+                  <TableCell>
                     <div className="flex gap-2">
                       <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
                         <Button 
