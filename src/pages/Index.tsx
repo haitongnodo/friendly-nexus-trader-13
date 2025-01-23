@@ -13,6 +13,13 @@ interface TraderData {
   trades: number;
 }
 
+interface TokenData {
+  symbol: string;
+  price: string;
+  change24h: string;
+  volume24h: string;
+}
+
 const fetchTraderData = async (): Promise<TraderData> => {
   // Note: Replace with actual Birdeye API endpoint and key
   const response = await axios.get('https://public-api.birdeye.so/public/trader_stats', {
@@ -29,6 +36,36 @@ const fetchTraderData = async (): Promise<TraderData> => {
   };
 };
 
+const fetchTrendingTokens = async (): Promise<TokenData[]> => {
+  // Note: Replace with actual Birdeye API endpoint and key
+  const response = await axios.get('https://public-api.birdeye.so/public/trending_tokens', {
+    headers: {
+      'X-API-KEY': 'your-birdeye-api-key'
+    }
+  });
+  
+  return [
+    {
+      symbol: "SOL",
+      price: "$123.45",
+      change24h: "+5.67%",
+      volume24h: "$1.23B"
+    },
+    {
+      symbol: "BONK",
+      price: "$0.00001234",
+      change24h: "+12.34%",
+      volume24h: "$456.78M"
+    },
+    {
+      symbol: "JTO",
+      price: "$2.34",
+      change24h: "+3.45%",
+      volume24h: "$789.12M"
+    }
+  ];
+};
+
 const Index = () => {
   const [message, setMessage] = useState("");
   const [messages, setMessages] = useState([
@@ -38,9 +75,14 @@ const Index = () => {
     },
   ]);
 
-  const { data: traderData, isLoading } = useQuery({
+  const { data: traderData, isLoading: isLoadingTrader } = useQuery({
     queryKey: ['traderData'],
     queryFn: fetchTraderData,
+  });
+
+  const { data: trendingTokens, isLoading: isLoadingTokens } = useQuery({
+    queryKey: ['trendingTokens'],
+    queryFn: fetchTrendingTokens,
   });
 
   const features = [
@@ -61,6 +103,17 @@ const Index = () => {
       title: "Trending Tokens",
       icon: LineChart,
       comingSoon: false,
+      onClick: () => {
+        if (trendingTokens) {
+          const tokenList = trendingTokens.map(token => 
+            `${token.symbol}\n• Price: ${token.price}\n• 24h Change: ${token.change24h}\n• 24h Volume: ${token.volume24h}`
+          ).join('\n\n');
+          setMessages(prev => [...prev, {
+            type: "bot",
+            content: `Trending Tokens:\n\n${tokenList}\n\nData provided by Birdeye API`
+          }]);
+        }
+      }
     },
     {
       title: "Find Gems",
@@ -94,7 +147,7 @@ const Index = () => {
         transition={{ duration: 0.6 }}
         className="text-center mb-12 space-y-3"
       >
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent tracking-tight">
+        <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent tracking-tight">
           NODO: Democratizing DeFi Trading with AI
         </h1>
         <p className="text-gray-400 text-lg tracking-wide">
