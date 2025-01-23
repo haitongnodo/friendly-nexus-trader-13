@@ -13,6 +13,7 @@ const Navigation = () => {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [availableWallets, setAvailableWallets] = useState<any[]>([]);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const navItems = [
     { icon: MessageSquare, label: "Chat", path: "/chat" },
@@ -26,6 +27,17 @@ const Navigation = () => {
     const wallets = checkWalletStatus();
     setAvailableWallets(wallets);
     console.log('Available wallets:', wallets);
+  }, []);
+
+  // Add scroll event listener
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      setIsScrolled(scrollPosition > 20);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const handleSelectWallet = async (walletType: string) => {
@@ -45,7 +57,14 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 glass">
+    <nav 
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-200 ease-in-out",
+        isScrolled 
+          ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-lg"
+          : "bg-transparent"
+      )}
+    >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="text-2xl font-bold text-white">
           <svg width="93" height="40" viewBox="0 0 93 40" fill="none" xmlns="http://www.w3.org/2000/svg">
