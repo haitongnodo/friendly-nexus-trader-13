@@ -84,7 +84,7 @@ const Navigation = () => {
             "px-4 py-2 rounded-lg font-medium transition-all",
             isWalletConnected
               ? "bg-green-500/20 text-green-400"
-              : "orange-gradient text-black hover:opacity-90"
+              : "orange-gradient text-white hover:opacity-90"
           )}
         >
           {isWalletConnected 
