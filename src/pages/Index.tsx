@@ -61,99 +61,95 @@ export default function Index() {
     setIsExpanded(true);
     setIsLoading(true);
     
-    // Simulate loading
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
   };
 
   return (
-    <div className="min-h-screen bg-page-gradient relative">
+    <div className="min-h-screen bg-page-gradient relative flex flex-col">
       <div className="absolute inset-0 bg-noise opacity-[0.02] pointer-events-none" />
       
       {/* Ambient gradients */}
       <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/[0.02] blur-[120px] pointer-events-none mix-blend-soft-light" />
       <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/[0.03] blur-[120px] pointer-events-none mix-blend-soft-light" />
       
-      {/* Content */}
-      <div className="w-[1000px] mx-auto px-6 relative">
-        {/* Header Section */}
+      {/* Main Content Container */}
+      <div className="w-[1000px] mx-auto px-6 flex flex-col h-screen relative">
+        {/* Header Section - Fixed Height */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center mt-[89px] mb-[55px]"
+          className="text-center py-8 h-[100px] flex flex-col justify-center"
         >
           <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent hover:animate-gradient-shift bg-[length:200%_200%]">
             Nexus AI
           </h1>
-          <p className="text-base text-text-secondary mt-4">
+          <p className="text-base text-text-secondary mt-2">
             Your personal AI trading companion
           </p>
         </motion.div>
 
-        {/* Chat Container */}
+        {/* Chat Container - Flexible Height */}
         <motion.div 
-          animate={{ height: isExpanded ? 400 : 100 }}
+          animate={{ height: isExpanded ? "calc(100vh - 220px)" : "auto" }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="w-full bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden"
+          className="w-full bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden flex flex-col"
         >
-          <div className="flex flex-col h-full">
-            {/* Welcome Message */}
+          {/* Message Area - Scrollable */}
+          <div className="flex-1 p-6 overflow-y-auto">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="flex-1 p-6"
+              className="text-lg font-medium text-text-primary text-center mb-6"
             >
-              <div className="text-lg font-medium text-text-primary text-center">
-                How can I help you with trading today?
-              </div>
-              
-              {isExpanded && (
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.2 }}
-                  className="mt-4"
-                >
-                  <DataDisplay 
-                    type={selectedFeature === "traders" ? "traders" : "tokens"}
-                    isLoading={isLoading}
-                  />
-                </motion.div>
-              )}
+              How can I help you with trading today?
             </motion.div>
-
-            {/* Input Area */}
-            <div className="p-4 border-t border-border-subtle bg-background-surface/80">
-              <form onSubmit={handleSubmit} className="relative">
-                <Input
-                  value={message}
-                  onChange={(e) => setMessage(e.target.value)}
-                  placeholder="Message Nexus..."
-                  className="h-12 pr-16 bg-background-elevated border-border-subtle 
-                    placeholder:text-sm placeholder:text-text-disabled
-                    focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
-                    transition-all duration-200"
+            
+            {isExpanded && (
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <DataDisplay 
+                  type={selectedFeature === "traders" ? "traders" : "tokens"}
+                  isLoading={isLoading}
                 />
-                <div className="absolute right-3 top-1/2 -translate-y-1/2">
-                  <Button
-                    type="submit"
-                    size="icon"
-                    className="h-8 w-8 bg-primary hover:bg-primary-hover transition-colors duration-200"
-                    disabled={!message.trim()}
-                  >
-                    <Send className="h-5 w-5" />
-                  </Button>
-                </div>
-              </form>
-            </div>
+              </motion.div>
+            )}
+          </div>
+
+          {/* Input Area - Fixed Height */}
+          <div className="p-4 border-t border-border-subtle bg-background-surface/80 h-[60px] flex items-center">
+            <form onSubmit={handleSubmit} className="relative w-full">
+              <Input
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+                placeholder="Message Nexus..."
+                className="h-12 pr-16 bg-background-elevated border-border-subtle 
+                  placeholder:text-sm placeholder:text-text-disabled
+                  focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
+                  transition-all duration-200"
+              />
+              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+                <Button
+                  type="submit"
+                  size="icon"
+                  className="h-8 w-8 bg-primary hover:bg-primary-hover transition-colors duration-200"
+                  disabled={!message.trim()}
+                >
+                  <Send className="h-5 w-5" />
+                </Button>
+              </div>
+            </form>
           </div>
         </motion.div>
 
-        {/* Feature Buttons */}
-        <div className="flex justify-center gap-4 mt-6">
+        {/* Feature Buttons - Fixed Height */}
+        <div className="h-[60px] flex justify-center gap-4 mt-6">
           {features.map((feature) => (
             <motion.button
               key={feature.id}
