@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Send, TrendingUp, BarChart2, Diamond, ArrowDownUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DataDisplay } from "@/components/DataDisplay";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 
 const features = [
   {
@@ -67,25 +67,20 @@ export default function Index() {
   };
 
   return (
-    <div className="h-screen overflow-hidden bg-page-gradient relative flex flex-col">
-      {/* Ambient gradients */}
-      <div className="absolute inset-0 bg-noise opacity-[0.02] pointer-events-none" />
-      <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/[0.02] blur-[120px] pointer-events-none mix-blend-soft-light" />
-      <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/[0.03] blur-[120px] pointer-events-none mix-blend-soft-light" />
-      
-      {/* Main Content Container */}
-      <div className="max-w-[1200px] w-full mx-auto px-6 flex flex-col h-full">
+    <div className="min-h-screen bg-page-gradient">
+      {/* Content Container */}
+      <div className="max-w-[800px] w-full mx-auto px-6">
         {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex-none text-center py-4 h-[80px] flex flex-col justify-center"
+          className="pt-32 pb-6 text-center"
         >
-          <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent mb-1">
+          <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent">
             Nexus AI
           </h1>
-          <p className="text-sm text-text-secondary">
+          <p className="text-sm text-text-secondary mt-3">
             Your personal AI trading companion
           </p>
         </motion.div>
@@ -97,26 +92,25 @@ export default function Index() {
             scale: 1,
             opacity: 1,
             height: isExpanded ? "500px" : "100px",
-            maxWidth: isExpanded ? "100%" : "800px",
           }}
           transition={{ 
             duration: 0.3,
             ease: [0.4, 0, 0.2, 1],
           }}
           className={cn(
-            "flex-none mx-auto w-full backdrop-blur-md rounded-xl border border-border-subtle",
+            "w-full backdrop-blur-md rounded-xl border border-border-subtle",
             "shadow-[0_8px_20px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col",
-            "bg-[rgba(20,21,26,0.7)] transition-all duration-300"
+            "bg-[rgba(20,21,26,0.7)]"
           )}
         >
           {/* Welcome Message - Sticky Top */}
           <div className="flex-none sticky top-0 z-10 bg-inherit border-b border-border-subtle">
-            <div className="flex items-center justify-center h-[40px]">
+            <div className="flex items-center justify-center h-[60px]">
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="text-[16px] font-medium text-text-primary text-center"
+                className="text-[20px] font-medium text-text-primary"
               >
                 How can I help you with trading today?
               </motion.div>
@@ -124,13 +118,13 @@ export default function Index() {
           </div>
 
           {/* Scrollable Content Area */}
-          <div className="flex-1 overflow-y-auto scrollbar-thin">
+          <div className="flex-1 overflow-y-auto scrollbar-thin px-6">
             {isExpanded && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="p-6 space-y-4"
+                className="py-4 space-y-4"
               >
                 <DataDisplay 
                   type={selectedFeature === "traders" ? "traders" : "tokens"}
@@ -166,14 +160,14 @@ export default function Index() {
           </div>
         </motion.div>
 
-        {/* Feature Buttons - Always Visible */}
-        <div className="flex-none h-[60px] flex justify-center gap-4 mt-4 mb-4">
+        {/* Feature Buttons */}
+        <div className="mt-5 mb-6 flex justify-center gap-3">
           {features.map((feature) => (
             <motion.button
               key={feature.id}
               onClick={() => handleFeatureClick(feature.id)}
               className={cn(
-                "relative flex items-center gap-3 px-4 h-[50px] rounded-xl border transition-all duration-200",
+                "relative flex items-center gap-3 px-4 h-[40px] rounded-xl border transition-all duration-200",
                 feature.disabled
                   ? "opacity-50 cursor-not-allowed grayscale bg-background-surface/30 border-border-subtle"
                   : "bg-background-surface/60 border-border-subtle hover:scale-102 hover:shadow-glow-sm active:scale-98"
