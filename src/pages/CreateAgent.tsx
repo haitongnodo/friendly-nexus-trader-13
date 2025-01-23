@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Upload, Copy, Wallet } from "lucide-react";
+import { Plus, Upload, Copy, Wallet, User, Robot } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
@@ -55,20 +55,20 @@ const CreateAgent = () => {
         ))}
       </div>
 
-      <Card className="mb-8 glass rounded-[16px]">
+      <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
         <div className="p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <span className="text-blue-400">⬡</span> Token Integration
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button className="h-20 bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]">
+            <Button className="h-20 bg-gradient-to-r from-[#FB7402] to-[#FB7402] hover:opacity-90 rounded-[16px]">
               <Plus className="mr-2" />
               <div>
                 <div className="font-semibold">Launch a New Agent</div>
                 <div className="text-sm opacity-80">Fee: SUI/N 25,000 NODO + Pool Fee</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-20 glass hover:bg-[#222329] rounded-[16px]">
+            <Button variant="outline" className="h-20 bg-[#16171E] border-[#222329] hover:bg-[#222329] rounded-[16px]">
               <div>
                 <div className="font-semibold">Use Existing Agent</div>
                 <div className="text-sm opacity-80">Fee: SUI/N 4,000 NODO</div>
@@ -78,7 +78,7 @@ const CreateAgent = () => {
         </div>
       </Card>
 
-      <Card className="mb-8 glass rounded-[16px]">
+      <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
         <div className="p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
             <input type="checkbox" className="rounded border-gray-400" />
@@ -86,34 +86,46 @@ const CreateAgent = () => {
           </h2>
           <div className="space-y-4">
             <div className="relative">
-              <Input placeholder="Enter wallet address to copy trades from" className="bg-[#16171E] border border-[#222329]" />
+              <Input 
+                placeholder="Enter wallet address to copy trades from" 
+                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]" 
+              />
               <Copy className="absolute right-3 top-3 text-muted-foreground cursor-pointer" />
             </div>
             <div className="relative">
-              <Input placeholder="Enter token address to copy trades from" className="bg-[#16171E] border border-[#222329]" />
+              <Input 
+                placeholder="Enter token address to copy trades from" 
+                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]" 
+              />
               <Wallet className="absolute right-3 top-3 text-muted-foreground cursor-pointer" />
             </div>
           </div>
         </div>
       </Card>
 
-      <Card className="mb-8 glass rounded-[16px]">
+      <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
         <div className="p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <span className="text-gray-400">👤</span> Agent Details
+            <User className="text-gray-400" /> Agent Details
           </h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Name <span className="text-red-500">*</span></label>
-              <Input placeholder="Enter agent name" className="bg-[#16171E] border border-[#222329]" />
+              <Input 
+                placeholder="Enter agent name" 
+                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]" 
+              />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Description</label>
-              <Textarea placeholder="Describe your agent's purpose and capabilities" className="h-32 glass" />
+              <Textarea 
+                placeholder="Describe your agent's purpose and capabilities" 
+                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402] min-h-[120px]" 
+              />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Profile Image</label>
-              <div className="glass border-2 border-dashed rounded-lg p-8 text-center cursor-pointer hover:border-[#EC6E05] transition-colors">
+              <div className="bg-[#16171E] border-2 border-dashed border-[#222329] rounded-lg p-8 text-center cursor-pointer hover:border-[#FB7402] transition-colors">
                 <Upload className="mx-auto mb-2" />
                 <p className="text-sm text-muted-foreground">Drop image here or click to upload</p>
                 <p className="text-xs text-muted-foreground mt-1">Supported formats: PNG, JPG, GIF (max. 5MB)</p>
@@ -123,19 +135,19 @@ const CreateAgent = () => {
         </div>
       </Card>
 
-      <Card className="mb-8 glass rounded-[16px]">
+      <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
         <div className="p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <span className="text-blue-400">🤖</span> AI Trading Configuration
+            <Robot className="text-blue-400" /> AI Trading Configuration
           </h2>
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Trading Type</label>
               <Select>
-                <SelectTrigger className="bg-[#16171E] border border-[#222329]">
+                <SelectTrigger className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]">
                   <SelectValue placeholder="Select trading type" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#16171E] border-[#222329]">
                   <SelectItem value="spot">Spot Trading</SelectItem>
                   <SelectItem value="futures">Futures Trading</SelectItem>
                   <SelectItem value="options">Options Trading</SelectItem>
@@ -145,10 +157,10 @@ const CreateAgent = () => {
             <div>
               <label className="block text-sm font-medium mb-1">Trading Strategy</label>
               <Select>
-                <SelectTrigger className="bg-[#16171E] border border-[#222329]">
+                <SelectTrigger className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]">
                   <SelectValue placeholder="Select trading strategy" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className="bg-[#16171E] border-[#222329]">
                   <SelectItem value="momentum">Momentum Trading</SelectItem>
                   <SelectItem value="mean-reversion">Mean Reversion</SelectItem>
                   <SelectItem value="arbitrage">Arbitrage</SelectItem>
@@ -156,17 +168,17 @@ const CreateAgent = () => {
               </Select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Trading Strategy</label>
+              <label className="block text-sm font-medium mb-1">Trading Pairs</label>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#222329]">
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
                   <span className="w-2 h-2 rounded-full bg-red-500 mr-2"></span>
                   BTC
                 </Button>
-                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#222329]">
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
                   <span className="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
                   ETH
                 </Button>
-                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#222329]">
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
                   <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
                   USDT
                 </Button>
@@ -175,11 +187,11 @@ const CreateAgent = () => {
             <div>
               <label className="block text-sm font-medium mb-1">Personality Traits</label>
               <div className="flex flex-wrap gap-2">
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Conservative</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Aggressive</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Balanced</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Data-Driven</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Risk-Averse</Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Conservative</Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Aggressive</Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Balanced</Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Data-Driven</Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Risk-Averse</Button>
               </div>
             </div>
           </div>
@@ -187,7 +199,7 @@ const CreateAgent = () => {
       </Card>
 
       <div className="flex justify-center">
-        <Button size="lg" className="bg-[#FB7402] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]">
+        <Button size="lg" className="bg-[#FB7402] hover:opacity-90 rounded-[16px]">
           <Plus className="mr-2" /> CREATE AGENT
         </Button>
       </div>
