@@ -27,7 +27,7 @@ const CreateAgent = () => {
         className="flex justify-between items-center mt-[100px]"
       >
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold text-black">Create Your Agent</h1>
+          <h1 className="text-4xl font-bold text-text-primary">Create Your Agent</h1>
           <p className="text-muted-foreground">Set up your AI trading agent by configuring its personality and trading parameters.</p>
         </div>
         <div className="flex items-center gap-4">
