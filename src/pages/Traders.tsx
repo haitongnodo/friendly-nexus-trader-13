@@ -25,6 +25,21 @@ const traders = Array(10).fill({
   copiers: "708",
 });
 
+const containerAnimation = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemAnimation = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
+
 export default function Traders() {
   return (
     <div className="container mx-auto px-4 py-8">
@@ -42,15 +57,19 @@ export default function Traders() {
         </p>
       </motion.div>
 
-      {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <motion.div 
+        variants={containerAnimation}
+        initial="hidden"
+        animate="show"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+      >
         {statsData.map((stat, index) => (
           <motion.div
             key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105"
+            variants={itemAnimation}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 transition-all duration-300 cursor-pointer hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
           >
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">{stat.label}</p>
@@ -63,47 +82,50 @@ export default function Traders() {
             </div>
           </motion.div>
         ))}
-      </div>
+      </motion.div>
 
-      {/* Search and Filters */}
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
         className="space-y-4 mb-8"
       >
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
+        <div className="relative group">
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4 transition-colors group-hover:text-[#FB7402]" />
           <Input 
             placeholder="Search by agent name, wallet address or trading strategy..." 
-            className="pl-10 glass rounded-[16px]"
+            className="pl-10 glass rounded-[16px] border-[#222329] bg-[#16171E] transition-all duration-300 hover:border-[#FB7402]/50 focus:border-[#FB7402] focus:ring-[#FB7402]/20"
           />
         </div>
         
         <div className="flex flex-wrap gap-2">
           {tradingPairs.map((pair) => (
-            <Button
+            <motion.div
               key={pair}
-              variant={pair === "All Agents" ? "default" : "secondary"}
-              className={`hover:scale-105 transition-transform duration-200 rounded-[16px] ${
-                pair === "All Agents" 
-                  ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90" 
-                  : "glass hover:bg-[#1a1f2a]"
-              }`}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {pair}
-            </Button>
+              <Button
+                variant={pair === "All Agents" ? "default" : "secondary"}
+                className={`transition-all duration-300 rounded-[16px] ${
+                  pair === "All Agents" 
+                    ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 shadow-lg hover:shadow-[#FB7402]/20" 
+                    : "glass hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
+                }`}
+              >
+                {pair}
+              </Button>
+            </motion.div>
           ))}
         </div>
       </motion.div>
 
-      {/* Traders Table */}
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="bg-[#16171E] border border-[#222329] rounded-[16px]">
+        <Card className="bg-[#16171E] border border-[#222329] rounded-[16px] overflow-hidden transition-all duration-300 hover:border-[#FB7402]/20">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
@@ -118,10 +140,10 @@ export default function Traders() {
             </TableHeader>
             <TableBody>
               {traders.map((trader, index) => (
-                <TableRow key={index} className="hover:bg-[#1a1f2a]">
+                <TableRow key={index} className="group hover:bg-[#1a1f2a] transition-colors duration-300">
                   <TableCell className="font-medium">
                     <div className="flex flex-col">
-                      <span>{trader.agent}</span>
+                      <span className="group-hover:text-[#FB7402] transition-colors duration-300">{trader.agent}</span>
                       <span className="text-sm text-muted-foreground">{trader.address}</span>
                     </div>
                   </TableCell>
@@ -134,25 +156,29 @@ export default function Traders() {
                   <TableCell>
                     <div className="flex items-center gap-1">
                       {trader.copiers}
-                      <span className="text-orange-500">🔥</span>
+                      <span className="text-orange-500 animate-pulse">🔥</span>
                     </div>
                   </TableCell>
                   <TableCell>
                     <div className="flex gap-2">
-                      <Button 
-                        variant="default" 
-                        size="sm"
-                        className="bg-[#FB7402] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]"
-                      >
-                        Copy
-                      </Button>
-                      <Button 
-                        variant="secondary" 
-                        size="sm"
-                        className="bg-[#16171E] border border-[#222329] hover:bg-[#222329] rounded-[16px]"
-                      >
-                        Profile
-                      </Button>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button 
+                          variant="default" 
+                          size="sm"
+                          className="bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px] shadow-lg hover:shadow-[#FB7402]/20"
+                        >
+                          Copy
+                        </Button>
+                      </motion.div>
+                      <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                        <Button 
+                          variant="secondary" 
+                          size="sm"
+                          className="glass hover:bg-[#1a1f2a] rounded-[16px] border border-[#222329] hover:border-[#FB7402]/20"
+                        >
+                          Profile
+                        </Button>
+                      </motion.div>
                     </div>
                   </TableCell>
                 </TableRow>
@@ -161,7 +187,6 @@ export default function Traders() {
           </Table>
         </Card>
 
-        {/* Pagination */}
         <div className="flex items-center justify-between mt-4">
           <p className="text-sm text-muted-foreground">
             Showing 1-10 of 50 agents
@@ -169,19 +194,19 @@ export default function Traders() {
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious href="#" />
+                <PaginationPrevious className="hover:bg-[#1a1f2a] transition-colors duration-300" />
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href="#" isActive>1</PaginationLink>
+                <PaginationLink href="#" isActive className="hover:bg-[#1a1f2a] transition-colors duration-300">1</PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href="#">2</PaginationLink>
+                <PaginationLink href="#" className="hover:bg-[#1a1f2a] transition-colors duration-300">2</PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationLink href="#">3</PaginationLink>
+                <PaginationLink href="#" className="hover:bg-[#1a1f2a] transition-colors duration-300">3</PaginationLink>
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext href="#" />
+                <PaginationNext className="hover:bg-[#1a1f2a] transition-colors duration-300" />
               </PaginationItem>
             </PaginationContent>
           </Pagination>
