@@ -1,3 +1,4 @@
+import React, { useState, useMemo } from "react";
 import { Search, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -6,7 +7,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "framer-motion";
-import { useState, useMemo } from "react";
 import { generateTraders, type Trader } from "@/utils/mockTraderData";
 import { cn } from "@/lib/utils";
 
@@ -116,13 +116,19 @@ export default function Traders() {
   };
 
   const ActiveFilters = () => {
+    const hasActiveFilters = selectedPair !== "All Pairs" || 
+                           selectedStrategy !== "All Strategies" || 
+                           selectedSort !== "All Agents";
+
+    if (!hasActiveFilters) return null;
+
     return (
       <div className="flex flex-wrap gap-2 mt-4">
-        {selectedPair !== "All Pairs" && (
+        {selectedSort !== "All Agents" && (
           <div className="flex items-center gap-1 px-3 py-1.5 bg-background-elevated rounded-full border border-border-subtle">
-            <span className="text-sm text-text-secondary">{selectedPair}</span>
+            <span className="text-sm text-text-secondary">{selectedSort}</span>
             <button
-              onClick={() => clearFilter('pair')}
+              onClick={() => clearFilter('sort')}
               className="text-text-tertiary hover:text-primary transition-colors"
             >
               <X size={14} />
@@ -140,11 +146,11 @@ export default function Traders() {
             </button>
           </div>
         )}
-        {selectedSort !== "All Agents" && (
+        {selectedPair !== "All Pairs" && (
           <div className="flex items-center gap-1 px-3 py-1.5 bg-background-elevated rounded-full border border-border-subtle">
-            <span className="text-sm text-text-secondary">{selectedSort}</span>
+            <span className="text-sm text-text-secondary">{selectedPair}</span>
             <button
-              onClick={() => clearFilter('sort')}
+              onClick={() => clearFilter('pair')}
               className="text-text-tertiary hover:text-primary transition-colors"
             >
               <X size={14} />
@@ -217,36 +223,66 @@ export default function Traders() {
           />
         </div>
         
-        <div className="flex items-center gap-2 bg-background-surface border border-border-subtle rounded-lg p-3">
+        <div className="flex items-center gap-2">
           <Select value={selectedSort} onValueChange={setSelectedSort}>
-            <SelectTrigger className="w-[160px] h-10 bg-background-elevated border-border-subtle">
-              <SelectValue placeholder="Filter by type" />
+            <SelectTrigger 
+              className="w-[160px] h-10 bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] 
+                hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
+                data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
+            >
+              <SelectValue placeholder="Sort by" />
             </SelectTrigger>
-            <SelectContent className="bg-background-surface border-border-subtle">
+            <SelectContent className="bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] max-h-[280px]">
               {sortOptions.map((option) => (
-                <SelectItem key={option} value={option}>{option}</SelectItem>
+                <SelectItem 
+                  key={option} 
+                  value={option}
+                  className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
+                >
+                  {option}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
 
           <Select value={selectedStrategy} onValueChange={setSelectedStrategy}>
-            <SelectTrigger className="w-[160px] h-10 bg-background-elevated border-border-subtle">
-              <SelectValue placeholder="Select strategy" />
+            <SelectTrigger 
+              className="w-[160px] h-10 bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)]
+                hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
+                data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
+            >
+              <SelectValue placeholder="Strategy" />
             </SelectTrigger>
-            <SelectContent className="bg-background-surface border-border-subtle">
+            <SelectContent className="bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] max-h-[280px]">
               {strategies.map((strategy) => (
-                <SelectItem key={strategy} value={strategy}>{strategy}</SelectItem>
+                <SelectItem 
+                  key={strategy} 
+                  value={strategy}
+                  className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
+                >
+                  {strategy}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
 
           <Select value={selectedPair} onValueChange={setSelectedPair}>
-            <SelectTrigger className="w-[160px] h-10 bg-background-elevated border-border-subtle">
-              <SelectValue placeholder="Select pair" />
+            <SelectTrigger 
+              className="w-[160px] h-10 bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)]
+                hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
+                data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
+            >
+              <SelectValue placeholder="Trading pair" />
             </SelectTrigger>
-            <SelectContent className="bg-background-surface border-border-subtle">
+            <SelectContent className="bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] max-h-[280px]">
               {tradingPairs.map((pair) => (
-                <SelectItem key={pair} value={pair}>{pair}</SelectItem>
+                <SelectItem 
+                  key={pair} 
+                  value={pair}
+                  className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
+                >
+                  {pair}
+                </SelectItem>
               ))}
             </SelectContent>
           </Select>
