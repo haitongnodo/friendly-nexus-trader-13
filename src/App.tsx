@@ -1,3 +1,4 @@
+import React from "react";
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -10,47 +11,49 @@ import Traders from "./pages/Traders";
 import CreateAgent from "./pages/CreateAgent";
 import TraderProfile from "./pages/TraderProfile";
 
-const App = () => {
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        refetchOnWindowFocus: false,
-        retry: false,
-      },
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: false,
     },
-  });
+  },
+});
 
+const App: React.FC = () => {
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <div className="min-h-screen bg-background">
-            <Routes>
-              <Route path="/login" element={<Login />} />
-              <Route
-                path="/*"
-                element={
-                  <>
-                    <Navigation />
-                    <div className="pt-16">
-                      <Routes>
-                        <Route path="/" element={<Navigate to="/chat" replace />} />
-                        <Route path="/chat" element={<Index />} />
-                        <Route path="/traders" element={<Traders />} />
-                        <Route path="/traders/:id" element={<TraderProfile />} />
-                        <Route path="/create-agent" element={<CreateAgent />} />
-                      </Routes>
-                    </div>
-                  </>
-                }
-              />
-            </Routes>
-          </div>
-        </BrowserRouter>
-      </TooltipProvider>
-    </QueryClientProvider>
+    <React.StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <div className="min-h-screen bg-background">
+              <Routes>
+                <Route path="/login" element={<Login />} />
+                <Route
+                  path="/*"
+                  element={
+                    <>
+                      <Navigation />
+                      <div className="pt-16">
+                        <Routes>
+                          <Route path="/" element={<Navigate to="/chat" replace />} />
+                          <Route path="/chat" element={<Index />} />
+                          <Route path="/traders" element={<Traders />} />
+                          <Route path="/traders/:id" element={<TraderProfile />} />
+                          <Route path="/create-agent" element={<CreateAgent />} />
+                        </Routes>
+                      </div>
+                    </>
+                  }
+                />
+              </Routes>
+            </div>
+          </BrowserRouter>
+        </TooltipProvider>
+      </QueryClientProvider>
+    </React.StrictMode>
   );
 };
 
