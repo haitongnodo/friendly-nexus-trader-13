@@ -162,10 +162,10 @@ const Index = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12 space-y-3"
+        className="text-center mb-8 space-y-4"
       >
-        <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent tracking-tight">
-          NODO: Democratizing DeFi Trading with AI
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent tracking-tight leading-tight">
+          Building the Future of AI-Powered Trading on Sui Network
         </h1>
         <p className="text-gray-400 text-lg tracking-wide">
           Building the Future of AI-Powered Trading on Sui Network

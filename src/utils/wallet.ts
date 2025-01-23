@@ -1,26 +1,35 @@
-import { toast } from "@/components/ui/use-toast";
+import { toast } from "@/hooks/use-toast";
 
-export const connectWallet = async () => {
+export const connectWallet = async (walletType: string) => {
   try {
-    // Check if Sui wallet is installed
-    if (!(window as any).suiWallet) {
+    let wallet;
+    
+    switch (walletType) {
+      case 'sui':
+        wallet = (window as any).suiWallet;
+        break;
+      case 'martian':
+        wallet = (window as any).martianSuiWallet;
+        break;
+      case 'suiet':
+        wallet = (window as any).suiet;
+        break;
+      default:
+        wallet = null;
+    }
+
+    if (!wallet) {
       toast({
         title: "Wallet not found",
-        description: "Please install Sui Wallet to continue",
+        description: `Please install ${walletType} wallet to continue`,
         variant: "destructive",
       });
-      window.open("https://chrome.google.com/webstore/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil", "_blank");
       return false;
     }
 
-    // Request connection
-    const response = await (window as any).suiWallet.requestPermissions();
+    const response = await wallet.requestPermissions();
     if (response.success) {
-      const address = await (window as any).suiWallet.getAccounts();
-      toast({
-        title: "Wallet Connected",
-        description: `Connected to address: ${address[0].slice(0, 6)}...${address[0].slice(-4)}`,
-      });
+      const address = await wallet.getAccounts();
       return address[0];
     }
     return false;
