@@ -10,9 +10,15 @@ interface WalletModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectWallet: (wallet: string) => void;
+  availableWallets: any[];
 }
 
-const WalletModal = ({ isOpen, onClose, onSelectWallet }: WalletModalProps) => {
+const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: WalletModalProps) => {
+  const getWalletStatus = (type: string) => {
+    const wallet = availableWallets.find(w => w.name === type);
+    return wallet?.installed;
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
@@ -27,24 +33,59 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet }: WalletModalProps) => {
         <div className="grid gap-4 py-4">
           <button
             onClick={() => onSelectWallet("sui")}
-            className="flex items-center space-x-3 w-full p-3 rounded-lg hover:bg-white/5 transition-colors text-left"
+            className={cn(
+              "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
+              getWalletStatus("sui")
+                ? "hover:bg-white/5"
+                : "opacity-50 cursor-not-allowed"
+            )}
+            disabled={!getWalletStatus("sui")}
           >
             <img src="/lovable-uploads/a1fd43d4-26fa-4d06-8b4d-97c2b83df6e5.png" alt="Sui Wallet" className="w-6 h-6" />
-            <span>Sui Wallet</span>
+            <div className="flex flex-col">
+              <span>Sui Wallet</span>
+              {!getWalletStatus("sui") && (
+                <span className="text-sm text-red-400">Not installed</span>
+              )}
+            </div>
           </button>
+          
           <button
             onClick={() => onSelectWallet("martian")}
-            className="flex items-center space-x-3 w-full p-3 rounded-lg hover:bg-white/5 transition-colors text-left"
+            className={cn(
+              "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
+              getWalletStatus("martian")
+                ? "hover:bg-white/5"
+                : "opacity-50 cursor-not-allowed"
+            )}
+            disabled={!getWalletStatus("martian")}
           >
             <img src="/lovable-uploads/a1fd43d4-26fa-4d06-8b4d-97c2b83df6e5.png" alt="Martian Sui Wallet" className="w-6 h-6" />
-            <span>Martian Sui Wallet</span>
+            <div className="flex flex-col">
+              <span>Martian Sui Wallet</span>
+              {!getWalletStatus("martian") && (
+                <span className="text-sm text-red-400">Not installed</span>
+              )}
+            </div>
           </button>
+          
           <button
             onClick={() => onSelectWallet("suiet")}
-            className="flex items-center space-x-3 w-full p-3 rounded-lg hover:bg-white/5 transition-colors text-left"
+            className={cn(
+              "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
+              getWalletStatus("suiet")
+                ? "hover:bg-white/5"
+                : "opacity-50 cursor-not-allowed"
+            )}
+            disabled={!getWalletStatus("suiet")}
           >
             <img src="/lovable-uploads/a1fd43d4-26fa-4d06-8b4d-97c2b83df6e5.png" alt="Suiet" className="w-6 h-6" />
-            <span>Suiet</span>
+            <div className="flex flex-col">
+              <span>Suiet</span>
+              {!getWalletStatus("suiet") && (
+                <span className="text-sm text-red-400">Not installed</span>
+              )}
+            </div>
           </button>
         </div>
         <div className="mt-6 space-y-4">

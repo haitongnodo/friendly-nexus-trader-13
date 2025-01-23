@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MessageSquare, Users, Plus, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { connectWallet } from "@/utils/wallet";
+import { connectWallet, checkWalletStatus } from "@/utils/wallet";
 import { useToast } from "@/hooks/use-toast";
 import WalletModal from "./WalletModal";
 
@@ -12,6 +12,7 @@ const Navigation = () => {
   const [isWalletConnected, setIsWalletConnected] = useState(false);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
+  const [availableWallets, setAvailableWallets] = useState<any[]>([]);
 
   const navItems = [
     { icon: MessageSquare, label: "Chat", path: "/chat" },
@@ -20,9 +21,19 @@ const Navigation = () => {
     { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
+  // Check wallet status on component mount
+  useEffect(() => {
+    const wallets = checkWalletStatus();
+    setAvailableWallets(wallets);
+    console.log('Available wallets:', wallets);
+  }, []);
+
   const handleSelectWallet = async (walletType: string) => {
+    console.log(`Initiating connection to ${walletType} wallet...`);
     const address = await connectWallet(walletType);
+    
     if (address) {
+      console.log('Wallet connected successfully:', address);
       setIsWalletConnected(true);
       setWalletAddress(address);
       setIsWalletModalOpen(false);
@@ -65,7 +76,10 @@ const Navigation = () => {
         </div>
 
         <button
-          onClick={() => setIsWalletModalOpen(true)}
+          onClick={() => {
+            console.log('Opening wallet modal');
+            setIsWalletModalOpen(true);
+          }}
           className={cn(
             "px-4 py-2 rounded-lg font-medium transition-all",
             isWalletConnected
@@ -82,6 +96,7 @@ const Navigation = () => {
           isOpen={isWalletModalOpen}
           onClose={() => setIsWalletModalOpen(false)}
           onSelectWallet={handleSelectWallet}
+          availableWallets={availableWallets}
         />
       </div>
     </nav>
