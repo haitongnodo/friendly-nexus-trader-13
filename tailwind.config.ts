@@ -19,43 +19,76 @@ export default {
     },
     extend: {
       colors: {
-        nodo: {
-          orange: "#FB7402",
-          "orange-light": "#FB7402",
-        },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
         primary: {
-          DEFAULT: "hsl(var(--primary))",
-          foreground: "hsl(var(--primary-foreground))",
+          DEFAULT: "#FF7A0F",
+          hover: "#FF8D2E",
+          pressed: "#E66400",
+          ghost: "rgba(255, 122, 15, 0.08)",
         },
-        secondary: {
-          DEFAULT: "hsl(var(--secondary))",
-          foreground: "hsl(var(--secondary-foreground))",
+        background: {
+          base: "#0A0A0D",
+          subtle: "#101013",
+          surface: "#141417",
+          elevated: "#18181C",
+          highlight: "#1D1D22",
         },
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
+        text: {
+          primary: "rgba(255, 255, 255, 0.95)",
+          secondary: "rgba(255, 255, 255, 0.82)",
+          tertiary: "rgba(255, 255, 255, 0.65)",
+          disabled: "rgba(255, 255, 255, 0.45)",
         },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
+        semantic: {
+          success: "#2ECC71",
+          "success-dark": "#25A85C",
+          warning: "#E6B412",
+          error: "#E53E3E",
+          info: "#3B82F6",
         },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
+        border: {
+          DEFAULT: "rgba(255, 255, 255, 0.08)",
+          subtle: "rgba(255, 255, 255, 0.06)",
+          strong: "rgba(255, 255, 255, 0.08)",
+          focus: "rgba(255, 122, 15, 0.5)",
         },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
+        overlay: {
+          hover: "rgba(255, 255, 255, 0.08)",
+          active: "rgba(255, 255, 255, 0.12)",
+          modal: "rgba(0, 0, 0, 0.7)",
         },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
+      },
+      boxShadow: {
+        small: "0 1px 2px rgba(0, 0, 0, 0.3)",
+        medium: "0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)",
+        large: "0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)",
+      },
+      opacity: {
+        solid: "1",
+        semi: "0.8",
+        medium: "0.5",
+        light: "0.2",
+        subtle: "0.08",
+      },
+      transitionDuration: {
+        fast: "150ms",
+        normal: "200ms",
+        slow: "300ms",
+      },
+      transitionTimingFunction: {
+        DEFAULT: "ease",
+      },
+      ringWidth: {
+        DEFAULT: "2px",
+      },
+      ringOffsetWidth: {
+        DEFAULT: "2px",
+      },
+      ringColor: {
+        DEFAULT: "rgba(255, 122, 15, 0.35)",
+      },
+      backgroundImage: {
+        "primary-gradient": "linear-gradient(135deg, #FF7A0F 0%, #FF8D2E 100%)",
+        "surface-gradient": "linear-gradient(135deg, rgba(255, 122, 15, 0.05) 0%, rgba(255, 122, 15, 0.02) 100%)",
       },
       borderRadius: {
         lg: "var(--radius)",
