@@ -23,7 +23,7 @@ export default {
         display: ["SF Pro Display", "Inter", "sans-serif"],
       },
       fontSize: {
-        "title": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+        "title": ["32px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
         "section": ["20px", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600" }],
         "label": ["14px", { lineHeight: "1.4", fontWeight: "500" }],
         "helper": ["13px", { lineHeight: "1.4", fontWeight: "400" }],
@@ -83,43 +83,21 @@ export default {
         glow: "0 0 0 1px rgba(255, 122, 15, 0.3), 0 0 4px rgba(255, 122, 15, 0.2), 0 0 8px rgba(255, 122, 15, 0.1)",
         "glow-sm": "0 0 0 1px rgba(255, 122, 15, 0.2), 0 0 2px rgba(255, 122, 15, 0.1)",
         "glow-lg": "0 0 0 2px rgba(255, 122, 15, 0.3), 0 0 8px rgba(255, 122, 15, 0.2), 0 0 16px rgba(255, 122, 15, 0.1)",
-        "neon": "0 0 5px rgba(255, 122, 15, 0.5), 0 0 20px rgba(255, 122, 15, 0.3), 0 0 40px rgba(255, 122, 15, 0.2)",
-        "neon-sm": "0 0 3px rgba(255, 122, 15, 0.4), 0 0 12px rgba(255, 122, 15, 0.2)",
-        "neon-lg": "0 0 8px rgba(255, 122, 15, 0.6), 0 0 30px rgba(255, 122, 15, 0.4), 0 0 60px rgba(255, 122, 15, 0.3)",
-        'stats': '0 4px 24px rgba(0, 0, 0, 0.2)',
-        'input-focus': '0 0 0 4px rgba(255, 122, 15, 0.1)',
-        'card-hover': '0 8px 32px rgba(0, 0, 0, 0.24)',
       },
       keyframes: {
-        "neon-pulse": {
-          "0%, 100%": { opacity: "1" },
-          "50%": { opacity: "0.8" },
+        "gradient-shift": {
+          "0%, 100%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
         },
-        "fade-up": {
-          "0%": { 
-            opacity: "0",
-            transform: "translateY(10px) scale(0.98)"
-          },
-          "100%": {
-            opacity: "1",
-            transform: "translateY(0) scale(1)"
-          }
-        },
-        "number-transition": {
-          "0%": { transform: "translateY(100%)", opacity: "0" },
-          "100%": { transform: "translateY(0)", opacity: "1" }
-        }
       },
       animation: {
-        "neon-pulse": "neon-pulse 2s ease-in-out infinite",
-        "fade-up": "fade-up 0.3s ease-out forwards",
-        "number-transition": "number-transition 0.3s ease-out"
+        "gradient-shift": "gradient-shift 3s ease infinite",
       },
       maxWidth: {
         'chat': '768px',
       },
       spacing: {
-        'chat-input': '44px',
+        'chat-input': '48px',
       },
     },
   },
