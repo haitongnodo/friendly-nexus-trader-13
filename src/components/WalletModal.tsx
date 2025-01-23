@@ -22,7 +22,7 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="sm:max-w-md bg-background-base">
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center">
             <span>Connect a Wallet</span>
