@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
+import Traders from "./pages/Traders";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
                     <Routes>
                       <Route path="/" element={<Navigate to="/chat" replace />} />
                       <Route path="/chat" element={<Index />} />
+                      <Route path="/traders" element={<Traders />} />
                       {/* Add other routes as we implement them */}
                     </Routes>
                   </div>
