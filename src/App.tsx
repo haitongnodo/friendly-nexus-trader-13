@@ -9,39 +9,48 @@ import Index from "./pages/Index";
 import Traders from "./pages/Traders";
 import CreateAgent from "./pages/CreateAgent";
 
-const queryClient = new QueryClient();
+const App = () => {
+  // Create a new QueryClient instance inside the component
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        retry: false,
+      },
+    },
+  });
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <div className="min-h-screen bg-background">
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route
-              path="/*"
-              element={
-                <>
-                  <Navigation />
-                  <div className="pt-16">
-                    <Routes>
-                      <Route path="/" element={<Navigate to="/chat" replace />} />
-                      <Route path="/chat" element={<Index />} />
-                      <Route path="/traders" element={<Traders />} />
-                      <Route path="/create-agent" element={<CreateAgent />} />
-                      {/* Add other routes as we implement them */}
-                    </Routes>
-                  </div>
-                </>
-              }
-            />
-          </Routes>
-        </div>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <div className="min-h-screen bg-background">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/*"
+                element={
+                  <>
+                    <Navigation />
+                    <div className="pt-16">
+                      <Routes>
+                        <Route path="/" element={<Navigate to="/chat" replace />} />
+                        <Route path="/chat" element={<Index />} />
+                        <Route path="/traders" element={<Traders />} />
+                        <Route path="/create-agent" element={<CreateAgent />} />
+                      </Routes>
+                    </div>
+                  </>
+                }
+              />
+            </Routes>
+          </div>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
