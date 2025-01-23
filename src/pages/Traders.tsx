@@ -8,6 +8,22 @@ import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { generateTraders, type Trader } from "@/utils/mockTraderData";
 
+// Add animation variants
+const containerAnimation = {
+  hidden: { opacity: 0 },
+  show: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemAnimation = {
+  hidden: { opacity: 0, y: 20 },
+  show: { opacity: 1, y: 0 }
+};
+
 const statsData = [
   { label: "Top AI Agents", value: "156", change: "+12%" },
   { label: "24h Trading Volume", value: "$2.5M", change: "+8.5%" },

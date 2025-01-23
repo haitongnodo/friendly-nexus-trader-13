@@ -18,10 +18,10 @@ const strategies = ['Momentum', 'Mean Reversion', 'Breakout', 'Scalping', 'Grid 
 
 export const generateTraders = (count: number): Trader[] => {
   return Array(count).fill(null).map((_, index) => {
-    const winRate = faker.number.float({ min: 50, max: 95, precision: 0.1 });
-    const pnl24h = faker.number.float({ min: -10000, max: 10000, precision: 0.01 });
-    const pnl4d = faker.number.float({ min: -25000, max: 25000, precision: 0.01 });
-    const volume = faker.number.float({ min: 100000, max: 5000000, precision: 0.01 });
+    const winRate = faker.number.float({ min: 50, max: 95, fractionDigits: 1 });
+    const pnl24h = faker.number.float({ min: -10000, max: 10000, fractionDigits: 2 });
+    const pnl4d = faker.number.float({ min: -25000, max: 25000, fractionDigits: 2 });
+    const volume = faker.number.float({ min: 100000, max: 5000000, fractionDigits: 2 });
     const copiers = faker.number.int({ min: 10, max: 2000 });
     
     return {
