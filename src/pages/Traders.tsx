@@ -32,9 +32,9 @@ export default function Traders() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12 space-y-3"
+        className="text-center mb-12 space-y-3 mt-[100px]"
       >
-        <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent tracking-tight">
+        <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent tracking-tight">
           AI-Powered Copy Trading
         </h1>
         <p className="text-gray-400 text-lg tracking-wide">
@@ -50,7 +50,7 @@ export default function Traders() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="bg-[#151822] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-xl border border-white/5"
+            className="glass rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105"
           >
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">{stat.label}</p>
@@ -76,7 +76,7 @@ export default function Traders() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input 
             placeholder="Search by agent name, wallet address or trading strategy..." 
-            className="pl-10 bg-[#151822] border border-white/5 rounded-[16px]"
+            className="pl-10 glass rounded-[16px]"
           />
         </div>
         
@@ -87,8 +87,8 @@ export default function Traders() {
               variant={pair === "All Agents" ? "default" : "secondary"}
               className={`hover:scale-105 transition-transform duration-200 rounded-[16px] ${
                 pair === "All Agents" 
-                  ? "bg-[#FB7402] hover:bg-[#FB7402]/90" 
-                  : "bg-[#151822] hover:bg-[#1a1f2a] border border-white/5"
+                  ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90" 
+                  : "glass hover:bg-[#1a1f2a]"
               }`}
             >
               {pair}
@@ -103,10 +103,10 @@ export default function Traders() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="bg-[#151822] border border-white/5 rounded-[16px]">
+        <Card className="glass rounded-[16px]">
           <Table>
             <TableHeader>
-              <TableRow className="hover:bg-transparent border-white/5">
+              <TableRow className="hover:bg-transparent">
                 <TableHead className="text-white">AGENT</TableHead>
                 <TableHead className="text-white">WIN RATE</TableHead>
                 <TableHead className="text-white">24H PNL</TableHead>
@@ -118,7 +118,7 @@ export default function Traders() {
             </TableHeader>
             <TableBody>
               {traders.map((trader, index) => (
-                <TableRow key={index} className="hover:bg-[#1a1f2a] border-white/5">
+                <TableRow key={index} className="hover:bg-[#1a1f2a]">
                   <TableCell className="font-medium">
                     <div className="flex flex-col">
                       <span>{trader.agent}</span>
@@ -142,14 +142,14 @@ export default function Traders() {
                       <Button 
                         variant="default" 
                         size="sm"
-                        className="bg-[#FB7402] hover:bg-[#FB7402]/90 rounded-[16px]"
+                        className="bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]"
                       >
                         Copy
                       </Button>
                       <Button 
                         variant="secondary" 
                         size="sm"
-                        className="bg-[#151822] hover:bg-[#1a1f2a] border border-white/5 rounded-[16px]"
+                        className="glass hover:bg-[#1a1f2a] rounded-[16px]"
                       >
                         Profile
                       </Button>
