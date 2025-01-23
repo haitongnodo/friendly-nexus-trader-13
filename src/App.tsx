@@ -5,7 +5,7 @@ import TraderProfile from "@/components/trader/TraderProfile";
 
 // Wrapper component to get URL parameters
 const TraderProfileWrapper = () => {
-  const { traderId } = useParams();
+  const { traderId } = useParams<{ traderId: string }>();
   return <TraderProfile traderId={traderId || ""} />;
 };
 

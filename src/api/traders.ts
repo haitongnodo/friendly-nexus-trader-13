@@ -1,5 +1,12 @@
+export interface Trader {
+  id: string;
+  name: string;
+  followers: number;
+  winRate: number;
+}
+
 // Mock data for demonstration
-const mockTraders = [
+const mockTraders: Trader[] = [
   {
     id: "1",
     name: "Elite Trader #1",
@@ -20,7 +27,7 @@ const mockTraders = [
   },
 ];
 
-export const getTraders = async () => {
+export const getTraders = async (): Promise<Trader[]> => {
   // Simulate API call delay
   await new Promise(resolve => setTimeout(resolve, 500));
   return mockTraders;

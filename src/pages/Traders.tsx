@@ -1,14 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { getTraders } from "@/api/traders";
-
-interface Trader {
-  id: string;
-  name: string;
-  followers: number;
-  winRate: number;
-}
+import { getTraders, Trader } from "@/api/traders";
 
 const Traders = () => {
   const navigate = useNavigate();
