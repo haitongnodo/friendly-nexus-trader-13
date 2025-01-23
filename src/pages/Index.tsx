@@ -178,10 +178,21 @@ const Index = () => {
     setMessage("");
   };
 
-  // ... keep existing code (JSX for the main layout and chat interface)
-
   return (
     <div className="container mx-auto px-4 py-8">
+      {/* Animated gradient background */}
+      <div 
+        className="fixed inset-0 -z-10 animate-gradient"
+        style={{
+          background: `radial-gradient(circle at 50% 50%, 
+            rgba(255, 107, 44, 0.15), 
+            rgba(28, 28, 40, 0.15)
+          )`,
+          backgroundSize: "200% 200%",
+          backdropFilter: "blur(100px)",
+        }}
+      />
+
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -242,7 +253,7 @@ const Index = () => {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="bg-[#151822] rounded-[16px] p-4 min-h-[500px] flex flex-col border border-white/5"
+        className="bg-[#151822]/90 backdrop-blur-sm rounded-[16px] p-4 min-h-[500px] flex flex-col border border-white/5"
       >
         <div className="flex-1 space-y-4 overflow-y-auto mb-4 p-4">
           {messages.map((msg, i) => (

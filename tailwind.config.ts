@@ -23,6 +23,10 @@ export default {
           orange: "#FB7402",
           "orange-light": "#FB7402",
         },
+        ai: {
+          orange: "#FF6B2C",
+          slate: "#1C1C28",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
@@ -75,11 +79,17 @@ export default {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        gradient: {
+          "0%": { backgroundPosition: "0% 50%" },
+          "50%": { backgroundPosition: "100% 50%" },
+          "100%": { backgroundPosition: "0% 50%" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         float: "float 3s ease-in-out infinite",
+        gradient: "gradient 15s ease infinite",
       },
     },
   },
