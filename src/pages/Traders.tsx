@@ -1,9 +1,10 @@
-import { Search } from "lucide-react";
+import { Search, X, ChevronDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { generateTraders, type Trader } from "@/utils/mockTraderData";
@@ -100,6 +101,60 @@ export default function Traders() {
     Math.min(totalPages, Math.max(5, currentPage + 2))
   );
 
+  const clearFilter = (type: 'pair' | 'strategy' | 'sort') => {
+    switch (type) {
+      case 'pair':
+        setSelectedPair("All Pairs");
+        break;
+      case 'strategy':
+        setSelectedStrategy("All Strategies");
+        break;
+      case 'sort':
+        setSelectedSort("All Agents");
+        break;
+    }
+  };
+
+  const ActiveFilters = () => {
+    return (
+      <div className="flex flex-wrap gap-2 mt-4">
+        {selectedPair !== "All Pairs" && (
+          <div className="flex items-center gap-1 px-3 py-1.5 bg-background-elevated rounded-full border border-border-subtle">
+            <span className="text-sm text-text-secondary">{selectedPair}</span>
+            <button
+              onClick={() => clearFilter('pair')}
+              className="text-text-tertiary hover:text-primary transition-colors"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+        {selectedStrategy !== "All Strategies" && (
+          <div className="flex items-center gap-1 px-3 py-1.5 bg-background-elevated rounded-full border border-border-subtle">
+            <span className="text-sm text-text-secondary">{selectedStrategy}</span>
+            <button
+              onClick={() => clearFilter('strategy')}
+              className="text-text-tertiary hover:text-primary transition-colors"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+        {selectedSort !== "All Agents" && (
+          <div className="flex items-center gap-1 px-3 py-1.5 bg-background-elevated rounded-full border border-border-subtle">
+            <span className="text-sm text-text-secondary">{selectedSort}</span>
+            <button
+              onClick={() => clearFilter('sort')}
+              className="text-text-tertiary hover:text-primary transition-colors"
+            >
+              <X size={14} />
+            </button>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
       <motion.div 
@@ -162,86 +217,43 @@ export default function Traders() {
           />
         </div>
         
-        <div className="bg-background-surface border border-border-subtle rounded-lg p-4 space-y-3">
-          <div className="flex flex-wrap gap-2">
-            {sortOptions.map((option) => (
-              <motion.div
-                key={option}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Button
-                  variant={option === selectedSort ? "default" : "secondary"}
-                  size="sm"
-                  className={cn(
-                    "rounded-lg transition-all duration-200",
-                    option === selectedSort 
-                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_0_1px_rgba(255,122,15,0.3),0_0_4px_rgba(255,122,15,0.2),0_0_8px_rgba(255,122,15,0.1)] hover:bg-[rgba(255,122,15,0.2)]" 
-                      : "bg-background-surface border border-border-subtle hover:bg-[rgba(255,122,15,0.2)] hover:border-[#FF7A0F] hover:shadow-[0_0_0_1px_rgba(255,122,15,0.2),0_0_2px_rgba(255,122,15,0.1)]"
-                  )}
-                  onClick={() => setSelectedSort(option)}
-                >
-                  {option}
-                </Button>
-              </motion.div>
-            ))}
-          </div>
+        <div className="flex items-center gap-2 bg-background-surface border border-border-subtle rounded-lg p-3">
+          <Select value={selectedSort} onValueChange={setSelectedSort}>
+            <SelectTrigger className="w-[160px] h-10 bg-background-elevated border-border-subtle">
+              <SelectValue placeholder="Filter by type" />
+            </SelectTrigger>
+            <SelectContent className="bg-background-surface border-border-subtle">
+              {sortOptions.map((option) => (
+                <SelectItem key={option} value={option}>{option}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          <div className="flex flex-wrap gap-2">
-            {strategies.map((strategy) => (
-              <motion.div
-                key={strategy}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Button
-                  variant={strategy === selectedStrategy ? "default" : "secondary"}
-                  size="sm"
-                  className={cn(
-                    "rounded-lg transition-all duration-200",
-                    strategy === selectedStrategy 
-                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_10px_rgba(255,122,15,0.3),inset_0_0_15px_rgba(255,122,15,0.2)] hover:bg-[rgba(255,122,15,0.2)]" 
-                      : "bg-background-surface border border-border-subtle hover:bg-background-elevated"
-                  )}
-                  onClick={() => setSelectedStrategy(strategy)}
-                >
-                  {strategy}
-                </Button>
-              </motion.div>
-            ))}
-          </div>
+          <Select value={selectedStrategy} onValueChange={setSelectedStrategy}>
+            <SelectTrigger className="w-[160px] h-10 bg-background-elevated border-border-subtle">
+              <SelectValue placeholder="Select strategy" />
+            </SelectTrigger>
+            <SelectContent className="bg-background-surface border-border-subtle">
+              {strategies.map((strategy) => (
+                <SelectItem key={strategy} value={strategy}>{strategy}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
 
-          <div className="flex flex-wrap gap-2">
-            {tradingPairs.map((pair) => (
-              <motion.div
-                key={pair}
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                <Button
-                  variant={pair === selectedPair ? "default" : "secondary"}
-                  size="sm"
-                  className={cn(
-                    "rounded-lg transition-all duration-200",
-                    pair === selectedPair 
-                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_10px_rgba(255,122,15,0.3),inset_0_0_15px_rgba(255,122,15,0.2)] hover:bg-[rgba(255,122,15,0.2)]" 
-                      : "bg-background-surface border border-border-subtle hover:bg-background-elevated"
-                  )}
-                  onClick={() => setSelectedPair(pair)}
-                >
-                  {pair}
-                </Button>
-              </motion.div>
-            ))}
-          </div>
+          <Select value={selectedPair} onValueChange={setSelectedPair}>
+            <SelectTrigger className="w-[160px] h-10 bg-background-elevated border-border-subtle">
+              <SelectValue placeholder="Select pair" />
+            </SelectTrigger>
+            <SelectContent className="bg-background-surface border-border-subtle">
+              {tradingPairs.map((pair) => (
+                <SelectItem key={pair} value={pair}>{pair}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-      </motion.div>
 
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-      >
+        <ActiveFilters />
+
         <Card className="bg-background-surface border border-border-subtle rounded-[16px] overflow-hidden transition-all duration-normal hover:border-primary/20">
           <Table>
             <TableHeader>
