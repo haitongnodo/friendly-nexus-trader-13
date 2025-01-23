@@ -90,21 +90,21 @@ export default function Index() {
           animate={{ 
             scale: 1,
             opacity: 1,
-            height: isExpanded ? "500px" : "100px",
+            height: isExpanded ? "500px" : "120px",
           }}
           transition={{ 
             duration: 0.3,
             ease: [0.4, 0, 0.2, 1],
           }}
           className={cn(
-            "w-full backdrop-blur-md rounded-xl border border-border-subtle",
+            "w-full rounded-xl border border-border-subtle",
             "shadow-[0_8px_20px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col",
             "bg-[rgba(20,21,26,0.7)]"
           )}
         >
-          {/* Welcome Message Section */}
-          <div className="flex-none bg-inherit border-b border-border-subtle">
-            <div className="flex items-center justify-center h-[56px] px-4">
+          <div className="flex flex-col h-full">
+            {/* Welcome Message */}
+            <div className="px-6 pt-4">
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
@@ -114,48 +114,48 @@ export default function Index() {
                 How can I help you with trading today?
               </motion.div>
             </div>
-          </div>
 
-          {/* Scrollable Content Area */}
-          <div className="flex-1 overflow-y-auto scrollbar-thin px-6">
-            {isExpanded && (
-              <motion.div
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="py-4 space-y-4"
-              >
-                <DataDisplay 
-                  type={selectedFeature === "traders" ? "traders" : "tokens"}
-                  isLoading={isLoading}
-                />
-              </motion.div>
-            )}
-          </div>
-
-          {/* Input Section */}
-          <div className="flex-none p-4 border-t border-border-subtle bg-background-surface/80 backdrop-blur-sm">
-            <form onSubmit={handleSubmit} className="relative w-full">
-              <Input
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder="Message Nexus..."
-                className="h-[44px] pr-12 bg-background-elevated border-border-subtle 
-                  placeholder:text-sm placeholder:text-text-disabled
-                  focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
-                  transition-all duration-200"
-              />
-              <div className="absolute right-2 top-1/2 -translate-y-1/2">
-                <Button
-                  type="submit"
-                  size="icon"
-                  className="h-7 w-7 bg-primary hover:bg-primary-hover transition-colors duration-200"
-                  disabled={!message.trim()}
+            {/* Scrollable Content Area */}
+            <div className="flex-1 overflow-y-auto scrollbar-thin px-6">
+              {isExpanded && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.2 }}
+                  className="py-4 space-y-4"
                 >
-                  <Send className="h-4 w-4" />
-                </Button>
-              </div>
-            </form>
+                  <DataDisplay 
+                    type={selectedFeature === "traders" ? "traders" : "tokens"}
+                    isLoading={isLoading}
+                  />
+                </motion.div>
+              )}
+            </div>
+
+            {/* Input Section */}
+            <div className="px-6 pb-4">
+              <form onSubmit={handleSubmit} className="relative w-full">
+                <Input
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Message Nexus..."
+                  className="h-[44px] pr-12 bg-background-elevated border-border-subtle 
+                    placeholder:text-sm placeholder:text-text-disabled
+                    focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
+                    transition-all duration-200"
+                />
+                <div className="absolute right-2 top-1/2 -translate-y-1/2">
+                  <Button
+                    type="submit"
+                    size="icon"
+                    className="h-7 w-7 bg-primary hover:bg-primary-hover transition-colors duration-200"
+                    disabled={!message.trim()}
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
         </motion.div>
 
