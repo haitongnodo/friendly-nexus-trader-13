@@ -213,6 +213,33 @@ const Index = () => {
         ))}
       </div>
 
+      <Dialog open={showApiKeyDialog} onOpenChange={setShowApiKeyDialog}>
+        <DialogContent className="bg-background-elevated border-border-strong">
+          <DialogHeader>
+            <DialogTitle className="text-text-primary">Enter Birdeye API Key</DialogTitle>
+            <DialogDescription className="text-text-secondary">
+              Please enter your Birdeye API key to access trading data.
+              You can get your API key from the Birdeye website.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Input
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Enter your Birdeye API key"
+              type="password"
+              className="bg-background-surface border-border-subtle text-text-primary placeholder:text-text-disabled"
+            />
+            <Button 
+              onClick={handleSaveApiKey} 
+              className="w-full bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white transition-colors duration-normal"
+            >
+              Save API Key
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -261,33 +288,6 @@ const Index = () => {
           </div>
         </form>
       </motion.div>
-
-      <Dialog open={showApiKeyDialog} onOpenChange={setShowApiKeyDialog}>
-        <DialogContent className="bg-background-elevated border-border-strong">
-          <DialogHeader>
-            <DialogTitle className="text-text-primary">Enter Birdeye API Key</DialogTitle>
-            <DialogDescription className="text-text-secondary">
-              Please enter your Birdeye API key to access trading data.
-              You can get your API key from the Birdeye website.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <Input
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Enter your Birdeye API key"
-              type="password"
-              className="bg-background-surface border-border-subtle text-text-primary placeholder:text-text-disabled"
-            />
-            <Button 
-              onClick={handleSaveApiKey} 
-              className="w-full bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white transition-colors duration-normal"
-            >
-              Save API Key
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 };

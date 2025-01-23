@@ -36,13 +36,15 @@ const App: React.FC = () => {
                   element={
                     <>
                       <Navigation />
-                      <Routes>
-                        <Route path="/" element={<Navigate to="/chat" replace />} />
-                        <Route path="/chat" element={<Index />} />
-                        <Route path="/traders" element={<Traders />} />
-                        <Route path="/traders/:id" element={<TraderProfile />} />
-                        <Route path="/create-agent" element={<CreateAgent />} />
-                      </Routes>
+                      <div className="pt-16">
+                        <Routes>
+                          <Route path="/" element={<Navigate to="/chat" replace />} />
+                          <Route path="/chat" element={<Index />} />
+                          <Route path="/traders" element={<Traders />} />
+                          <Route path="/traders/:id" element={<TraderProfile />} />
+                          <Route path="/create-agent" element={<CreateAgent />} />
+                        </Routes>
+                      </div>
                     </>
                   }
                 />
