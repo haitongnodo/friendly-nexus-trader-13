@@ -18,13 +18,16 @@ export default {
       },
     },
     extend: {
+      backgroundImage: {
+        'primary-gradient': 'linear-gradient(to right, #FF7A0F, #FFB366)',
+      },
       colors: {
         primary: {
           DEFAULT: "#FF7A0F",
           hover: "#FF8D2E",
           pressed: "#E66400",
           ghost: "rgba(255, 122, 15, 0.08)",
-          foreground: "#351C06", // Added this line for primary button text color
+          foreground: "#351C06",
         },
         background: {
           base: "#0A0A0D",

@@ -53,5 +53,5 @@
 }
 
 .orange-gradient {
-  @apply bg-primary-gradient;
+  @apply bg-gradient-to-r from-[#FF7A0F] to-[#FFB366];
 }
