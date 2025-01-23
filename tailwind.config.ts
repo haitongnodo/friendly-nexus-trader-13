@@ -31,6 +31,9 @@ export default {
         "mono-lg": ["24px", { lineHeight: "1.2", fontFamily: "SF Mono, monospace" }],
         "mono-base": ["14px", { lineHeight: "1.4", fontFamily: "SF Mono, monospace" }],
       },
+      scale: {
+        '102': '1.02',
+      },
       backgroundImage: {
         'primary-gradient': 'linear-gradient(to right, #FF7A0F, #FFB366)',
       },
