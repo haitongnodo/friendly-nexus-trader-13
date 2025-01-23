@@ -30,7 +30,7 @@ const Navigation = () => {
     console.log('Available wallets:', wallets);
   }, []);
 
-  // Add scroll event listener
+  // Update scroll event listener
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY;
@@ -82,9 +82,9 @@ const Navigation = () => {
   return (
     <nav 
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-200 ease-in-out",
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out",
         isScrolled 
-          ? "bg-black/80 backdrop-blur-md border-b border-white/10 shadow-lg"
+          ? "bg-background-base/80 backdrop-blur-md border-b border-border-subtle"
           : "bg-transparent"
       )}
     >
