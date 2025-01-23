@@ -28,10 +28,12 @@ const CreateAgent = () => {
         className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8"
       >
         <div className="space-y-2">
-          <h1 className="font-display text-title bg-gradient-to-r from-[#FF7A0F] to-[#FFB366] bg-clip-text text-transparent">
+          <h1 className="text-[32px] font-semibold bg-gradient-to-r from-[#FF7A0F] to-[#FFB366] bg-clip-text text-transparent">
             Create Your Agent
           </h1>
-          <p className="text-text-secondary font-display text-label">Set up your AI trading agent with advanced parameters</p>
+          <p className="text-[16px] text-text-secondary">
+            Set up your AI trading agent with advanced parameters
+          </p>
         </div>
         
         <div className="flex items-center gap-4 bg-background-surface/30 backdrop-blur-lg p-6 rounded-xl border border-border-subtle">

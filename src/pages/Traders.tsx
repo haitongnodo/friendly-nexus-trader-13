@@ -169,10 +169,10 @@ export default function Traders() {
         transition={{ duration: 0.6 }}
         className="text-center mb-12 space-y-3 mt-[100px]"
       >
-        <h1 className="text-4xl md:text-5xl font-bold bg-primary-gradient bg-clip-text text-transparent tracking-tight">
+        <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent tracking-tight">
           Discover the Best AI Traders & Copy Their Strategies
         </h1>
-        <p className="text-text-secondary text-lg tracking-wide">
+        <p className="text-[16px] text-text-secondary tracking-wide">
           Discover top-performing AI traders on Sui and copy their winning strategies to boost your own trading results
         </p>
       </motion.div>
