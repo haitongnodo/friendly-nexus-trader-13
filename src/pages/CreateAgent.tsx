@@ -18,15 +18,15 @@ const CreateAgent = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-8 max-w-6xl">
+    <div className="container mx-auto px-4 py-12 max-w-6xl space-y-12">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="flex justify-between items-center mb-8 mt-[100px]"
+        className="flex justify-between items-center"
       >
-        <div>
-          <h1 className="text-4xl font-bold mb-2 bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent">Create Your Agent</h1>
+        <div className="space-y-2">
+          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent">Create Your Agent</h1>
           <p className="text-muted-foreground">Set up your AI trading agent by configuring its personality and trading parameters.</p>
         </div>
         <div className="flex items-center gap-4">
@@ -37,17 +37,17 @@ const CreateAgent = () => {
         </div>
       </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {stats.map((stat, index) => (
           <motion.div
             key={index}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-4 hover:bg-[#222329] transition-all duration-300 cursor-pointer transform hover:scale-105"
+            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-6 hover:bg-[#222329] transition-all duration-300 cursor-pointer transform hover:scale-105"
           >
             <p className="text-sm text-muted-foreground">{stat.label}</p>
-            <div className="flex items-end justify-between mt-2">
+            <div className="flex items-end justify-between mt-3">
               <span className="text-2xl font-bold">{stat.value}</span>
               <span className="text-green-500 text-sm">{stat.change}</span>
             </div>
@@ -55,21 +55,21 @@ const CreateAgent = () => {
         ))}
       </div>
 
-      <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+      <Card className="bg-[#16171E] border-[#222329] rounded-[16px]">
+        <div className="p-8 space-y-6">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
             <span className="text-blue-400">⬡</span> Token Integration
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Button className="h-20 bg-gradient-to-r from-[#FB7402] to-[#FB7402] hover:opacity-90 rounded-[16px]">
-              <Plus className="mr-2" />
-              <div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <Button className="h-24 bg-gradient-to-r from-[#FB7402] to-[#FB7402] hover:opacity-90 rounded-[16px]">
+              <Plus className="mr-3" />
+              <div className="space-y-1 text-left">
                 <div className="font-semibold">Launch a New Agent</div>
                 <div className="text-sm opacity-80">Fee: SUI/N 25,000 NODO + Pool Fee</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-20 bg-[#16171E] border-[#222329] hover:bg-[#222329] rounded-[16px]">
-              <div>
+            <Button variant="outline" className="h-24 bg-[#16171E] border-[#222329] hover:bg-[#222329] rounded-[16px]">
+              <div className="space-y-1 text-left">
                 <div className="font-semibold">Use Existing Agent</div>
                 <div className="text-sm opacity-80">Fee: SUI/N 4,000 NODO</div>
               </div>
@@ -78,9 +78,9 @@ const CreateAgent = () => {
         </div>
       </Card>
 
-      <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+      <Card className="bg-[#16171E] border-[#222329] rounded-[16px]">
+        <div className="p-8 space-y-6">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
             <input type="checkbox" className="rounded border-gray-400" />
             Copy Trading
           </h2>
@@ -198,7 +198,7 @@ const CreateAgent = () => {
         </div>
       </Card>
 
-      <div className="flex justify-center">
+      <div className="flex justify-center pt-6">
         <Button size="lg" className="bg-[#FB7402] hover:opacity-90 rounded-[16px]">
           <Plus className="mr-2" /> CREATE AGENT
         </Button>
