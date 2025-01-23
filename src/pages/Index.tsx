@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, TrendingUp, BarChart2, Diamond, ArrowDownUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DataDisplay } from "@/components/DataDisplay";
-import { getBirdeyeApiKey } from "@/config/api";
+import { getBirdeyeApiKey, setBirdeyeApiKey } from "@/config/api";
 import { useToast } from "@/components/ui/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 
 const features = [
   {
@@ -42,7 +49,31 @@ export default function Index() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | undefined>();
   const [tokenData, setTokenData] = useState<any[]>([]);
+  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
+  const [apiKey, setApiKey] = useState("");
   const { toast } = useToast();
+
+  useEffect(() => {
+    const key = getBirdeyeApiKey();
+    if (!key || key === 'de50b259bbc04c419443ba226fa22c71') {
+      setShowApiKeyDialog(true);
+    }
+  }, []);
+
+  const handleApiKeySubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (apiKey.trim()) {
+      setBirdeyeApiKey(apiKey.trim());
+      setShowApiKeyDialog(false);
+      toast({
+        title: "Success",
+        description: "BirdEye API key has been updated",
+      });
+      if (selectedFeature === "tokens") {
+        fetchTrendingTokens();
+      }
+    }
+  };
 
   const fetchTrendingTokens = async () => {
     setIsLoading(true);
@@ -224,6 +255,37 @@ export default function Index() {
           ))}
         </div>
       </div>
+
+      <Dialog open={showApiKeyDialog} onOpenChange={setShowApiKeyDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enter BirdEye API Key</DialogTitle>
+            <DialogDescription>
+              Please enter your BirdEye API key to access token data. You can get your API key from the BirdEye dashboard.
+            </DialogDescription>
+          </DialogHeader>
+          <form onSubmit={handleApiKeySubmit} className="space-y-4">
+            <Input
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Enter your BirdEye API key"
+              className="w-full"
+            />
+            <div className="flex justify-between items-center">
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => window.open('https://birdeye.so/settings?tab=api', '_blank')}
+              >
+                Get API Key
+              </Button>
+              <Button type="submit" disabled={!apiKey.trim()}>
+                Save API Key
+              </Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
