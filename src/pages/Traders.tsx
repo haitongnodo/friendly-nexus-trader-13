@@ -8,7 +8,6 @@ import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { generateTraders, type Trader } from "@/utils/mockTraderData";
 
-// Add animation variants
 const containerAnimation = {
   hidden: { opacity: 0 },
   show: {
@@ -35,7 +34,6 @@ const tradingPairs = ["All Pairs", "BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USD
 const strategies = ["All Strategies", "Momentum", "Mean Reversion", "Breakout", "Scalping", "Grid Trading"];
 const sortOptions = ["All Agents", "Top Gainers", "Most Copied", "Highest Win Rate"];
 
-// Generate 100 traders
 const allTraders = generateTraders(100);
 
 const ITEMS_PER_PAGE = 10;
@@ -50,7 +48,6 @@ export default function Traders() {
   const filteredAndSortedTraders = useMemo(() => {
     let filtered = allTraders;
 
-    // Apply search filter
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
       filtered = filtered.filter(
@@ -61,17 +58,14 @@ export default function Traders() {
       );
     }
 
-    // Apply pair filter
     if (selectedPair !== "All Pairs") {
       filtered = filtered.filter(trader => trader.pairs.includes(selectedPair));
     }
 
-    // Apply strategy filter
     if (selectedStrategy !== "All Strategies") {
       filtered = filtered.filter(trader => trader.strategy === selectedStrategy);
     }
 
-    // Apply sorting
     switch (selectedSort) {
       case "Top Gainers":
         filtered = [...filtered].sort((a, b) => 
@@ -93,14 +87,12 @@ export default function Traders() {
     return filtered;
   }, [searchTerm, selectedPair, selectedStrategy, selectedSort]);
 
-  // Calculate pagination
   const totalPages = Math.ceil(filteredAndSortedTraders.length / ITEMS_PER_PAGE);
   const paginatedTraders = filteredAndSortedTraders.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
-  // Generate page numbers for pagination
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
   const visiblePageNumbers = pageNumbers.slice(
     Math.max(0, Math.min(currentPage - 2, totalPages - 4)),
@@ -156,80 +148,85 @@ export default function Traders() {
         transition={{ duration: 0.5 }}
         className="space-y-4 mb-8"
       >
-        <div className="relative group">
+        <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4 transition-colors group-hover:text-[#FB7402]" />
           <Input 
             placeholder="Search by agent name, wallet address or trading strategy..." 
-            className="pl-10 glass rounded-[16px] border-[#222329] bg-[#16171E] transition-all duration-300 hover:border-[#FB7402]/50 focus:border-[#FB7402] focus:ring-[#FB7402]/20"
+            className="pl-10 bg-[#16161B] border-[#1F2024] rounded-lg transition-all duration-300 hover:border-[#FB7402]/50 focus:border-[#FB7402] focus:ring-[#FB7402]/20"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         
-        <div className="flex flex-wrap gap-2">
-          {sortOptions.map((option) => (
-            <motion.div
-              key={option}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                variant={option === selectedSort ? "default" : "secondary"}
-                className={`transition-all duration-300 rounded-[16px] ${
-                  option === selectedSort 
-                    ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 shadow-lg hover:shadow-[#FB7402]/20" 
-                    : "glass hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
-                }`}
-                onClick={() => setSelectedSort(option)}
+        <div className="bg-[#16161B] border border-[#1F2024] rounded-lg p-4 space-y-3">
+          <div className="flex flex-wrap gap-2">
+            {sortOptions.map((option) => (
+              <motion.div
+                key={option}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {option}
-              </Button>
-            </motion.div>
-          ))}
-        </div>
+                <Button
+                  variant={option === selectedSort ? "default" : "secondary"}
+                  size="sm"
+                  className={`rounded-lg ${
+                    option === selectedSort 
+                      ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90" 
+                      : "bg-[#16161B] border border-[#1F2024] hover:bg-[#1F2024]"
+                  }`}
+                  onClick={() => setSelectedSort(option)}
+                >
+                  {option}
+                </Button>
+              </motion.div>
+            ))}
+          </div>
 
-        <div className="flex flex-wrap gap-2">
-          {strategies.map((strategy) => (
-            <motion.div
-              key={strategy}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                variant={strategy === selectedStrategy ? "default" : "secondary"}
-                className={`transition-all duration-300 rounded-[16px] ${
-                  strategy === selectedStrategy 
-                    ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 shadow-lg hover:shadow-[#FB7402]/20" 
-                    : "glass hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
-                }`}
-                onClick={() => setSelectedStrategy(strategy)}
+          <div className="flex flex-wrap gap-2">
+            {strategies.map((strategy) => (
+              <motion.div
+                key={strategy}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {strategy}
-              </Button>
-            </motion.div>
-          ))}
-        </div>
+                <Button
+                  variant={strategy === selectedStrategy ? "default" : "secondary"}
+                  size="sm"
+                  className={`rounded-lg ${
+                    strategy === selectedStrategy 
+                      ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90" 
+                      : "bg-[#16161B] border border-[#1F2024] hover:bg-[#1F2024]"
+                  }`}
+                  onClick={() => setSelectedStrategy(strategy)}
+                >
+                  {strategy}
+                </Button>
+              </motion.div>
+            ))}
+          </div>
 
-        <div className="flex flex-wrap gap-2">
-          {tradingPairs.map((pair) => (
-            <motion.div
-              key={pair}
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              <Button
-                variant={pair === selectedPair ? "default" : "secondary"}
-                className={`transition-all duration-300 rounded-[16px] ${
-                  pair === selectedPair 
-                    ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 shadow-lg hover:shadow-[#FB7402]/20" 
-                    : "glass hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
-                }`}
-                onClick={() => setSelectedPair(pair)}
+          <div className="flex flex-wrap gap-2">
+            {tradingPairs.map((pair) => (
+              <motion.div
+                key={pair}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                {pair}
-              </Button>
-            </motion.div>
-          ))}
+                <Button
+                  variant={pair === selectedPair ? "default" : "secondary"}
+                  size="sm"
+                  className={`rounded-lg ${
+                    pair === selectedPair 
+                      ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90" 
+                      : "bg-[#16161B] border border-[#1F2024] hover:bg-[#1F2024]"
+                  }`}
+                  onClick={() => setSelectedPair(pair)}
+                >
+                  {pair}
+                </Button>
+              </motion.div>
+            ))}
+          </div>
         </div>
       </motion.div>
 
