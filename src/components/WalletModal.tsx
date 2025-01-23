@@ -40,22 +40,22 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
             </button>
           </DialogTitle>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
+        <div className="grid gap-6 py-6">
           <button
             onClick={() => handleWalletSelect("sui")}
             className={cn(
-              "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
+              "flex items-center space-x-4 w-full p-4 rounded-lg transition-all duration-200 text-left relative",
               getWalletStatus("sui")
-                ? "hover:bg-overlay-hover"
+                ? "hover:bg-[rgba(255,122,15,0.15)] hover:border-primary hover:shadow-[0_0_10px_rgba(255,122,15,0.3)] border-2 border-transparent"
                 : "opacity-50 cursor-not-allowed"
             )}
             disabled={!getWalletStatus("sui")}
           >
-            <img src="/lovable-uploads/a7083879-0396-4ae6-ab70-4c8ba2c768fc.png" alt="Sui Wallet" className="w-6 h-6" />
+            <img src="/lovable-uploads/a7083879-0396-4ae6-ab70-4c8ba2c768fc.png" alt="Sui Wallet" className="w-8 h-8" />
             <div className="flex flex-col">
-              <span>Sui Wallet</span>
+              <span className="font-medium text-[#FFB366]">Sui Wallet</span>
               {!getWalletStatus("sui") && (
-                <span className="text-sm text-semantic-error">Not installed</span>
+                <span className="text-sm text-semantic-error mt-0.5">Not installed</span>
               )}
             </div>
           </button>
@@ -63,18 +63,18 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
           <button
             onClick={() => handleWalletSelect("martian")}
             className={cn(
-              "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
+              "flex items-center space-x-4 w-full p-4 rounded-lg transition-colors text-left",
               getWalletStatus("martian")
-                ? "hover:bg-overlay-hover"
+                ? "hover:bg-overlay-hover border border-transparent hover:border-border-subtle"
                 : "opacity-50 cursor-not-allowed"
             )}
             disabled={!getWalletStatus("martian")}
           >
-            <img src="/lovable-uploads/d6b8c326-0ce6-4e60-9b88-d0aaedcf00f6.png" alt="Martian Sui Wallet" className="w-6 h-6" />
+            <img src="/lovable-uploads/d6b8c326-0ce6-4e60-9b88-d0aaedcf00f6.png" alt="Martian Sui Wallet" className="w-8 h-8" />
             <div className="flex flex-col">
-              <span>Martian Sui Wallet</span>
+              <span className="font-medium">Martian Sui Wallet</span>
               {!getWalletStatus("martian") && (
-                <span className="text-sm text-semantic-error">Not installed</span>
+                <span className="text-sm text-semantic-error mt-0.5">Not installed</span>
               )}
             </div>
           </button>
@@ -82,18 +82,18 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
           <button
             onClick={() => handleWalletSelect("suiet")}
             className={cn(
-              "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
+              "flex items-center space-x-4 w-full p-4 rounded-lg transition-colors text-left",
               getWalletStatus("suiet")
-                ? "hover:bg-overlay-hover"
+                ? "hover:bg-overlay-hover border border-transparent hover:border-border-subtle"
                 : "opacity-50 cursor-not-allowed"
             )}
             disabled={!getWalletStatus("suiet")}
           >
-            <img src="/lovable-uploads/d96930e3-ce73-4d48-b9b4-76357fcee014.png" alt="Suiet" className="w-6 h-6" />
+            <img src="/lovable-uploads/d96930e3-ce73-4d48-b9b4-76357fcee014.png" alt="Suiet" className="w-8 h-8" />
             <div className="flex flex-col">
-              <span>Suiet</span>
+              <span className="font-medium">Suiet</span>
               {!getWalletStatus("suiet") && (
-                <span className="text-sm text-semantic-error">Not installed</span>
+                <span className="text-sm text-semantic-error mt-0.5">Not installed</span>
               )}
             </div>
           </button>
