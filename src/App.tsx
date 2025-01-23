@@ -28,28 +28,24 @@ const App: React.FC = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen bg-background">
-              <Routes>
-                <Route path="/login" element={<Login />} />
-                <Route
-                  path="/*"
-                  element={
-                    <>
-                      <Navigation />
-                      <div className="pt-16">
-                        <Routes>
-                          <Route path="/" element={<Navigate to="/chat" replace />} />
-                          <Route path="/chat" element={<Index />} />
-                          <Route path="/traders" element={<Traders />} />
-                          <Route path="/traders/:id" element={<TraderProfile />} />
-                          <Route path="/create-agent" element={<CreateAgent />} />
-                        </Routes>
-                      </div>
-                    </>
-                  }
-                />
-              </Routes>
-            </div>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route
+                path="/*"
+                element={
+                  <>
+                    <Navigation />
+                    <Routes>
+                      <Route path="/" element={<Navigate to="/chat" replace />} />
+                      <Route path="/chat" element={<Index />} />
+                      <Route path="/traders" element={<Traders />} />
+                      <Route path="/traders/:id" element={<TraderProfile />} />
+                      <Route path="/create-agent" element={<CreateAgent />} />
+                    </Routes>
+                  </>
+                }
+              />
+            </Routes>
           </BrowserRouter>
         </TooltipProvider>
       </QueryClientProvider>
