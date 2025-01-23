@@ -20,24 +20,33 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
     return wallet?.installed;
   };
 
+  const handleWalletSelect = async (walletType: string) => {
+    console.log(`Selecting wallet: ${walletType}`);
+    onSelectWallet(walletType);
+    onClose();
+  };
+
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-md bg-background-base">
+      <DialogContent className="sm:max-w-md bg-background-base border-border">
         <DialogHeader>
           <DialogTitle className="flex justify-between items-center">
             <span>Connect a Wallet</span>
-            <button onClick={onClose} className="text-gray-400 hover:text-white">
+            <button 
+              onClick={onClose} 
+              className="text-text-tertiary hover:text-text-primary transition-colors"
+            >
               <X className="h-4 w-4" />
             </button>
           </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <button
-            onClick={() => onSelectWallet("sui")}
+            onClick={() => handleWalletSelect("sui")}
             className={cn(
               "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
               getWalletStatus("sui")
-                ? "hover:bg-white/5"
+                ? "hover:bg-overlay-hover"
                 : "opacity-50 cursor-not-allowed"
             )}
             disabled={!getWalletStatus("sui")}
@@ -46,17 +55,17 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
             <div className="flex flex-col">
               <span>Sui Wallet</span>
               {!getWalletStatus("sui") && (
-                <span className="text-sm text-red-400">Not installed</span>
+                <span className="text-sm text-semantic-error">Not installed</span>
               )}
             </div>
           </button>
           
           <button
-            onClick={() => onSelectWallet("martian")}
+            onClick={() => handleWalletSelect("martian")}
             className={cn(
               "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
               getWalletStatus("martian")
-                ? "hover:bg-white/5"
+                ? "hover:bg-overlay-hover"
                 : "opacity-50 cursor-not-allowed"
             )}
             disabled={!getWalletStatus("martian")}
@@ -65,17 +74,17 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
             <div className="flex flex-col">
               <span>Martian Sui Wallet</span>
               {!getWalletStatus("martian") && (
-                <span className="text-sm text-red-400">Not installed</span>
+                <span className="text-sm text-semantic-error">Not installed</span>
               )}
             </div>
           </button>
           
           <button
-            onClick={() => onSelectWallet("suiet")}
+            onClick={() => handleWalletSelect("suiet")}
             className={cn(
               "flex items-center space-x-3 w-full p-3 rounded-lg transition-colors text-left",
               getWalletStatus("suiet")
-                ? "hover:bg-white/5"
+                ? "hover:bg-overlay-hover"
                 : "opacity-50 cursor-not-allowed"
             )}
             disabled={!getWalletStatus("suiet")}
@@ -84,7 +93,7 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
             <div className="flex flex-col">
               <span>Suiet</span>
               {!getWalletStatus("suiet") && (
-                <span className="text-sm text-red-400">Not installed</span>
+                <span className="text-sm text-semantic-error">Not installed</span>
               )}
             </div>
           </button>
@@ -92,11 +101,11 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
         <div className="mt-6 space-y-4">
           <div>
             <h3 className="font-medium mb-2">Easy Login</h3>
-            <p className="text-sm text-gray-400">No need to create new accounts and passwords for every website. Just connect your wallet and get going.</p>
+            <p className="text-sm text-text-tertiary">No need to create new accounts and passwords for every website. Just connect your wallet and get going.</p>
           </div>
           <div>
             <h3 className="font-medium mb-2">Store your Digital Assets</h3>
-            <p className="text-sm text-gray-400">Send, receive, store, and display your digital assets like NFTs & coins.</p>
+            <p className="text-sm text-text-tertiary">Send, receive, store, and display your digital assets like NFTs & coins.</p>
           </div>
         </div>
       </DialogContent>
