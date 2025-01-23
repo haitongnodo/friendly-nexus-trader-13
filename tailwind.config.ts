@@ -23,10 +23,11 @@ export default {
         display: ["SF Pro Display", "Inter", "sans-serif"],
       },
       fontSize: {
-        "title": ["28px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
+        "title": ["36px", { lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "600" }],
         "section": ["20px", { lineHeight: "1.3", letterSpacing: "-0.01em", fontWeight: "600" }],
         "label": ["14px", { lineHeight: "1.4", fontWeight: "500" }],
         "helper": ["13px", { lineHeight: "1.4", fontWeight: "400" }],
+        "chat": ["15px", { lineHeight: "1.6", fontWeight: "400" }],
         "mono-lg": ["24px", { lineHeight: "1.2", fontFamily: "SF Mono, monospace" }],
         "mono-base": ["14px", { lineHeight: "1.4", fontFamily: "SF Mono, monospace" }],
       },
@@ -113,6 +114,12 @@ export default {
         "neon-pulse": "neon-pulse 2s ease-in-out infinite",
         "fade-up": "fade-up 0.3s ease-out forwards",
         "number-transition": "number-transition 0.3s ease-out"
+      },
+      maxWidth: {
+        'chat': '768px',
+      },
+      spacing: {
+        'chat-input': '44px',
       },
     },
   },

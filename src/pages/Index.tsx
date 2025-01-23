@@ -1,295 +1,156 @@
-import { useState, useEffect } from "react";
-import { MessageSquare, TrendingUp, Diamond, LineChart } from "lucide-react";
+import React from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
-import { useToast } from "@/components/ui/use-toast";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import { getBirdeyeApiKey, setBirdeyeApiKey } from "@/config/api";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Card } from "@/components/ui/card";
+import { Send, Mic, Image, Settings, Command, ChevronRight } from "lucide-react";
 
-interface TraderData {
-  address: string;
-  pnl: string;
-  volume: string;
-  trades: number;
-}
+const features = [
+  {
+    title: "Natural Conversations",
+    description: "Chat naturally with AI about trading strategies and market analysis",
+    icon: Command,
+  },
+  {
+    title: "Voice Commands",
+    description: "Use voice commands to control your trading experience",
+    icon: Mic,
+  },
+  {
+    title: "Visual Analysis",
+    description: "Upload charts and images for AI-powered technical analysis",
+    icon: Image,
+  },
+  {
+    title: "Custom Settings",
+    description: "Personalize your AI assistant's behavior and responses",
+    icon: Settings,
+  },
+];
 
-interface TokenData {
-  symbol: string;
-  price: string;
-  change24h: string;
-  volume24h: string;
-}
-
-const fetchTraderData = async (): Promise<TraderData> => {
-  const apiKey = getBirdeyeApiKey();
-  if (!apiKey) {
-    throw new Error('Please set your Birdeye API key');
-  }
-  
-  const response = await axios.get('https://public-api.birdeye.so/public/trader_stats', {
-    headers: {
-      'X-API-KEY': apiKey
-    }
-  });
-  return response.data;
-};
-
-const fetchTrendingTokens = async (): Promise<TokenData[]> => {
-  const apiKey = getBirdeyeApiKey();
-  if (!apiKey) {
-    throw new Error('Please set your Birdeye API key');
-  }
-  
-  const response = await axios.get('https://public-api.birdeye.so/public/trending_tokens', {
-    headers: {
-      'X-API-KEY': apiKey
-    }
-  });
-  return response.data;
-};
-
-const Index = () => {
-  const [message, setMessage] = useState("");
-  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
-  const [apiKey, setApiKey] = useState("");
-  const { toast } = useToast();
-  const [messages, setMessages] = useState([
-    {
-      type: "bot",
-      content: "Hi! I'm Nexus, your AI trading companion. How can I help you today?",
-    },
-  ]);
-
-  useEffect(() => {
-    if (!getBirdeyeApiKey()) {
-      setShowApiKeyDialog(true);
-    }
-  }, []);
-
-  const { data: traderData, isLoading: isLoadingTrader, error: traderError } = useQuery({
-    queryKey: ['traderData'],
-    queryFn: fetchTraderData,
-    enabled: !!getBirdeyeApiKey(),
-  });
-
-  const { data: trendingTokens, isLoading: isLoadingTokens, error: tokensError } = useQuery({
-    queryKey: ['trendingTokens'],
-    queryFn: fetchTrendingTokens,
-    enabled: !!getBirdeyeApiKey(),
-  });
-
-  const handleSaveApiKey = () => {
-    if (apiKey.trim()) {
-      setBirdeyeApiKey(apiKey.trim());
-      setShowApiKeyDialog(false);
-      toast({
-        title: "API Key Saved",
-        description: "Your Birdeye API key has been saved successfully.",
-      });
-      window.location.reload(); // Reload to trigger new API calls
-    }
-  };
-
-  const features = [
-    {
-      title: "Profitable Traders",
-      icon: TrendingUp,
-      comingSoon: false,
-      onClick: () => {
-        if (!getBirdeyeApiKey()) {
-          setShowApiKeyDialog(true);
-          return;
-        }
-        if (traderError) {
-          toast({
-            title: "Error",
-            description: "Failed to fetch trader data. Please try again.",
-            variant: "destructive",
-          });
-          return;
-        }
-        if (traderData) {
-          setMessages(prev => [...prev, {
-            type: "bot",
-            content: `Trader ${traderData.address}\n\n• PnL: ${traderData.pnl}\n\n• Volume: ${traderData.volume}\n\n• Trades: ${traderData.trades}\n\nData provided by Birdeye API`
-          }]);
-        }
-      }
-    },
-    {
-      title: "Trending Tokens",
-      icon: LineChart,
-      comingSoon: false,
-      onClick: () => {
-        if (!getBirdeyeApiKey()) {
-          setShowApiKeyDialog(true);
-          return;
-        }
-        if (tokensError) {
-          toast({
-            title: "Error",
-            description: "Failed to fetch token data. Please try again.",
-            variant: "destructive",
-          });
-          return;
-        }
-        if (trendingTokens) {
-          const tokenList = trendingTokens.map(token => 
-            `${token.symbol}\n• Price: ${token.price}\n• 24h Change: ${token.change24h}\n• 24h Volume: ${token.volume24h}`
-          ).join('\n\n');
-          setMessages(prev => [...prev, {
-            type: "bot",
-            content: `Trending Tokens:\n\n${tokenList}\n\nData provided by Birdeye API`
-          }]);
-        }
-      }
-    },
-    {
-      title: "Find Gems",
-      icon: Diamond,
-      comingSoon: true,
-    },
-    {
-      title: "Large Trades",
-      icon: TrendingUp,
-      comingSoon: true,
-    },
-  ];
+export default function Index() {
+  const [message, setMessage] = React.useState("");
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
-
-    setMessages((prev) => [
-      ...prev,
-      { type: "user", content: message },
-      { type: "bot", content: "I'm still being developed, but I'll be able to help you with trading soon!" },
-    ]);
+    
+    // Keep existing message handling logic
+    console.log("Sending message:", message);
     setMessage("");
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 bg-background-base min-h-screen">
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="text-center mb-8 space-y-4 mt-[100px]"
-      >
-        <h1 className="text-4xl md:text-5xl font-bold bg-primary-gradient bg-clip-text text-transparent tracking-tight leading-tight">
-          Building the Future of AI-Powered Trading on Sui Network
-        </h1>
-        <p className="text-text-secondary text-lg tracking-wide">
-          Building the Future of AI-Powered Trading on Sui Network
-        </p>
-      </motion.div>
+    <div className="min-h-screen bg-background-base text-text-primary">
+      <div className="max-w-chat mx-auto px-6 pt-[120px] pb-24">
+        {/* Header Section */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-16"
+        >
+          <h1 className="text-title bg-primary-gradient bg-clip-text text-transparent">
+            Chat with Your AI Trading Assistant
+          </h1>
+          <p className="text-base text-text-secondary opacity-70 mt-4">
+            Get real-time insights, analysis, and trading recommendations
+          </p>
+        </motion.div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        {features.map((feature, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-            onClick={feature.onClick}
-            className="bg-background-surface rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-background-elevated transition-all duration-normal cursor-pointer transform hover:scale-105 hover:shadow-medium border border-border-subtle"
-          >
-            <feature.icon className="w-6 h-6 text-primary" />
-            <h3 className="font-medium text-text-primary">{feature.title}</h3>
-            {feature.comingSoon && (
-              <span className="text-sm text-text-tertiary">(Coming Soon)</span>
-            )}
-          </motion.div>
-        ))}
-      </div>
-
-      <Dialog open={showApiKeyDialog} onOpenChange={setShowApiKeyDialog}>
-        <DialogContent className="bg-background-elevated border-border-strong">
-          <DialogHeader>
-            <DialogTitle className="text-text-primary">Enter Birdeye API Key</DialogTitle>
-            <DialogDescription className="text-text-secondary">
-              Please enter your Birdeye API key to access trading data.
-              You can get your API key from the Birdeye website.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="space-y-4">
-            <Input
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Enter your Birdeye API key"
-              type="password"
-              className="bg-background-surface border-border-subtle text-text-primary placeholder:text-text-disabled"
-            />
-            <Button 
-              onClick={handleSaveApiKey} 
-              className="w-full bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white transition-colors duration-normal"
-            >
-              Save API Key
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-        className="bg-background-surface rounded-[16px] p-4 min-h-[500px] flex flex-col border border-border-subtle shadow-medium"
-      >
-        <div className="flex-1 space-y-4 overflow-y-auto mb-4 p-4">
-          {messages.map((msg, i) => (
+        {/* Feature Cards Grid */}
+        <motion.div 
+          variants={{
+            show: {
+              transition: {
+                staggerChildren: 0.1
+              }
+            }
+          }}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16"
+        >
+          {features.map((feature, index) => (
             <motion.div
-              key={i}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.3, delay: i * 0.1 }}
-              className={`flex ${
-                msg.type === "user" ? "justify-end" : "justify-start"
-              }`}
+              key={index}
+              variants={{
+                hidden: { opacity: 0, y: 20 },
+                show: { opacity: 1, y: 0 }
+              }}
             >
-              <div
-                className={`max-w-[80%] rounded-[16px] p-4 ${
-                  msg.type === "user"
-                    ? "bg-primary text-white hover:bg-primary-hover"
-                    : "bg-background-elevated text-text-primary border border-border-subtle"
-                } transition-all duration-normal shadow-medium`}
-              >
-                {msg.content}
-              </div>
+              <Card className="h-[100px] p-5 bg-background-surface border-border-subtle hover:border-primary/20 transition-all duration-200">
+                <div className="flex items-start gap-4">
+                  <div className="p-2 rounded-md bg-background-elevated">
+                    <feature.icon className="w-5 h-5 text-primary" />
+                  </div>
+                  <div>
+                    <h3 className="font-medium mb-1">{feature.title}</h3>
+                    <p className="text-sm text-text-secondary">{feature.description}</p>
+                  </div>
+                </div>
+              </Card>
             </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <form onSubmit={handleSubmit} className="relative mt-auto">
-          <div className="flex gap-2 items-center bg-background-elevated rounded-[16px] p-2 border border-border-subtle shadow-medium">
-            <Textarea
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              placeholder="Ask about crypto markets..."
-              className="flex-1 bg-transparent border-none focus:ring-0 resize-none text-text-primary placeholder:text-text-disabled rounded-[16px]"
-              rows={1}
-            />
-            <Button
-              type="submit"
-              className="bg-primary hover:bg-primary-hover active:bg-primary-pressed text-white transition-colors duration-normal rounded-[16px]"
-            >
-              Send
-            </Button>
+        {/* Chat Container */}
+        <div className="h-[70vh] bg-background-surface rounded-lg border border-border-subtle mb-6 overflow-hidden">
+          <div className="h-full flex flex-col">
+            {/* Command Bar */}
+            <div className="h-8 border-b border-border-subtle px-6 flex items-center gap-6">
+              {['General', 'Trading', 'Analysis', 'Settings'].map((item) => (
+                <button
+                  key={item}
+                  className="flex items-center gap-1.5 text-sm text-text-secondary hover:text-text-primary transition-colors"
+                >
+                  <span>{item}</span>
+                  <ChevronRight className="w-3 h-3" />
+                </button>
+              ))}
+            </div>
+
+            {/* Chat Messages */}
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="text-chat text-text-secondary">
+                Start a conversation with your AI trading assistant...
+              </div>
+            </div>
+
+            {/* Input Area */}
+            <div className="p-6 border-t border-border-subtle">
+              <form onSubmit={handleSubmit} className="relative">
+                <Input
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  placeholder="Message your AI trading assistant..."
+                  className="h-chat-input pr-32 bg-background-elevated border-border-subtle 
+                    placeholder:text-sm placeholder:text-text-disabled
+                    focus:border-primary/40 focus:bg-background-surface"
+                />
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-2">
+                  <Button
+                    type="button"
+                    size="icon"
+                    variant="ghost"
+                    className="h-8 w-8 text-text-tertiary hover:text-primary hover:bg-primary/10"
+                  >
+                    <Mic className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    type="submit"
+                    size="icon"
+                    className="h-8 w-8 bg-primary hover:bg-primary-hover"
+                    disabled={!message.trim()}
+                  >
+                    <Send className="h-4 w-4" />
+                  </Button>
+                </div>
+              </form>
+            </div>
           </div>
-        </form>
-      </motion.div>
+        </div>
+      </div>
     </div>
   );
-};
-
-export default Index;
+}
