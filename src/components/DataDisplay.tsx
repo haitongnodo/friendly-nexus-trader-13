@@ -10,6 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { getBirdeyeApiKey } from "@/config/api";
+import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 
 interface Token {
   address: string;
@@ -27,14 +28,30 @@ interface DataDisplayProps {
 }
 
 export const DataDisplay = ({ type, isLoading, error, data }: DataDisplayProps) => {
+  const apiKey = getBirdeyeApiKey();
+
+  if (!apiKey) {
+    return (
+      <Alert className="mb-4">
+        <AlertTitle>API Key Required</AlertTitle>
+        <AlertDescription>
+          Please set your BirdEye API key in settings to view token data. 
+          Make sure you have an active subscription with sufficient permissions.
+        </AlertDescription>
+      </Alert>
+    );
+  }
+
   if (error) {
     return (
-      <div className="p-4 text-center">
-        <p className="text-semantic-error mb-2">{error}</p>
-        <button className="text-primary hover:text-primary-hover">
-          Try again
-        </button>
-      </div>
+      <Alert variant="destructive" className="mb-4">
+        <AlertTitle>Error</AlertTitle>
+        <AlertDescription>
+          {error.includes("401") 
+            ? "Your API key may be invalid or lacks sufficient permissions. Please check your BirdEye account status."
+            : error}
+        </AlertDescription>
+      </Alert>
     );
   }
 
