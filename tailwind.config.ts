@@ -18,6 +18,27 @@ export default {
       },
     },
     extend: {
+      colors: {
+        border: {
+          DEFAULT: "hsl(var(--border))",
+          subtle: "rgba(255, 255, 255, 0.1)",
+        },
+        background: {
+          base: "hsl(var(--background))",
+          surface: "hsl(var(--card))",
+          elevated: "hsl(var(--popover))",
+        },
+        text: {
+          primary: "hsl(var(--foreground))",
+          secondary: "hsl(var(--muted-foreground))",
+          tertiary: "hsl(var(--muted-foreground) / 0.8)",
+          disabled: "hsl(var(--muted-foreground) / 0.5)",
+        },
+        overlay: {
+          DEFAULT: "rgba(0, 0, 0, 0.5)",
+          hover: "rgba(255, 255, 255, 0.05)",
+        },
+      },
       backgroundImage: {
         'primary-gradient': 'linear-gradient(to right, #FF7A0F, #FFB366)',
         'card-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01))',

@@ -38,7 +38,7 @@
   }
 
   * {
-    @apply border-border;
+    @apply border-border-subtle;
   }
   
   body {
