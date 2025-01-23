@@ -11,6 +11,8 @@ import {
 } from "@/components/ui/table";
 import { getBirdeyeApiKey } from "@/config/api";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
+import { ExternalLink } from "lucide-react";
 
 interface Token {
   address: string;
@@ -29,13 +31,34 @@ interface DataDisplayProps {
 
 export const DataDisplay = ({ type, isLoading, error, data }: DataDisplayProps) => {
   if (error) {
+    const is401Error = error.includes("401") || error.toLowerCase().includes("api key");
+    
     return (
       <Alert variant="destructive" className="mb-4">
         <AlertTitle>Error</AlertTitle>
-        <AlertDescription>
-          {error.includes("401") 
-            ? "API key validation failed. Please check your BirdEye account status."
-            : error}
+        <AlertDescription className="space-y-4">
+          {is401Error ? (
+            <>
+              <p>Your BirdEye API key needs to be updated. Please:</p>
+              <ol className="list-decimal ml-4 space-y-2">
+                <li>Visit the BirdEye dashboard to check your API key status</li>
+                <li>Ensure your subscription plan allows access to this endpoint</li>
+                <li>Copy your API key and update it in the settings</li>
+              </ol>
+              <div className="mt-4">
+                <Button 
+                  variant="outline" 
+                  className="text-sm"
+                  onClick={() => window.open('https://birdeye.so/settings?tab=api', '_blank')}
+                >
+                  Go to BirdEye Dashboard
+                  <ExternalLink className="ml-2 h-4 w-4" />
+                </Button>
+              </div>
+            </>
+          ) : (
+            error
+          )}
         </AlertDescription>
       </Alert>
     );
