@@ -7,6 +7,7 @@ import Navigation from "./components/Navigation";
 import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Traders from "./pages/Traders";
+import CreateAgent from "./pages/CreateAgent";
 
 const queryClient = new QueryClient();
 
@@ -29,6 +30,7 @@ const App = () => (
                       <Route path="/" element={<Navigate to="/chat" replace />} />
                       <Route path="/chat" element={<Index />} />
                       <Route path="/traders" element={<Traders />} />
+                      <Route path="/create-agent" element={<CreateAgent />} />
                       {/* Add other routes as we implement them */}
                     </Routes>
                   </div>
