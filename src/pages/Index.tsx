@@ -84,7 +84,7 @@ export default function Index() {
           transition={{ duration: 0.6 }}
           className="text-center mt-[89px] mb-[55px]"
         >
-          <h1 className="text-title bg-primary-gradient bg-clip-text text-transparent hover:animate-gradient-shift bg-[length:200%_200%]">
+          <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent hover:animate-gradient-shift bg-[length:200%_200%]">
             Nexus AI
           </h1>
           <p className="text-base text-text-secondary mt-4">
