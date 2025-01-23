@@ -67,21 +67,20 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-page-gradient relative flex flex-col">
-      <div className="absolute inset-0 bg-noise opacity-[0.02] pointer-events-none" />
-      
+    <div className="h-screen overflow-hidden bg-page-gradient relative flex flex-col">
       {/* Ambient gradients */}
+      <div className="absolute inset-0 bg-noise opacity-[0.02] pointer-events-none" />
       <div className="fixed top-0 right-0 w-[500px] h-[500px] bg-primary/[0.02] blur-[120px] pointer-events-none mix-blend-soft-light" />
       <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/[0.03] blur-[120px] pointer-events-none mix-blend-soft-light" />
       
       {/* Main Content Container */}
-      <div className="max-w-[1200px] w-full mx-auto px-6 flex flex-col min-h-screen">
+      <div className="max-w-[1200px] w-full mx-auto px-6 flex flex-col h-full">
         {/* Header Section - Fixed Height */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center py-6 h-[120px] flex flex-col justify-center mb-12"
+          className="flex-none text-center py-6 h-[120px] flex flex-col justify-center"
         >
           <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent mb-2">
             Nexus AI
@@ -93,27 +92,29 @@ export default function Index() {
 
         {/* Chat Container */}
         <motion.div 
-          animate={{ height: isExpanded ? "calc(100vh - 220px)" : "auto" }}
+          animate={{ height: isExpanded ? "calc(100vh - 300px)" : "auto" }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="w-full bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden flex flex-col"
+          className="flex-1 w-full bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden flex flex-col"
         >
           {/* Message Area - Scrollable */}
-          <div className="flex-1 p-6 overflow-y-auto min-h-[300px]">
-            <motion.div 
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
-              className="text-xl font-medium text-text-primary text-center mb-8 mt-4"
-            >
-              How can I help you with trading today?
-            </motion.div>
-            
-            {isExpanded && (
+          <div className="flex-1 overflow-y-auto">
+            {!isExpanded ? (
+              <div className="flex items-center justify-center h-full min-h-[300px] p-6">
+                <motion.div 
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="text-xl font-medium text-text-primary text-center"
+                >
+                  How can I help you with trading today?
+                </motion.div>
+              </div>
+            ) : (
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
-                className="space-y-4"
+                className="p-6 space-y-4"
               >
                 <DataDisplay 
                   type={selectedFeature === "traders" ? "traders" : "tokens"}
@@ -124,8 +125,8 @@ export default function Index() {
           </div>
 
           {/* Input Area */}
-          <div className="p-6 border-t border-border-subtle bg-background-surface/80">
-            <form onSubmit={handleSubmit} className="relative w-full mb-6">
+          <div className="flex-none p-6 border-t border-border-subtle bg-background-surface/80">
+            <form onSubmit={handleSubmit} className="relative w-full">
               <Input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -150,7 +151,7 @@ export default function Index() {
         </motion.div>
 
         {/* Feature Buttons */}
-        <div className="h-[60px] flex justify-center gap-4 mt-6 mb-6">
+        <div className="flex-none h-[60px] flex justify-center gap-4 mt-6 mb-6">
           {features.map((feature) => (
             <motion.button
               key={feature.id}
