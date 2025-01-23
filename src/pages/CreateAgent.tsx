@@ -27,7 +27,7 @@ const CreateAgent = () => {
         className="flex justify-between items-center mt-[100px]"
       >
         <div className="space-y-2">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent">Create Your Agent</h1>
+          <h1 className="text-4xl font-bold text-black">Create Your Agent</h1>
           <p className="text-muted-foreground">Set up your AI trading agent by configuring its personality and trading parameters.</p>
         </div>
         <div className="flex items-center gap-4">
@@ -124,10 +124,11 @@ const CreateAgent = () => {
                 className="min-h-[120px] bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402] px-4 py-3" 
               />
             </div>
+
             <div>
               <label className="block text-sm font-medium mb-3">Profile Image</label>
-              <div className="bg-[#16171E] border-2 border-dashed border-[#222329] rounded-lg py-10 px-6 text-center cursor-pointer hover:border-[#FB7402] transition-colors aspect-video">
-                <Upload className="mx-auto mb-4 h-8 w-8" />
+              <div className="bg-[#16171E] border-2 border-dashed border-[#222329] rounded-lg py-10 px-6 text-center cursor-pointer hover:border-[#FB7402] transition-colors aspect-video flex flex-col items-center justify-center">
+                <Upload className="mb-4 h-8 w-8" />
                 <p className="text-sm text-muted-foreground mb-2">Drop image here or click to upload</p>
                 <p className="text-xs text-muted-foreground">Supported formats: PNG, JPG, GIF (max. 5MB)</p>
               </div>

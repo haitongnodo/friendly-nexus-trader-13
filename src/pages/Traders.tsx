@@ -153,7 +153,10 @@ export default function Traders() {
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary h-4 w-4 transition-colors group-hover:text-primary" />
           <Input 
             placeholder="Search by agent name, wallet address or trading strategy..." 
-            className="pl-10 bg-background-surface border-border-subtle rounded-lg transition-all duration-normal hover:border-primary/50 focus:border-primary focus:ring-primary/20"
+            className="pl-10 bg-background-surface border-border-subtle rounded-lg transition-all duration-200
+              hover:border-primary/50 hover:bg-[rgba(255,122,15,0.2)] hover:shadow-glow
+              focus:border-[#FF7A0F] focus:border-2 focus:bg-[rgba(255,122,15,0.15)] focus:text-[#FFB366] 
+              focus:shadow-[0_0_0_1px_rgba(255,122,15,0.3),0_0_4px_rgba(255,122,15,0.2),0_0_8px_rgba(255,122,15,0.1)]"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -173,8 +176,8 @@ export default function Traders() {
                   className={cn(
                     "rounded-lg transition-all duration-200",
                     option === selectedSort 
-                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_10px_rgba(255,122,15,0.3),inset_0_0_15px_rgba(255,122,15,0.2)] hover:bg-[rgba(255,122,15,0.2)]" 
-                      : "bg-background-surface border border-border-subtle hover:bg-background-elevated"
+                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_0_1px_rgba(255,122,15,0.3),0_0_4px_rgba(255,122,15,0.2),0_0_8px_rgba(255,122,15,0.1)] hover:bg-[rgba(255,122,15,0.2)]" 
+                      : "bg-background-surface border border-border-subtle hover:bg-[rgba(255,122,15,0.2)] hover:border-[#FF7A0F] hover:shadow-[0_0_0_1px_rgba(255,122,15,0.2),0_0_2px_rgba(255,122,15,0.1)]"
                   )}
                   onClick={() => setSelectedSort(option)}
                 >
