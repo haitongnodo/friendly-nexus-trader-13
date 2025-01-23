@@ -75,35 +75,35 @@ export default function Index() {
       <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/[0.03] blur-[120px] pointer-events-none mix-blend-soft-light" />
       
       {/* Main Content Container */}
-      <div className="w-[1000px] mx-auto px-6 flex flex-col h-screen relative">
+      <div className="max-w-[1200px] w-full mx-auto px-6 flex flex-col min-h-screen">
         {/* Header Section - Fixed Height */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="text-center py-8 h-[100px] flex flex-col justify-center"
+          className="text-center py-6 h-[120px] flex flex-col justify-center mb-12"
         >
-          <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent hover:animate-gradient-shift bg-[length:200%_200%]">
+          <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent mb-2">
             Nexus AI
           </h1>
-          <p className="text-base text-text-secondary mt-2">
+          <p className="text-base text-text-secondary">
             Your personal AI trading companion
           </p>
         </motion.div>
 
-        {/* Chat Container - Flexible Height */}
+        {/* Chat Container */}
         <motion.div 
           animate={{ height: isExpanded ? "calc(100vh - 220px)" : "auto" }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
           className="w-full bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden flex flex-col"
         >
           {/* Message Area - Scrollable */}
-          <div className="flex-1 p-6 overflow-y-auto">
+          <div className="flex-1 p-6 overflow-y-auto min-h-[300px]">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.3 }}
-              className="text-lg font-medium text-text-primary text-center mb-6"
+              className="text-xl font-medium text-text-primary text-center mb-8 mt-4"
             >
               How can I help you with trading today?
             </motion.div>
@@ -113,6 +113,7 @@ export default function Index() {
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
+                className="space-y-4"
               >
                 <DataDisplay 
                   type={selectedFeature === "traders" ? "traders" : "tokens"}
@@ -122,14 +123,14 @@ export default function Index() {
             )}
           </div>
 
-          {/* Input Area - Fixed Height */}
-          <div className="p-4 border-t border-border-subtle bg-background-surface/80 h-[60px] flex items-center">
-            <form onSubmit={handleSubmit} className="relative w-full">
+          {/* Input Area */}
+          <div className="p-6 border-t border-border-subtle bg-background-surface/80">
+            <form onSubmit={handleSubmit} className="relative w-full mb-6">
               <Input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Message Nexus..."
-                className="h-12 pr-16 bg-background-elevated border-border-subtle 
+                className="h-[60px] pr-16 bg-background-elevated border-border-subtle 
                   placeholder:text-sm placeholder:text-text-disabled
                   focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
                   transition-all duration-200"
@@ -148,14 +149,14 @@ export default function Index() {
           </div>
         </motion.div>
 
-        {/* Feature Buttons - Fixed Height */}
-        <div className="h-[60px] flex justify-center gap-4 mt-6">
+        {/* Feature Buttons */}
+        <div className="h-[60px] flex justify-center gap-4 mt-6 mb-6">
           {features.map((feature) => (
             <motion.button
               key={feature.id}
               onClick={() => handleFeatureClick(feature.id)}
               className={cn(
-                "relative flex items-center gap-3 h-12 px-4 rounded-xl border transition-all duration-200",
+                "relative flex items-center gap-3 px-4 h-[60px] rounded-xl border transition-all duration-200",
                 feature.disabled
                   ? "opacity-50 cursor-not-allowed grayscale bg-background-surface/30 border-border-subtle"
                   : "bg-background-surface/60 border-border-subtle hover:scale-102 hover:shadow-glow-sm active:scale-98"
