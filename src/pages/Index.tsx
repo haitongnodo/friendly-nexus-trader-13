@@ -80,12 +80,12 @@ export default function Index() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="flex-none text-center py-6 h-[120px] flex flex-col justify-center"
+          className="flex-none text-center py-4 h-[80px] flex flex-col justify-center"
         >
-          <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent mb-2">
+          <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent mb-1">
             Nexus AI
           </h1>
-          <p className="text-base text-text-secondary">
+          <p className="text-sm text-text-secondary">
             Your personal AI trading companion
           </p>
         </motion.div>
@@ -96,36 +96,36 @@ export default function Index() {
           animate={{ 
             scale: 1,
             opacity: 1,
-            height: isExpanded ? "calc(100vh - 300px)" : "auto",
+            height: isExpanded ? "500px" : "100px",
             maxWidth: isExpanded ? "100%" : "800px",
           }}
           transition={{ 
             duration: 0.3,
             ease: [0.4, 0, 0.2, 1],
-            delay: 0.05
           }}
           className={cn(
-            "flex-1 mx-auto w-full backdrop-blur-md rounded-xl border border-border-subtle",
+            "flex-none mx-auto w-full backdrop-blur-md rounded-xl border border-border-subtle",
             "shadow-[0_8px_20px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col",
             "bg-[rgba(20,21,26,0.7)] transition-all duration-300"
           )}
         >
-          {/* Message Area - Scrollable */}
-          <div className="flex-1 overflow-y-auto">
-            {!isExpanded ? (
-              <div className="flex flex-col justify-center min-h-[180px] px-6">
-                <div className="py-[60px] flex items-center justify-center">
-                  <motion.div 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.3 }}
-                    className="text-[20px] leading-[1.5] font-medium text-text-primary text-center"
-                  >
-                    How can I help you with trading today?
-                  </motion.div>
-                </div>
-              </div>
-            ) : (
+          {/* Welcome Message - Sticky Top */}
+          <div className="flex-none sticky top-0 z-10 bg-inherit border-b border-border-subtle">
+            <div className="flex items-center justify-center h-[40px]">
+              <motion.div 
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3 }}
+                className="text-[16px] font-medium text-text-primary text-center"
+              >
+                How can I help you with trading today?
+              </motion.div>
+            </div>
+          </div>
+
+          {/* Scrollable Content Area */}
+          <div className="flex-1 overflow-y-auto scrollbar-thin">
+            {isExpanded && (
               <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -140,40 +140,40 @@ export default function Index() {
             )}
           </div>
 
-          {/* Input Area */}
-          <div className="flex-none p-6 border-t border-border-subtle bg-background-surface/80">
+          {/* Input Area - Sticky Bottom */}
+          <div className="flex-none sticky bottom-0 p-4 border-t border-border-subtle bg-background-surface/80 backdrop-blur-sm">
             <form onSubmit={handleSubmit} className="relative w-full">
               <Input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Message Nexus..."
-                className="h-[48px] pr-16 bg-background-elevated border-border-subtle 
+                className="h-[40px] pr-12 bg-background-elevated border-border-subtle 
                   placeholder:text-sm placeholder:text-text-disabled
                   focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
                   transition-all duration-200"
               />
-              <div className="absolute right-3 top-1/2 -translate-y-1/2">
+              <div className="absolute right-2 top-1/2 -translate-y-1/2">
                 <Button
                   type="submit"
                   size="icon"
-                  className="h-8 w-8 bg-primary hover:bg-primary-hover transition-colors duration-200"
+                  className="h-7 w-7 bg-primary hover:bg-primary-hover transition-colors duration-200"
                   disabled={!message.trim()}
                 >
-                  <Send className="h-5 w-5" />
+                  <Send className="h-4 w-4" />
                 </Button>
               </div>
             </form>
           </div>
         </motion.div>
 
-        {/* Feature Buttons */}
-        <div className="flex-none h-[60px] flex justify-center gap-4 mt-6 mb-6">
+        {/* Feature Buttons - Always Visible */}
+        <div className="flex-none h-[60px] flex justify-center gap-4 mt-4 mb-4">
           {features.map((feature) => (
             <motion.button
               key={feature.id}
               onClick={() => handleFeatureClick(feature.id)}
               className={cn(
-                "relative flex items-center gap-3 px-4 h-[60px] rounded-xl border transition-all duration-200",
+                "relative flex items-center gap-3 px-4 h-[50px] rounded-xl border transition-all duration-200",
                 feature.disabled
                   ? "opacity-50 cursor-not-allowed grayscale bg-background-surface/30 border-border-subtle"
                   : "bg-background-surface/60 border-border-subtle hover:scale-102 hover:shadow-glow-sm active:scale-98"
