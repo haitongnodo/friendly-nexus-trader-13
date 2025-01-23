@@ -24,6 +24,7 @@ export default {
           hover: "#FF8D2E",
           pressed: "#E66400",
           ghost: "rgba(255, 122, 15, 0.08)",
+          foreground: "#351C06", // Added this line for primary button text color
         },
         background: {
           base: "#0A0A0D",
