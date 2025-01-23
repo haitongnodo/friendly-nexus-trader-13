@@ -6,6 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Upload, Copy, Wallet, User, Bot } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 const CreateAgent = () => {
   const { toast } = useToast();
@@ -18,7 +19,7 @@ const CreateAgent = () => {
   ];
 
   return (
-    <div className="container mx-auto px-4 py-12 max-w-6xl space-y-12">
+    <div className="container mx-auto px-6 py-8 max-w-6xl space-y-8">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -104,31 +105,31 @@ const CreateAgent = () => {
       </Card>
 
       <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <div className="p-8 space-y-8">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
             <User className="text-gray-400" /> Agent Details
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-5">
             <div>
-              <label className="block text-sm font-medium mb-1">Name <span className="text-red-500">*</span></label>
+              <label className="block text-sm font-medium mb-3">Name <span className="text-red-500">*</span></label>
               <Input 
                 placeholder="Enter agent name" 
-                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]" 
+                className="h-12 bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402] px-4" 
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Description</label>
+              <label className="block text-sm font-medium mb-3">Description</label>
               <Textarea 
                 placeholder="Describe your agent's purpose and capabilities" 
-                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402] min-h-[120px]" 
+                className="min-h-[120px] bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402] px-4 py-3" 
               />
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Profile Image</label>
-              <div className="bg-[#16171E] border-2 border-dashed border-[#222329] rounded-lg p-8 text-center cursor-pointer hover:border-[#FB7402] transition-colors">
-                <Upload className="mx-auto mb-2" />
-                <p className="text-sm text-muted-foreground">Drop image here or click to upload</p>
-                <p className="text-xs text-muted-foreground mt-1">Supported formats: PNG, JPG, GIF (max. 5MB)</p>
+              <label className="block text-sm font-medium mb-3">Profile Image</label>
+              <div className="bg-[#16171E] border-2 border-dashed border-[#222329] rounded-lg py-10 px-6 text-center cursor-pointer hover:border-[#FB7402] transition-colors aspect-video">
+                <Upload className="mx-auto mb-4 h-8 w-8" />
+                <p className="text-sm text-muted-foreground mb-2">Drop image here or click to upload</p>
+                <p className="text-xs text-muted-foreground">Supported formats: PNG, JPG, GIF (max. 5MB)</p>
               </div>
             </div>
           </div>
@@ -136,15 +137,15 @@ const CreateAgent = () => {
       </Card>
 
       <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
-        <div className="p-6">
-          <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
+        <div className="p-8 space-y-8">
+          <h2 className="text-xl font-semibold flex items-center gap-2">
             <Bot className="text-blue-400" /> AI Trading Configuration
           </h2>
-          <div className="space-y-4">
+          <div className="space-y-6">
             <div>
-              <label className="block text-sm font-medium mb-1">Trading Type</label>
+              <label className="block text-sm font-medium mb-3">Trading Type</label>
               <Select>
-                <SelectTrigger className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]">
+                <SelectTrigger className="h-12 bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]">
                   <SelectValue placeholder="Select trading type" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#16171E] border-[#222329]">
@@ -155,9 +156,9 @@ const CreateAgent = () => {
               </Select>
             </div>
             <div>
-              <label className="block text-sm font-medium mb-1">Trading Strategy</label>
+              <label className="block text-sm font-medium mb-3">Trading Strategy</label>
               <Select>
-                <SelectTrigger className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]">
+                <SelectTrigger className="h-12 bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]">
                   <SelectValue placeholder="Select trading strategy" />
                 </SelectTrigger>
                 <SelectContent className="bg-[#16171E] border-[#222329]">
@@ -167,9 +168,9 @@ const CreateAgent = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Trading Pairs</label>
-              <div className="flex gap-2">
+            <div className="space-y-3">
+              <label className="block text-sm font-medium">Trading Pairs</label>
+              <div className="flex flex-wrap gap-4">
                 <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
                   <span className="w-2 h-2 rounded-full bg-red-500 mr-2"></span>
                   BTC
@@ -184,14 +185,24 @@ const CreateAgent = () => {
                 </Button>
               </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium mb-1">Personality Traits</label>
-              <div className="flex flex-wrap gap-2">
-                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Conservative</Button>
-                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Aggressive</Button>
-                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Balanced</Button>
-                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Data-Driven</Button>
-                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">Risk-Averse</Button>
+            <div className="space-y-3">
+              <label className="block text-sm font-medium">Personality Traits</label>
+              <div className="flex flex-wrap gap-3">
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
+                  Conservative
+                </Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
+                  Aggressive
+                </Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
+                  Balanced
+                </Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
+                  Data-Driven
+                </Button>
+                <Button variant="outline" size="sm" className="rounded-full bg-[#16171E] border-[#222329] hover:bg-[#222329]">
+                  Risk-Averse
+                </Button>
               </div>
             </div>
           </div>
