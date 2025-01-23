@@ -113,15 +113,17 @@ export default function Index() {
           {/* Message Area - Scrollable */}
           <div className="flex-1 overflow-y-auto">
             {!isExpanded ? (
-              <div className="flex items-center justify-center h-[160px] min-h-[160px] max-h-[200px] px-6">
-                <motion.div 
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.3 }}
-                  className="text-[20px] leading-[1.5] font-medium text-text-primary text-center"
-                >
-                  How can I help you with trading today?
-                </motion.div>
+              <div className="flex flex-col justify-center min-h-[180px] px-6">
+                <div className="py-[60px] flex items-center justify-center">
+                  <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-[20px] leading-[1.5] font-medium text-text-primary text-center"
+                  >
+                    How can I help you with trading today?
+                  </motion.div>
+                </div>
               </div>
             ) : (
               <motion.div
@@ -145,7 +147,7 @@ export default function Index() {
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Message Nexus..."
-                className="h-[60px] pr-16 bg-background-elevated border-border-subtle 
+                className="h-[48px] pr-16 bg-background-elevated border-border-subtle 
                   placeholder:text-sm placeholder:text-text-disabled
                   focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
                   transition-all duration-200"
