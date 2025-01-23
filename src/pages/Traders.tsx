@@ -163,17 +163,18 @@ export default function Traders() {
             {sortOptions.map((option) => (
               <motion.div
                 key={option}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   variant={option === selectedSort ? "default" : "secondary"}
                   size="sm"
-                  className={`rounded-lg ${
+                  className={cn(
+                    "rounded-lg transition-all duration-200",
                     option === selectedSort 
-                      ? "bg-primary-gradient hover:opacity-90" 
+                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_10px_rgba(255,122,15,0.3),inset_0_0_15px_rgba(255,122,15,0.2)] hover:bg-[rgba(255,122,15,0.2)]" 
                       : "bg-background-surface border border-border-subtle hover:bg-background-elevated"
-                  }`}
+                  )}
                   onClick={() => setSelectedSort(option)}
                 >
                   {option}
@@ -186,17 +187,18 @@ export default function Traders() {
             {strategies.map((strategy) => (
               <motion.div
                 key={strategy}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   variant={strategy === selectedStrategy ? "default" : "secondary"}
                   size="sm"
-                  className={`rounded-lg ${
+                  className={cn(
+                    "rounded-lg transition-all duration-200",
                     strategy === selectedStrategy 
-                      ? "bg-primary-gradient hover:opacity-90" 
+                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_10px_rgba(255,122,15,0.3),inset_0_0_15px_rgba(255,122,15,0.2)] hover:bg-[rgba(255,122,15,0.2)]" 
                       : "bg-background-surface border border-border-subtle hover:bg-background-elevated"
-                  }`}
+                  )}
                   onClick={() => setSelectedStrategy(strategy)}
                 >
                   {strategy}
@@ -209,17 +211,18 @@ export default function Traders() {
             {tradingPairs.map((pair) => (
               <motion.div
                 key={pair}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
               >
                 <Button
                   variant={pair === selectedPair ? "default" : "secondary"}
                   size="sm"
-                  className={`rounded-lg ${
+                  className={cn(
+                    "rounded-lg transition-all duration-200",
                     pair === selectedPair 
-                      ? "bg-primary-gradient hover:opacity-90" 
+                      ? "border-2 border-[#FF7A0F] bg-[rgba(255,122,15,0.15)] text-[#FFB366] shadow-[0_0_10px_rgba(255,122,15,0.3),inset_0_0_15px_rgba(255,122,15,0.2)] hover:bg-[rgba(255,122,15,0.2)]" 
                       : "bg-background-surface border border-border-subtle hover:bg-background-elevated"
-                  }`}
+                  )}
                   onClick={() => setSelectedPair(pair)}
                 >
                   {pair}
