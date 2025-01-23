@@ -1,11 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MessageSquare, TrendingUp, Diamond, LineChart } from "lucide-react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
-import { getBirdeyeApiKey } from "@/config/api";
+import { getBirdeyeApiKey, setBirdeyeApiKey } from "@/config/api";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 
 interface TraderData {
   address: string;
@@ -27,22 +36,12 @@ const fetchTraderData = async (): Promise<TraderData> => {
     throw new Error('Please set your Birdeye API key');
   }
   
-  try {
-    const response = await axios.get('https://public-api.birdeye.so/public/trader_stats', {
-      headers: {
-        'X-API-KEY': apiKey
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching trader data:', error);
-    return {
-      address: "0x14e76daeb9aa0498b6cbcce57ee55c68dc401c2edf9fb042649a3f965013c6cb",
-      pnl: "+$223.08K",
-      volume: "$1.97M",
-      trades: 60
-    };
-  }
+  const response = await axios.get('https://public-api.birdeye.so/public/trader_stats', {
+    headers: {
+      'X-API-KEY': apiKey
+    }
+  });
+  return response.data;
 };
 
 const fetchTrendingTokens = async (): Promise<TokenData[]> => {
@@ -51,40 +50,19 @@ const fetchTrendingTokens = async (): Promise<TokenData[]> => {
     throw new Error('Please set your Birdeye API key');
   }
   
-  try {
-    const response = await axios.get('https://public-api.birdeye.so/public/trending_tokens', {
-      headers: {
-        'X-API-KEY': apiKey
-      }
-    });
-    return response.data;
-  } catch (error) {
-    console.error('Error fetching trending tokens:', error);
-    return [
-      {
-        symbol: "SOL",
-        price: "$123.45",
-        change24h: "+5.67%",
-        volume24h: "$1.23B"
-      },
-      {
-        symbol: "BONK",
-        price: "$0.00001234",
-        change24h: "+12.34%",
-        volume24h: "$456.78M"
-      },
-      {
-        symbol: "JTO",
-        price: "$2.34",
-        change24h: "+3.45%",
-        volume24h: "$789.12M"
-      }
-    ];
-  }
+  const response = await axios.get('https://public-api.birdeye.so/public/trending_tokens', {
+    headers: {
+      'X-API-KEY': apiKey
+    }
+  });
+  return response.data;
 };
 
 const Index = () => {
   const [message, setMessage] = useState("");
+  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
+  const [apiKey, setApiKey] = useState("");
+  const { toast } = useToast();
   const [messages, setMessages] = useState([
     {
       type: "bot",
@@ -92,15 +70,35 @@ const Index = () => {
     },
   ]);
 
-  const { data: traderData, isLoading: isLoadingTrader } = useQuery({
+  useEffect(() => {
+    if (!getBirdeyeApiKey()) {
+      setShowApiKeyDialog(true);
+    }
+  }, []);
+
+  const { data: traderData, isLoading: isLoadingTrader, error: traderError } = useQuery({
     queryKey: ['traderData'],
     queryFn: fetchTraderData,
+    enabled: !!getBirdeyeApiKey(),
   });
 
-  const { data: trendingTokens, isLoading: isLoadingTokens } = useQuery({
+  const { data: trendingTokens, isLoading: isLoadingTokens, error: tokensError } = useQuery({
     queryKey: ['trendingTokens'],
     queryFn: fetchTrendingTokens,
+    enabled: !!getBirdeyeApiKey(),
   });
+
+  const handleSaveApiKey = () => {
+    if (apiKey.trim()) {
+      setBirdeyeApiKey(apiKey.trim());
+      setShowApiKeyDialog(false);
+      toast({
+        title: "API Key Saved",
+        description: "Your Birdeye API key has been saved successfully.",
+      });
+      window.location.reload(); // Reload to trigger new API calls
+    }
+  };
 
   const features = [
     {
@@ -108,6 +106,18 @@ const Index = () => {
       icon: TrendingUp,
       comingSoon: false,
       onClick: () => {
+        if (!getBirdeyeApiKey()) {
+          setShowApiKeyDialog(true);
+          return;
+        }
+        if (traderError) {
+          toast({
+            title: "Error",
+            description: "Failed to fetch trader data. Please try again.",
+            variant: "destructive",
+          });
+          return;
+        }
         if (traderData) {
           setMessages(prev => [...prev, {
             type: "bot",
@@ -121,6 +131,18 @@ const Index = () => {
       icon: LineChart,
       comingSoon: false,
       onClick: () => {
+        if (!getBirdeyeApiKey()) {
+          setShowApiKeyDialog(true);
+          return;
+        }
+        if (tokensError) {
+          toast({
+            title: "Error",
+            description: "Failed to fetch token data. Please try again.",
+            variant: "destructive",
+          });
+          return;
+        }
         if (trendingTokens) {
           const tokenList = trendingTokens.map(token => 
             `${token.symbol}\n• Price: ${token.price}\n• 24h Change: ${token.change24h}\n• 24h Volume: ${token.volume24h}`
@@ -156,6 +178,8 @@ const Index = () => {
     setMessage("");
   };
 
+  // ... keep existing code (JSX for the main layout and chat interface)
+
   return (
     <div className="container mx-auto px-4 py-8">
       <motion.div 
@@ -190,6 +214,29 @@ const Index = () => {
           </motion.div>
         ))}
       </div>
+
+      <Dialog open={showApiKeyDialog} onOpenChange={setShowApiKeyDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Enter Birdeye API Key</DialogTitle>
+            <DialogDescription>
+              Please enter your Birdeye API key to access trading data.
+              You can get your API key from the Birdeye website.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4">
+            <Input
+              value={apiKey}
+              onChange={(e) => setApiKey(e.target.value)}
+              placeholder="Enter your Birdeye API key"
+              type="password"
+            />
+            <Button onClick={handleSaveApiKey} className="w-full">
+              Save API Key
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       <motion.div 
         initial={{ opacity: 0 }}
