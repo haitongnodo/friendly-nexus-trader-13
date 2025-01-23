@@ -4,43 +4,44 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, Mic, TrendingUp, BarChart2, Diamond, ArrowDownUp } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { DataDisplay } from "@/components/DataDisplay";
 
 const features = [
   {
-    id: "profitable-traders",
-    title: "Profitable Traders",
-    description: "Discover top-performing trading strategies",
+    id: "traders",
+    title: "Top Traders",
+    description: "Track best performers",
     icon: TrendingUp,
     disabled: false,
   },
   {
-    id: "trending-tokens",
-    title: "Trending Tokens",
-    description: "Track real-time market movements",
+    id: "tokens",
+    title: "Hot Tokens",
+    description: "Market movements",
     icon: BarChart2,
     disabled: false,
   },
   {
-    id: "find-gems",
-    title: "Find Gems",
-    description: "Discover promising opportunities",
+    id: "gems",
+    title: "Gem Finder",
+    description: "Discover opportunities",
     icon: Diamond,
     disabled: true,
   },
   {
-    id: "large-trades",
-    title: "Large Trades",
-    description: "Monitor significant market activities",
+    id: "bigmoves",
+    title: "Big Moves",
+    description: "Large transactions",
     icon: ArrowDownUp,
     disabled: true,
   },
 ];
 
 export default function Index() {
-  const [message, setMessage] = React.useState("");
-  const [isExpanded, setIsExpanded] = React.useState(false);
-  const [selectedFeature, setSelectedFeature] = React.useState<string | null>(null);
-  const [isLoading, setIsLoading] = React.useState(false);
+  const [message, setMessage] = useState("");
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -74,7 +75,7 @@ export default function Index() {
           <h1 className="text-[32px] font-semibold leading-tight bg-gradient-to-r from-[#FF7A0F] to-[#FFB366] bg-clip-text text-transparent hover:animate-gradient-shift bg-[length:200%_200%]">
             Nexus AI
           </h1>
-          <p className="text-base text-text-secondary mt-4 opacity-80">
+          <p className="text-base text-text-secondary mt-4">
             Your personal AI trading companion
           </p>
         </motion.div>
@@ -83,7 +84,7 @@ export default function Index() {
         <motion.div 
           animate={{ height: isExpanded ? 400 : 100 }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="w-[768px] mx-auto bg-background-surface/60 rounded-xl border border-border-subtle overflow-hidden"
+          className="w-[768px] mx-auto bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden"
         >
           <div className="flex flex-col h-full">
             {/* Welcome Message */}
@@ -104,34 +105,10 @@ export default function Index() {
                   transition={{ delay: 0.2 }}
                   className="mt-4"
                 >
-                  {isLoading ? (
-                    <div className="flex items-center justify-center space-x-2">
-                      <div className="w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
-                      <span className="text-text-secondary">Loading...</span>
-                    </div>
-                  ) : (
-                    <div className="space-y-4">
-                      {selectedFeature === "profitable-traders" && (
-                        <div className="space-y-2">
-                          <h3 className="text-lg font-semibold">Top Traders</h3>
-                          <div className="space-y-2">
-                            <div className="h-12 bg-background-elevated rounded animate-pulse" />
-                            <div className="h-12 bg-background-elevated rounded animate-pulse" />
-                            <div className="h-12 bg-background-elevated rounded animate-pulse" />
-                          </div>
-                        </div>
-                      )}
-                      {selectedFeature === "trending-tokens" && (
-                        <div className="space-y-2">
-                          <h3 className="text-lg font-semibold">Market Overview</h3>
-                          <div className="grid grid-cols-2 gap-4">
-                            <div className="h-32 bg-background-elevated rounded animate-pulse" />
-                            <div className="h-32 bg-background-elevated rounded animate-pulse" />
-                          </div>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                  <DataDisplay 
+                    type={selectedFeature === "traders" ? "traders" : "tokens"}
+                    isLoading={isLoading}
+                  />
                 </motion.div>
               )}
             </motion.div>
