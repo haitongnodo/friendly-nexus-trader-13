@@ -55,6 +55,15 @@ export default {
             rgba(255, 122, 15, 0.08) 100%
           )
         `,
+        'ai-gradient': `
+          radial-gradient(
+            ellipse at bottom,
+            rgba(255, 144, 70, 0.1) 0%,
+            rgba(86, 11, 173, 0.05) 25%,
+            rgba(10, 14, 51, 0.08) 50%,
+            transparent 90%
+          )
+        `,
       },
       keyframes: {
         "fade-in": {
@@ -65,11 +74,16 @@ export default {
           "0%": { transform: "scale(1)" },
           "50%": { transform: "scale(1.1)" },
           "100%": { transform: "scale(1)" }
+        },
+        "pulse-subtle": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.8" }
         }
       },
       animation: {
         "fade-in": "fade-in 0.3s ease-out",
-        "copy-success": "copy-success 0.3s ease-out"
+        "copy-success": "copy-success 0.3s ease-out",
+        "pulse-subtle": "pulse-subtle 15s ease-in-out infinite"
       }
     },
   },

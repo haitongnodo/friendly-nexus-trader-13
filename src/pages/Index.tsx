@@ -67,8 +67,8 @@ export default function Index() {
   };
 
   return (
-    <div className="min-h-screen bg-page-gradient">
-      <div className="max-w-[800px] w-full mx-auto px-6">
+    <div className="relative min-h-screen bg-[#13141b] before:content-[''] before:absolute before:inset-0 before:bg-ai-gradient before:animate-pulse-subtle">
+      <div className="relative z-10 max-w-[800px] w-full mx-auto px-6">
         {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -99,7 +99,7 @@ export default function Index() {
           className={cn(
             "w-full rounded-xl border border-border-subtle",
             "shadow-[0_8px_20px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col",
-            "bg-[rgba(20,21,26,0.7)]"
+            "bg-[rgba(20,21,26,0.7)] backdrop-blur-sm"
           )}
         >
           <div className="flex flex-col h-full">
@@ -169,7 +169,7 @@ export default function Index() {
                 "relative flex items-center gap-3 px-4 h-[40px] rounded-xl border transition-all duration-200",
                 feature.disabled
                   ? "opacity-50 cursor-not-allowed grayscale bg-background-surface/30 border-border-subtle"
-                  : "bg-background-surface/60 border-border-subtle hover:scale-102 hover:shadow-glow-sm active:scale-98"
+                  : "bg-background-surface/60 border-border-subtle hover:scale-102 hover:shadow-glow-sm active:scale-98 backdrop-blur-sm"
               )}
               whileHover={!feature.disabled ? { scale: 1.02 } : undefined}
               whileTap={!feature.disabled ? { scale: 0.98 } : undefined}
