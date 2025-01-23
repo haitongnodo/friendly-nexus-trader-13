@@ -184,7 +184,7 @@ const Index = () => {
     <div className="container mx-auto px-4 py-8">
       {/* Animated gradient background */}
       <div 
-        className="fixed inset-0 -z-10"
+        className="fixed inset-0 -z-10 overflow-hidden"
         style={{
           background: `
             radial-gradient(circle at 50% 50%, 
@@ -193,36 +193,42 @@ const Index = () => {
             ),
             radial-gradient(circle at 0% 0%, 
               rgba(255, 107, 44, 0.1), 
-              transparent
+              transparent 70%
             ),
             radial-gradient(circle at 100% 100%, 
               rgba(28, 28, 40, 0.1), 
-              transparent
+              transparent 70%
             )
           `,
           backgroundSize: "200% 200%, 100% 100%, 100% 100%",
           animation: "gradient 15s ease infinite",
-          backdropFilter: "blur(100px)",
         }}
-      />
+      >
+        <div className="absolute inset-0 backdrop-blur-[100px]" />
+      </div>
 
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
         style={{
-          backgroundColor: "#000000",
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 50,
+          backgroundColor: '#000000',
           backdropFilter: `blur(${headerBlur}px)`,
           WebkitBackdropFilter: `blur(${headerBlur}px)`,
         }}
-        className="fixed top-0 left-0 right-0 z-50 px-4 py-8 transition-all duration-300"
+        className="px-4 py-8 transition-all duration-300"
       >
         <div className="text-center space-y-4">
           <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent tracking-tight leading-tight">
             Building the Future of AI-Powered Trading on Sui Network
           </h1>
           <p className="text-gray-400 text-lg tracking-wide">
-            Building the Future of AI-Powered Trading on Sui Network
+            Experience the next generation of AI-powered trading
           </p>
         </div>
       </motion.div>
