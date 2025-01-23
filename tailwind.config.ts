@@ -70,6 +70,12 @@ export default {
         glow: "0 0 0 1px rgba(255, 122, 15, 0.3), 0 0 4px rgba(255, 122, 15, 0.2), 0 0 8px rgba(255, 122, 15, 0.1)",
         "glow-sm": "0 0 0 1px rgba(255, 122, 15, 0.2), 0 0 2px rgba(255, 122, 15, 0.1)",
       },
+      transitionDuration: {
+        normal: "200ms",
+      },
+      transitionTimingFunction: {
+        "ease-in-out": "cubic-bezier(0.4, 0, 0.2, 1)",
+      },
     },
   },
   plugins: [require("tailwindcss-animate")],
