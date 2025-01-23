@@ -6,12 +6,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import type { WalletInfo } from "@/utils/wallet";
 
 interface WalletModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSelectWallet: (wallet: string) => void;
-  availableWallets: any[];
+  availableWallets: WalletInfo[];
 }
 
 const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: WalletModalProps) => {
@@ -23,7 +24,19 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
   const handleWalletSelect = async (walletType: string) => {
     console.log(`Selecting wallet: ${walletType}`);
     onSelectWallet(walletType);
-    onClose();
+  };
+
+  const getWalletInstallLink = (type: string) => {
+    switch (type) {
+      case 'sui':
+        return 'https://chrome.google.com/webstore/detail/sui-wallet/opcgpfmipidbgpenhmajoajpbobppdil';
+      case 'martian':
+        return 'https://chrome.google.com/webstore/detail/martian-wallet-sui/efbglgofoippbgcjepnhiblaibcnclgk';
+      case 'suiet':
+        return 'https://chrome.google.com/webstore/detail/suiet-sui-wallet/khpkpbbcccdmmclmpigdgddabeilkdpd';
+      default:
+        return '';
+    }
   };
 
   return (
@@ -41,62 +54,43 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
           </DialogTitle>
         </DialogHeader>
         <div className="grid gap-6 py-6">
-          <button
-            onClick={() => handleWalletSelect("sui")}
-            className={cn(
-              "flex items-center space-x-4 w-full p-4 rounded-lg transition-all duration-200 text-left relative",
-              getWalletStatus("sui")
-                ? "hover:bg-[rgba(255,122,15,0.15)] hover:border-primary hover:shadow-[0_0_10px_rgba(255,122,15,0.3)] border-2 border-transparent"
-                : "opacity-50 cursor-not-allowed"
-            )}
-            disabled={!getWalletStatus("sui")}
-          >
-            <img src="/lovable-uploads/a7083879-0396-4ae6-ab70-4c8ba2c768fc.png" alt="Sui Wallet" className="w-8 h-8" />
-            <div className="flex flex-col">
-              <span className="font-medium text-[#FFB366]">Sui Wallet</span>
-              {!getWalletStatus("sui") && (
-                <span className="text-sm text-semantic-error mt-0.5">Not installed</span>
-              )}
+          {[
+            { type: 'sui', name: 'Sui Wallet', icon: '/lovable-uploads/a7083879-0396-4ae6-ab70-4c8ba2c768fc.png' },
+            { type: 'martian', name: 'Martian Sui Wallet', icon: '/lovable-uploads/d6b8c326-0ce6-4e60-9b88-d0aaedcf00f6.png' },
+            { type: 'suiet', name: 'Suiet', icon: '/lovable-uploads/d96930e3-ce73-4d48-b9b4-76357fcee014.png' }
+          ].map(wallet => (
+            <div key={wallet.type} className="relative">
+              <button
+                onClick={() => handleWalletSelect(wallet.type)}
+                className={cn(
+                  "flex items-center space-x-4 w-full p-4 rounded-lg transition-all duration-200 text-left relative",
+                  getWalletStatus(wallet.type)
+                    ? "hover:bg-[rgba(255,122,15,0.15)] hover:border-primary hover:shadow-[0_0_10px_rgba(255,122,15,0.3)] border-2 border-transparent"
+                    : "opacity-50 cursor-not-allowed"
+                )}
+                disabled={!getWalletStatus(wallet.type)}
+              >
+                <img src={wallet.icon} alt={wallet.name} className="w-8 h-8" />
+                <div className="flex flex-col">
+                  <span className="font-medium text-[#FFB366]">{wallet.name}</span>
+                  {!getWalletStatus(wallet.type) && (
+                    <div className="flex items-center space-x-2">
+                      <span className="text-sm text-semantic-error">Not installed</span>
+                      <a
+                        href={getWalletInstallLink(wallet.type)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm text-primary hover:text-primary-hover"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Install
+                      </a>
+                    </div>
+                  )}
+                </div>
+              </button>
             </div>
-          </button>
-          
-          <button
-            onClick={() => handleWalletSelect("martian")}
-            className={cn(
-              "flex items-center space-x-4 w-full p-4 rounded-lg transition-colors text-left",
-              getWalletStatus("martian")
-                ? "hover:bg-overlay-hover border border-transparent hover:border-border-subtle"
-                : "opacity-50 cursor-not-allowed"
-            )}
-            disabled={!getWalletStatus("martian")}
-          >
-            <img src="/lovable-uploads/d6b8c326-0ce6-4e60-9b88-d0aaedcf00f6.png" alt="Martian Sui Wallet" className="w-8 h-8" />
-            <div className="flex flex-col">
-              <span className="font-medium">Martian Sui Wallet</span>
-              {!getWalletStatus("martian") && (
-                <span className="text-sm text-semantic-error mt-0.5">Not installed</span>
-              )}
-            </div>
-          </button>
-          
-          <button
-            onClick={() => handleWalletSelect("suiet")}
-            className={cn(
-              "flex items-center space-x-4 w-full p-4 rounded-lg transition-colors text-left",
-              getWalletStatus("suiet")
-                ? "hover:bg-overlay-hover border border-transparent hover:border-border-subtle"
-                : "opacity-50 cursor-not-allowed"
-            )}
-            disabled={!getWalletStatus("suiet")}
-          >
-            <img src="/lovable-uploads/d96930e3-ce73-4d48-b9b4-76357fcee014.png" alt="Suiet" className="w-8 h-8" />
-            <div className="flex flex-col">
-              <span className="font-medium">Suiet</span>
-              {!getWalletStatus("suiet") && (
-                <span className="text-sm text-semantic-error mt-0.5">Not installed</span>
-              )}
-            </div>
-          </button>
+          ))}
         </div>
         <div className="mt-6 space-y-4">
           <div>

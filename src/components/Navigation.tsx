@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MessageSquare, Users, Plus, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
-import { connectWallet, checkWalletStatus } from "@/utils/wallet";
+import { connectWallet, checkWalletStatus, disconnectWallet } from "@/utils/wallet";
 import { useToast } from "@/hooks/use-toast";
 import WalletModal from "./WalletModal";
 
@@ -14,6 +14,7 @@ const Navigation = () => {
   const [isWalletModalOpen, setIsWalletModalOpen] = useState(false);
   const [availableWallets, setAvailableWallets] = useState<any[]>([]);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [currentWalletType, setCurrentWalletType] = useState<string | null>(null);
 
   const navItems = [
     { icon: MessageSquare, label: "Chat", path: "/chat" },
@@ -48,11 +49,33 @@ const Navigation = () => {
       console.log('Wallet connected successfully:', address);
       setIsWalletConnected(true);
       setWalletAddress(address);
+      setCurrentWalletType(walletType);
       setIsWalletModalOpen(false);
       toast({
         title: "Wallet Connected",
         description: `Connected to ${walletType} wallet`,
       });
+    } else {
+      toast({
+        title: "Connection Failed",
+        description: "Failed to connect wallet. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDisconnectWallet = async () => {
+    if (currentWalletType) {
+      const success = await disconnectWallet(currentWalletType);
+      if (success) {
+        setIsWalletConnected(false);
+        setWalletAddress(null);
+        setCurrentWalletType(null);
+        toast({
+          title: "Wallet Disconnected",
+          description: "Your wallet has been disconnected",
+        });
+      }
     }
   };
 
@@ -94,22 +117,29 @@ const Navigation = () => {
           ))}
         </div>
 
-        <button
-          onClick={() => {
-            console.log('Opening wallet modal');
-            setIsWalletModalOpen(true);
-          }}
-          className={cn(
-            "px-4 py-2 rounded-lg font-medium transition-all",
-            isWalletConnected
-              ? "bg-green-500/20 text-green-400"
-              : "orange-gradient text-white hover:opacity-90"
-          )}
-        >
-          {isWalletConnected 
-            ? `${walletAddress?.slice(0, 6)}...${walletAddress?.slice(-4)}`
-            : "Connect Wallet"}
-        </button>
+        {isWalletConnected ? (
+          <div className="flex items-center space-x-4">
+            <span className="text-green-400">
+              {`${walletAddress?.slice(0, 6)}...${walletAddress?.slice(-4)}`}
+            </span>
+            <button
+              onClick={handleDisconnectWallet}
+              className="text-red-400 hover:text-red-300 text-sm"
+            >
+              Disconnect
+            </button>
+          </div>
+        ) : (
+          <button
+            onClick={() => {
+              console.log('Opening wallet modal');
+              setIsWalletModalOpen(true);
+            }}
+            className="orange-gradient px-4 py-2 rounded-lg font-medium text-white hover:opacity-90 transition-all"
+          >
+            Connect Wallet
+          </button>
+        )}
 
         <WalletModal
           isOpen={isWalletModalOpen}

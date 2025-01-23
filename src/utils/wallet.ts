@@ -1,6 +1,4 @@
-import { toast } from "@/hooks/use-toast";
-
-type WalletInfo = {
+export type WalletInfo = {
   name: string;
   installed: boolean;
   adapter: any;
@@ -34,21 +32,21 @@ const checkWalletAvailability = (windowObj: any, walletType: string): WalletInfo
   };
 };
 
-export const connectWallet = async (walletType: string): Promise<string | false> => {
+export const connectWallet = async (walletType: string): Promise<string | null> => {
   try {
     console.log(`Attempting to connect to ${walletType} wallet...`);
     
+    // Check if window is defined (browser environment)
+    if (typeof window === 'undefined') {
+      throw new Error('Window object not available');
+    }
+
     // Check wallet availability
     const walletInfo = checkWalletAvailability(window, walletType);
     
     if (!walletInfo.installed) {
       console.error(`${walletType} wallet not detected`);
-      toast({
-        title: "Wallet Not Found",
-        description: `Please install ${walletType} wallet extension to continue`,
-        variant: "destructive",
-      });
-      return false;
+      return null;
     }
 
     // Handle different wallet types
@@ -76,38 +74,48 @@ export const connectWallet = async (walletType: string): Promise<string | false>
     }
 
     if (accounts && accounts.length > 0) {
-      console.log('Successfully connected to wallet');
+      console.log('Successfully connected to wallet:', accounts[0]);
       return accounts[0];
-    } else {
-      throw new Error('No accounts found');
     }
+    
+    return null;
   } catch (error: any) {
     console.error('Wallet connection error:', error);
-    
-    let errorMessage = 'Failed to connect to wallet. Please try again.';
-    if (error.message.includes('Permission denied')) {
-      errorMessage = 'Wallet connection was rejected. Please approve the connection request.';
-    } else if (error.message.includes('No accounts')) {
-      errorMessage = 'No accounts found in the wallet. Please create or import an account.';
-    } else if (error.message.includes('Network error')) {
-      errorMessage = 'Network error. Please check your internet connection.';
-    }
-
-    toast({
-      title: "Connection Failed",
-      description: errorMessage,
-      variant: "destructive",
-    });
-    return false;
+    return null;
   }
 };
 
-export const checkWalletStatus = () => {
+export const checkWalletStatus = (): WalletInfo[] => {
   console.log('Checking wallet status...');
+  
+  if (typeof window === 'undefined') {
+    console.log('Window object not available, returning empty wallet list');
+    return [];
+  }
+  
   const wallets = ['sui', 'martian', 'suiet'].map(type => 
     checkWalletAvailability(window, type)
   );
   
-  console.log('Wallet status:', wallets);
+  console.log('Available wallets:', wallets);
   return wallets;
+};
+
+export const disconnectWallet = async (walletType: string): Promise<boolean> => {
+  try {
+    if (typeof window === 'undefined') return false;
+
+    const walletInfo = checkWalletAvailability(window, walletType);
+    if (!walletInfo.installed || !walletInfo.adapter) return false;
+
+    if (typeof walletInfo.adapter.disconnect === 'function') {
+      await walletInfo.adapter.disconnect();
+      return true;
+    }
+
+    return false;
+  } catch (error) {
+    console.error('Error disconnecting wallet:', error);
+    return false;
+  }
 };
