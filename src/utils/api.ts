@@ -1,5 +1,11 @@
+interface Trader {
+  id: string;
+  name: string;
+  walletAddress: string;
+}
+
 // Mock function to get traders data
-export const getTraders = async () => {
+export const getTraders = async (): Promise<Trader[]> => {
   // This is a mock implementation
   return [
     {
