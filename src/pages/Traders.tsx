@@ -1,12 +1,18 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { getTraders } from "@/api/traders"; // Assuming you have an API function to fetch traders
-import TraderProfile from "@/components/trader/TraderProfile";
+import { getTraders } from "@/api/traders";
+
+interface Trader {
+  id: string;
+  name: string;
+  followers: number;
+  winRate: number;
+}
 
 const Traders = () => {
   const navigate = useNavigate();
-  const [traders, setTraders] = useState([]);
+  const [traders, setTraders] = useState<Trader[]>([]);
 
   useEffect(() => {
     const fetchTraders = async () => {
