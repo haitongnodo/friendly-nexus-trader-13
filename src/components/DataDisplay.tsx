@@ -9,14 +9,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { getBirdeyeApiKey } from "@/config/api";
+
+interface Token {
+  address: string;
+  symbol: string;
+  price: number;
+  priceChange24h: number;
+  volume24h: number;
+}
 
 interface DataDisplayProps {
   type: "traders" | "tokens";
   isLoading: boolean;
   error?: string;
+  data?: Token[];
 }
 
-export const DataDisplay = ({ type, isLoading, error }: DataDisplayProps) => {
+export const DataDisplay = ({ type, isLoading, error, data }: DataDisplayProps) => {
   if (error) {
     return (
       <div className="p-4 text-center">
@@ -67,16 +77,32 @@ export const DataDisplay = ({ type, isLoading, error }: DataDisplayProps) => {
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
-      <Card className="p-4">
-        <h3 className="text-sm font-semibold mb-2">SOL/USD</h3>
-        <div className="text-2xl font-mono">$123.45</div>
-        <div className="text-semantic-success text-sm">+5.67%</div>
-      </Card>
-      <Card className="p-4">
-        <h3 className="text-sm font-semibold mb-2">JUP/USD</h3>
-        <div className="text-2xl font-mono">$0.89</div>
-        <div className="text-semantic-error text-sm">-2.34%</div>
-      </Card>
+      {data ? (
+        data.slice(0, 6).map((token) => (
+          <Card key={token.address} className="p-4">
+            <h3 className="text-sm font-semibold mb-2">{token.symbol}</h3>
+            <div className="text-2xl font-mono">
+              ${token.price.toFixed(2)}
+            </div>
+            <div className={`text-sm ${token.priceChange24h >= 0 ? 'text-semantic-success' : 'text-semantic-error'}`}>
+              {token.priceChange24h >= 0 ? '+' : ''}{token.priceChange24h.toFixed(2)}%
+            </div>
+          </Card>
+        ))
+      ) : (
+        <>
+          <Card className="p-4">
+            <h3 className="text-sm font-semibold mb-2">SOL/USD</h3>
+            <div className="text-2xl font-mono">$123.45</div>
+            <div className="text-semantic-success text-sm">+5.67%</div>
+          </Card>
+          <Card className="p-4">
+            <h3 className="text-sm font-semibold mb-2">JUP/USD</h3>
+            <div className="text-2xl font-mono">$0.89</div>
+            <div className="text-semantic-error text-sm">-2.34%</div>
+          </Card>
+        </>
+      )}
     </div>
   );
 };

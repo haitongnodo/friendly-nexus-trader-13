@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Send, TrendingUp, BarChart2, Diamond, ArrowDownUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DataDisplay } from "@/components/DataDisplay";
+import { getBirdeyeApiKey } from "@/config/api";
+import { useToast } from "@/components/ui/use-toast";
 
 const features = [
   {
@@ -38,11 +40,61 @@ export default function Index() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | undefined>();
+  const [tokenData, setTokenData] = useState<any[]>([]);
+  const { toast } = useToast();
+
+  const fetchTrendingTokens = async () => {
+    const apiKey = getBirdeyeApiKey();
+    
+    if (!apiKey) {
+      toast({
+        title: "API Key Required",
+        description: "Please set your BirdEye API key in settings first",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const options = {
+      method: 'GET',
+      headers: {
+        accept: 'application/json',
+        'x-chain': 'sui',
+        'X-API-KEY': apiKey
+      }
+    };
+
+    try {
+      const response = await fetch(
+        'https://public-api.birdeye.so/defi/token_trending?sort_by=rank&sort_type=asc&offset=0&limit=20',
+        options
+      );
+      
+      if (!response.ok) {
+        throw new Error('Failed to fetch trending tokens');
+      }
+      
+      const data = await response.json();
+      setTokenData(data.data || []);
+      setError(undefined);
+    } catch (err) {
+      console.error('Error fetching trending tokens:', err);
+      setError('Failed to fetch trending tokens. Please try again.');
+      setTokenData([]);
+    }
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!message.trim()) return;
-    console.log("Sending message:", message);
+    
+    if (message.toLowerCase().includes("trending") || 
+        message.toLowerCase().includes("tokens") ||
+        message.toLowerCase().includes("hot")) {
+      handleFeatureClick("tokens");
+    }
+    
     setMessage("");
   };
 
@@ -53,8 +105,10 @@ export default function Index() {
     setIsLoading(true);
     setIsExpanded(true);
     
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    if (id === "tokens") {
+      await fetchTrendingTokens();
+    }
+    
     setIsLoading(false);
   };
 
@@ -111,6 +165,8 @@ export default function Index() {
                   <DataDisplay 
                     type={selectedFeature === "traders" ? "traders" : "tokens"}
                     isLoading={isLoading}
+                    error={error}
+                    data={tokenData}
                   />
                 </motion.div>
               )}
