@@ -8,9 +8,9 @@ import Login from "./pages/Login";
 import Index from "./pages/Index";
 import Traders from "./pages/Traders";
 import CreateAgent from "./pages/CreateAgent";
+import TraderProfile from "./pages/TraderProfile";
 
 const App = () => {
-  // Create a new QueryClient instance inside the component
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -39,6 +39,7 @@ const App = () => {
                         <Route path="/" element={<Navigate to="/chat" replace />} />
                         <Route path="/chat" element={<Index />} />
                         <Route path="/traders" element={<Traders />} />
+                        <Route path="/traders/:id" element={<TraderProfile />} />
                         <Route path="/create-agent" element={<CreateAgent />} />
                       </Routes>
                     </div>

@@ -175,6 +175,7 @@ export default function Traders() {
                           variant="secondary" 
                           size="sm"
                           className="glass hover:bg-[#1a1f2a] rounded-[16px] border border-[#222329] hover:border-[#FB7402]/20"
+                          onClick={() => window.location.href = `/traders/${trader.agent.replace(/[^0-9]/g, '')}`}
                         >
                           Profile
                         </Button>
