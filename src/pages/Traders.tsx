@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
+import { motion } from "framer-motion";
 
 const statsData = [
   { label: "Top AI Agents", value: "156", change: "+12%" },
@@ -26,20 +27,31 @@ const traders = Array(10).fill({
 
 export default function Traders() {
   return (
-    <div className="container mx-auto p-6 space-y-8 animate-fade-in">
-      <div className="space-y-4">
-        <h1 className="text-4xl font-bold bg-gradient-to-r from-nodo-orange to-nodo-orange-light bg-clip-text text-transparent animate-fade-in">
+    <div className="container mx-auto px-4 py-8">
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="text-center mb-12 space-y-3"
+      >
+        <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-[#FB7402] to-[#FB7402] bg-clip-text text-transparent tracking-tight">
           AI-Powered Copy Trading
         </h1>
-        <p className="text-muted-foreground max-w-2xl animate-fade-in">
-          Discover and automatically copy top-performing AI trading agents. Our advanced algorithms analyze trading patterns to help you find the most profitable strategies.
+        <p className="text-gray-400 text-lg tracking-wide">
+          Discover and automatically copy top-performing AI trading agents on Sui Network
         </p>
-      </div>
+      </motion.div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-        {statsData.map((stat) => (
-          <Card key={stat.label} className="p-6 glass hover:scale-105 transition-transform duration-200">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+        {statsData.map((stat, index) => (
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+            className="bg-[#151822] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105 hover:shadow-xl border border-white/5"
+          >
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">{stat.label}</p>
               <div className="flex items-center justify-between">
@@ -49,17 +61,22 @@ export default function Traders() {
                 </span>
               </div>
             </div>
-          </Card>
+          </motion.div>
         ))}
       </div>
 
       {/* Search and Filters */}
-      <div className="space-y-4">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+        className="space-y-4 mb-8"
+      >
         <div className="relative">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground h-4 w-4" />
           <Input 
             placeholder="Search by agent name, wallet address or trading strategy..." 
-            className="pl-10 glass"
+            className="pl-10 bg-[#151822] border border-white/5 rounded-[16px]"
           />
         </div>
         
@@ -68,97 +85,108 @@ export default function Traders() {
             <Button
               key={pair}
               variant={pair === "All Agents" ? "default" : "secondary"}
-              className="hover:scale-105 transition-transform duration-200"
+              className={`hover:scale-105 transition-transform duration-200 rounded-[16px] ${
+                pair === "All Agents" 
+                  ? "bg-[#FB7402] hover:bg-[#FB7402]/90" 
+                  : "bg-[#151822] hover:bg-[#1a1f2a] border border-white/5"
+              }`}
             >
               {pair}
             </Button>
           ))}
         </div>
-      </div>
+      </motion.div>
 
       {/* Traders Table */}
-      <Card className="glass">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>AGENT</TableHead>
-              <TableHead>WIN RATE</TableHead>
-              <TableHead>24H PNL</TableHead>
-              <TableHead>4D PNL</TableHead>
-              <TableHead>VOLUME</TableHead>
-              <TableHead>COPIERS</TableHead>
-              <TableHead>ACTION</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {traders.map((trader, index) => (
-              <TableRow key={index} className="hover:bg-muted/50 transition-colors">
-                <TableCell className="font-medium">
-                  <div className="flex flex-col">
-                    <span>{trader.agent}</span>
-                    <span className="text-sm text-muted-foreground">{trader.address}</span>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <span className="text-green-500">{trader.winRate}</span>
-                </TableCell>
-                <TableCell className="text-red-500">{trader.pnl24h}</TableCell>
-                <TableCell className="text-red-500">{trader.pnl4d}</TableCell>
-                <TableCell>{trader.volume}</TableCell>
-                <TableCell>
-                  <div className="flex items-center gap-1">
-                    {trader.copiers}
-                    <span className="text-orange-500">🔥</span>
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex gap-2">
-                    <Button 
-                      variant="default" 
-                      size="sm"
-                      className="bg-nodo-orange hover:bg-nodo-orange-light"
-                    >
-                      Copy
-                    </Button>
-                    <Button 
-                      variant="secondary" 
-                      size="sm"
-                    >
-                      Profile
-                    </Button>
-                  </div>
-                </TableCell>
+      <motion.div 
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Card className="bg-[#151822] border border-white/5 rounded-[16px]">
+          <Table>
+            <TableHeader>
+              <TableRow className="hover:bg-transparent border-white/5">
+                <TableHead className="text-white">AGENT</TableHead>
+                <TableHead className="text-white">WIN RATE</TableHead>
+                <TableHead className="text-white">24H PNL</TableHead>
+                <TableHead className="text-white">4D PNL</TableHead>
+                <TableHead className="text-white">VOLUME</TableHead>
+                <TableHead className="text-white">COPIERS</TableHead>
+                <TableHead className="text-white">ACTION</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </Card>
+            </TableHeader>
+            <TableBody>
+              {traders.map((trader, index) => (
+                <TableRow key={index} className="hover:bg-[#1a1f2a] border-white/5">
+                  <TableCell className="font-medium">
+                    <div className="flex flex-col">
+                      <span>{trader.agent}</span>
+                      <span className="text-sm text-muted-foreground">{trader.address}</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <span className="text-green-500">{trader.winRate}</span>
+                  </TableCell>
+                  <TableCell className="text-red-500">{trader.pnl24h}</TableCell>
+                  <TableCell className="text-red-500">{trader.pnl4d}</TableCell>
+                  <TableCell>{trader.volume}</TableCell>
+                  <TableCell>
+                    <div className="flex items-center gap-1">
+                      {trader.copiers}
+                      <span className="text-orange-500">🔥</span>
+                    </div>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      <Button 
+                        variant="default" 
+                        size="sm"
+                        className="bg-[#FB7402] hover:bg-[#FB7402]/90 rounded-[16px]"
+                      >
+                        Copy
+                      </Button>
+                      <Button 
+                        variant="secondary" 
+                        size="sm"
+                        className="bg-[#151822] hover:bg-[#1a1f2a] border border-white/5 rounded-[16px]"
+                      >
+                        Profile
+                      </Button>
+                    </div>
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
 
-      {/* Pagination */}
-      <div className="flex items-center justify-between">
-        <p className="text-sm text-muted-foreground">
-          Showing 1-10 of 50 agents
-        </p>
-        <Pagination>
-          <PaginationContent>
-            <PaginationItem>
-              <PaginationPrevious href="#" />
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#" isActive>1</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">2</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationLink href="#">3</PaginationLink>
-            </PaginationItem>
-            <PaginationItem>
-              <PaginationNext href="#" />
-            </PaginationItem>
-          </PaginationContent>
-        </Pagination>
-      </div>
+        {/* Pagination */}
+        <div className="flex items-center justify-between mt-4">
+          <p className="text-sm text-muted-foreground">
+            Showing 1-10 of 50 agents
+          </p>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious href="#" />
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#" isActive>1</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">2</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationLink href="#">3</PaginationLink>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext href="#" />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      </motion.div>
     </div>
   );
 }
