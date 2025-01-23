@@ -75,7 +75,7 @@ export default function Index() {
       
       {/* Main Content Container */}
       <div className="max-w-[1200px] w-full mx-auto px-6 flex flex-col h-full">
-        {/* Header Section - Fixed Height */}
+        {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -92,26 +92,40 @@ export default function Index() {
 
         {/* Chat Container */}
         <motion.div 
-          animate={{ height: isExpanded ? "calc(100vh - 300px)" : "auto" }}
-          transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="flex-1 w-full bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden flex flex-col"
+          initial={{ scale: 0.98, opacity: 0.9 }}
+          animate={{ 
+            scale: 1,
+            opacity: 1,
+            height: isExpanded ? "calc(100vh - 300px)" : "auto",
+            maxWidth: isExpanded ? "100%" : "800px",
+          }}
+          transition={{ 
+            duration: 0.3,
+            ease: [0.4, 0, 0.2, 1],
+            delay: 0.05
+          }}
+          className={cn(
+            "flex-1 mx-auto w-full backdrop-blur-md rounded-xl border border-border-subtle",
+            "shadow-[0_8px_20px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col",
+            "bg-[rgba(20,21,26,0.7)] transition-all duration-300"
+          )}
         >
           {/* Message Area - Scrollable */}
           <div className="flex-1 overflow-y-auto">
             {!isExpanded ? (
-              <div className="flex items-center justify-center h-full min-h-[300px] p-6">
+              <div className="flex items-center justify-center h-full min-h-[200px] p-6">
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
-                  className="text-xl font-medium text-text-primary text-center"
+                  className="text-xl leading-relaxed font-medium text-text-primary text-center max-w-[600px]"
                 >
                   How can I help you with trading today?
                 </motion.div>
               </div>
             ) : (
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.2 }}
                 className="p-6 space-y-4"
