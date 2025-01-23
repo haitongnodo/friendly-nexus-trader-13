@@ -1,20 +1,20 @@
-import { Card } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Plus, Upload, Copy, Wallet } from "lucide-react"
-import { useToast } from "@/components/ui/use-toast"
+import { Card } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Plus, Upload, Copy, Wallet } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 
 const CreateAgent = () => {
-  const { toast } = useToast()
+  const { toast } = useToast();
 
   const stats = [
     { label: "Top AI Agents", value: "156", change: "+8%" },
     { label: "24h Trading Volume", value: "$2.5M", change: "+6.5%" },
     { label: "Success Rate", value: "87.5%", change: "+5.2%" },
     { label: "Active Copiers", value: "2,345", change: "+10%" },
-  ]
+  ];
 
   return (
     <div className="container mx-auto px-4 py-8 max-w-6xl">
@@ -180,7 +180,7 @@ const CreateAgent = () => {
         </Button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default CreateAgent
+export default CreateAgent;
