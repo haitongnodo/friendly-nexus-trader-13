@@ -90,30 +90,6 @@ export default {
         "primary-gradient": "linear-gradient(135deg, #FF7A0F 0%, #FF8D2E 100%)",
         "surface-gradient": "linear-gradient(135deg, rgba(255, 122, 15, 0.05) 0%, rgba(255, 122, 15, 0.02) 100%)",
       },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-        float: {
-          "0%, 100%": { transform: "translateY(0)" },
-          "50%": { transform: "translateY(-10px)" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        float: "float 3s ease-in-out infinite",
-      },
     },
   },
   plugins: [require("tailwindcss-animate")],
