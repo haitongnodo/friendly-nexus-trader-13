@@ -7,6 +7,7 @@ import { Pagination, PaginationContent, PaginationItem, PaginationLink, Paginati
 import { motion } from "framer-motion";
 import { useState, useMemo } from "react";
 import { generateTraders, type Trader } from "@/utils/mockTraderData";
+import { cn } from "@/lib/utils";
 
 const containerAnimation = {
   hidden: { opacity: 0 },
