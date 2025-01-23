@@ -45,23 +45,15 @@ export default function Index() {
   const { toast } = useToast();
 
   const fetchTrendingTokens = async () => {
-    const apiKey = getBirdeyeApiKey();
+    setIsLoading(true);
+    setError(undefined);
     
-    if (!apiKey) {
-      toast({
-        title: "API Key Required",
-        description: "Please set your BirdEye API key in settings first",
-        variant: "destructive",
-      });
-      return;
-    }
-
     const options = {
       method: 'GET',
       headers: {
         accept: 'application/json',
         'x-chain': 'sui',
-        'X-API-KEY': apiKey
+        'X-API-KEY': getBirdeyeApiKey()
       }
     };
 
@@ -72,16 +64,25 @@ export default function Index() {
       );
       
       if (!response.ok) {
-        throw new Error('Failed to fetch trending tokens');
+        throw new Error(`Failed to fetch trending tokens: ${response.status}`);
       }
       
       const data = await response.json();
-      setTokenData(data.data || []);
-      setError(undefined);
-    } catch (err) {
+      if (data.success && data.data) {
+        setTokenData(data.data);
+      } else {
+        throw new Error(data.message || 'Failed to fetch token data');
+      }
+    } catch (err: any) {
       console.error('Error fetching trending tokens:', err);
-      setError('Failed to fetch trending tokens. Please try again.');
-      setTokenData([]);
+      setError(err.message);
+      toast({
+        title: "Error",
+        description: err.message,
+        variant: "destructive",
+      });
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -102,14 +103,11 @@ export default function Index() {
     if (features.find(f => f.id === id)?.disabled) return;
     
     setSelectedFeature(id);
-    setIsLoading(true);
     setIsExpanded(true);
     
     if (id === "tokens") {
       await fetchTrendingTokens();
     }
-    
-    setIsLoading(false);
   };
 
   return (
@@ -228,4 +226,3 @@ export default function Index() {
       </div>
     </div>
   );
-}

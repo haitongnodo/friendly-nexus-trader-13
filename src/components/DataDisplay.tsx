@@ -24,31 +24,17 @@ interface DataDisplayProps {
   type: "traders" | "tokens";
   isLoading: boolean;
   error?: string;
-  data?: Token[];
+  data?: any[];
 }
 
 export const DataDisplay = ({ type, isLoading, error, data }: DataDisplayProps) => {
-  const apiKey = getBirdeyeApiKey();
-
-  if (!apiKey) {
-    return (
-      <Alert className="mb-4">
-        <AlertTitle>API Key Required</AlertTitle>
-        <AlertDescription>
-          Please set your BirdEye API key in settings to view token data. 
-          Make sure you have an active subscription with sufficient permissions.
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
   if (error) {
     return (
       <Alert variant="destructive" className="mb-4">
         <AlertTitle>Error</AlertTitle>
         <AlertDescription>
           {error.includes("401") 
-            ? "Your API key may be invalid or lacks sufficient permissions. Please check your BirdEye account status."
+            ? "API key validation failed. Please check your BirdEye account status."
             : error}
         </AlertDescription>
       </Alert>
@@ -94,31 +80,25 @@ export const DataDisplay = ({ type, isLoading, error, data }: DataDisplayProps) 
 
   return (
     <div className="grid grid-cols-2 gap-4 p-4">
-      {data ? (
-        data.slice(0, 6).map((token) => (
+      {data && data.length > 0 ? (
+        data.slice(0, 6).map((token: any) => (
           <Card key={token.address} className="p-4">
             <h3 className="text-sm font-semibold mb-2">{token.symbol}</h3>
             <div className="text-2xl font-mono">
-              ${token.price.toFixed(2)}
+              ${parseFloat(token.price).toFixed(2)}
             </div>
-            <div className={`text-sm ${token.priceChange24h >= 0 ? 'text-semantic-success' : 'text-semantic-error'}`}>
-              {token.priceChange24h >= 0 ? '+' : ''}{token.priceChange24h.toFixed(2)}%
+            <div className={`text-sm ${parseFloat(token.priceChange24h) >= 0 ? 'text-semantic-success' : 'text-semantic-error'}`}>
+              {parseFloat(token.priceChange24h) >= 0 ? '+' : ''}{parseFloat(token.priceChange24h).toFixed(2)}%
             </div>
           </Card>
         ))
       ) : (
-        <>
-          <Card className="p-4">
-            <h3 className="text-sm font-semibold mb-2">SOL/USD</h3>
-            <div className="text-2xl font-mono">$123.45</div>
-            <div className="text-semantic-success text-sm">+5.67%</div>
-          </Card>
-          <Card className="p-4">
-            <h3 className="text-sm font-semibold mb-2">JUP/USD</h3>
-            <div className="text-2xl font-mono">$0.89</div>
-            <div className="text-semantic-error text-sm">-2.34%</div>
-          </Card>
-        </>
+        <Alert>
+          <AlertTitle>No Data Available</AlertTitle>
+          <AlertDescription>
+            No token data is currently available. Please try again later.
+          </AlertDescription>
+        </Alert>
       )}
     </div>
   );
