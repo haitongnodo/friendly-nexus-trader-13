@@ -113,12 +113,12 @@ export default function Index() {
           {/* Message Area - Scrollable */}
           <div className="flex-1 overflow-y-auto">
             {!isExpanded ? (
-              <div className="flex items-center justify-center h-full min-h-[200px] p-6">
+              <div className="flex items-center justify-center h-[160px] min-h-[160px] max-h-[200px] px-6">
                 <motion.div 
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 0.3 }}
-                  className="text-xl leading-relaxed font-medium text-text-primary text-center max-w-[600px]"
+                  className="text-[20px] leading-[1.5] font-medium text-text-primary text-center"
                 >
                   How can I help you with trading today?
                 </motion.div>
