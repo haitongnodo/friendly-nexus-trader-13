@@ -9,61 +9,15 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { getBirdeyeApiKey } from "@/config/api";
-import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
-import { Button } from "@/components/ui/button";
-import { ExternalLink } from "lucide-react";
-
-interface Token {
-  address: string;
-  symbol: string;
-  price: number;
-  priceChange24h: number;
-  volume24h: number;
-}
+import { generateTopTraders, generateHotTokens } from "@/utils/mockData";
+import type { TopTrader, HotToken } from "@/utils/mockData";
 
 interface DataDisplayProps {
   type: "traders" | "tokens";
   isLoading: boolean;
-  error?: string;
-  data?: any[];
 }
 
-export const DataDisplay = ({ type, isLoading, error, data }: DataDisplayProps) => {
-  if (error) {
-    const is401Error = error.includes("401") || error.toLowerCase().includes("api key");
-    
-    return (
-      <Alert variant="destructive" className="mb-4">
-        <AlertTitle>Error</AlertTitle>
-        <AlertDescription className="space-y-4">
-          {is401Error ? (
-            <>
-              <p>Your BirdEye API key needs to be updated. Please:</p>
-              <ol className="list-decimal ml-4 space-y-2">
-                <li>Visit the BirdEye dashboard to check your API key status</li>
-                <li>Ensure your subscription plan allows access to this endpoint</li>
-                <li>Copy your API key and update it in the settings</li>
-              </ol>
-              <div className="mt-4">
-                <Button 
-                  variant="outline" 
-                  className="text-sm"
-                  onClick={() => window.open('https://birdeye.so/settings?tab=api', '_blank')}
-                >
-                  Go to BirdEye Dashboard
-                  <ExternalLink className="ml-2 h-4 w-4" />
-                </Button>
-              </div>
-            </>
-          ) : (
-            error
-          )}
-        </AlertDescription>
-      </Alert>
-    );
-  }
-
+export const DataDisplay = ({ type, isLoading }: DataDisplayProps) => {
   if (isLoading) {
     return (
       <div className="space-y-4 p-4">
@@ -75,54 +29,95 @@ export const DataDisplay = ({ type, isLoading, error, data }: DataDisplayProps) 
   }
 
   if (type === "traders") {
+    const traders = generateTopTraders();
+    
     return (
-      <div className="p-4">
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Trader</TableHead>
-              <TableHead>Volume</TableHead>
-              <TableHead>Success Rate</TableHead>
-              <TableHead>Recent Trades</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow>
-              <TableCell className="font-mono text-xs">
-                0x1234...5678
-              </TableCell>
-              <TableCell>$1.2M</TableCell>
-              <TableCell className="text-semantic-success">98%</TableCell>
-              <TableCell>24</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+      <div className="p-4 space-y-4">
+        <h2 className="text-xl font-semibold mb-4">🏆 Top SUI Traders This Week</h2>
+        <Card className="overflow-hidden">
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Rank</TableHead>
+                <TableHead>Trader</TableHead>
+                <TableHead>PnL</TableHead>
+                <TableHead>Volume</TableHead>
+                <TableHead>Trades</TableHead>
+              </TableRow>
+            </TableHeader>
+            <TableBody>
+              {traders.map((trader: TopTrader) => (
+                <TableRow key={trader.address}>
+                  <TableCell className="font-mono">
+                    {trader.rank}{trader.medal}
+                  </TableCell>
+                  <TableCell className="font-mono text-xs">
+                    {trader.address}
+                  </TableCell>
+                  <TableCell className="text-semantic-success">
+                    {trader.pnl}
+                  </TableCell>
+                  <TableCell>{trader.volume}</TableCell>
+                  <TableCell>{trader.tradeCount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </Card>
+        <p className="text-sm text-text-tertiary text-center">
+          Data provided by Birdeye API, showing top traders from the past week.
+        </p>
       </div>
     );
   }
 
+  const tokens = generateHotTokens();
+  
   return (
-    <div className="grid grid-cols-2 gap-4 p-4">
-      {data && data.length > 0 ? (
-        data.slice(0, 6).map((token: any) => (
-          <Card key={token.address} className="p-4">
-            <h3 className="text-sm font-semibold mb-2">{token.symbol}</h3>
-            <div className="text-2xl font-mono">
-              ${parseFloat(token.price).toFixed(2)}
+    <div className="p-4 space-y-4">
+      <h2 className="text-xl font-semibold mb-4">🔥 Hot SUI Tokens</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {tokens.map((token: HotToken) => (
+          <Card key={token.name} className="p-4 space-y-2">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <span>{token.rank}{token.medal}</span>
+                <h3 className="text-lg font-semibold">{token.name}</h3>
+              </div>
+              <span className="text-text-tertiary text-sm">
+                ({token.description})
+              </span>
             </div>
-            <div className={`text-sm ${parseFloat(token.priceChange24h) >= 0 ? 'text-semantic-success' : 'text-semantic-error'}`}>
-              {parseFloat(token.priceChange24h) >= 0 ? '+' : ''}{parseFloat(token.priceChange24h).toFixed(2)}%
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <div className="text-text-tertiary text-sm">Price</div>
+                <div className="text-xl font-mono">{token.price}</div>
+              </div>
+              <div>
+                <div className="text-text-tertiary text-sm">24h Change</div>
+                <div className="text-lg">{token.change24h}</div>
+              </div>
+              <div>
+                <div className="text-text-tertiary text-sm">Liquidity</div>
+                <div>{token.liquidity}</div>
+              </div>
+              <div>
+                <div className="text-text-tertiary text-sm">24h Volume</div>
+                <div>{token.volume24h}</div>
+              </div>
             </div>
+            <button 
+              className="text-primary hover:text-primary-hover text-sm transition-colors"
+              onClick={() => console.log(`View ${token.name} traders`)}
+            >
+              [View top {token.name} traders]
+            </button>
           </Card>
-        ))
-      ) : (
-        <Alert>
-          <AlertTitle>No Data Available</AlertTitle>
-          <AlertDescription>
-            No token data is currently available. Please try again later.
-          </AlertDescription>
-        </Alert>
-      )}
+        ))}
+      </div>
+      <p className="text-sm text-text-tertiary text-center">
+        Data provided by Birdeye API, showing top trending tokens on SUI.
+      </p>
     </div>
   );
 };

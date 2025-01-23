@@ -1,19 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Send, TrendingUp, BarChart2, Diamond, ArrowDownUp } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { DataDisplay } from "@/components/DataDisplay";
-import { getBirdeyeApiKey, setBirdeyeApiKey } from "@/config/api";
 import { useToast } from "@/components/ui/use-toast";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogDescription,
-} from "@/components/ui/dialog";
 
 const features = [
   {
@@ -47,75 +39,7 @@ export default function Index() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | undefined>();
-  const [tokenData, setTokenData] = useState<any[]>([]);
-  const [showApiKeyDialog, setShowApiKeyDialog] = useState(false);
-  const [apiKey, setApiKey] = useState("");
   const { toast } = useToast();
-
-  useEffect(() => {
-    const key = getBirdeyeApiKey();
-    if (!key || key === 'de50b259bbc04c419443ba226fa22c71') {
-      setShowApiKeyDialog(true);
-    }
-  }, []);
-
-  const handleApiKeySubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (apiKey.trim()) {
-      setBirdeyeApiKey(apiKey.trim());
-      setShowApiKeyDialog(false);
-      toast({
-        title: "Success",
-        description: "BirdEye API key has been updated",
-      });
-      if (selectedFeature === "tokens") {
-        fetchTrendingTokens();
-      }
-    }
-  };
-
-  const fetchTrendingTokens = async () => {
-    setIsLoading(true);
-    setError(undefined);
-    
-    const options = {
-      method: 'GET',
-      headers: {
-        accept: 'application/json',
-        'x-chain': 'sui',
-        'X-API-KEY': getBirdeyeApiKey()
-      }
-    };
-
-    try {
-      const response = await fetch(
-        'https://public-api.birdeye.so/defi/token_trending?sort_by=rank&sort_type=asc&offset=0&limit=20',
-        options
-      );
-      
-      if (!response.ok) {
-        throw new Error(`Failed to fetch trending tokens: ${response.status}`);
-      }
-      
-      const data = await response.json();
-      if (data.success && data.data) {
-        setTokenData(data.data);
-      } else {
-        throw new Error(data.message || 'Failed to fetch token data');
-      }
-    } catch (err: any) {
-      console.error('Error fetching trending tokens:', err);
-      setError(err.message);
-      toast({
-        title: "Error",
-        description: err.message,
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -135,10 +59,12 @@ export default function Index() {
     
     setSelectedFeature(id);
     setIsExpanded(true);
+    setIsLoading(true);
     
-    if (id === "tokens") {
-      await fetchTrendingTokens();
-    }
+    // Simulate loading
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 500);
   };
 
   return (
@@ -194,8 +120,6 @@ export default function Index() {
                   <DataDisplay 
                     type={selectedFeature === "traders" ? "traders" : "tokens"}
                     isLoading={isLoading}
-                    error={error}
-                    data={tokenData}
                   />
                 </motion.div>
               )}
@@ -255,37 +179,6 @@ export default function Index() {
           ))}
         </div>
       </div>
-
-      <Dialog open={showApiKeyDialog} onOpenChange={setShowApiKeyDialog}>
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>Enter BirdEye API Key</DialogTitle>
-            <DialogDescription>
-              Please enter your BirdEye API key to access token data. You can get your API key from the BirdEye dashboard.
-            </DialogDescription>
-          </DialogHeader>
-          <form onSubmit={handleApiKeySubmit} className="space-y-4">
-            <Input
-              value={apiKey}
-              onChange={(e) => setApiKey(e.target.value)}
-              placeholder="Enter your BirdEye API key"
-              className="w-full"
-            />
-            <div className="flex justify-between items-center">
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => window.open('https://birdeye.so/settings?tab=api', '_blank')}
-              >
-                Get API Key
-              </Button>
-              <Button type="submit" disabled={!apiKey.trim()}>
-                Save API Key
-              </Button>
-            </div>
-          </form>
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
