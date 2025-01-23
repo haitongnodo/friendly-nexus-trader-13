@@ -42,7 +42,7 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
             )}
             disabled={!getWalletStatus("sui")}
           >
-            <img src="/lovable-uploads/a1fd43d4-26fa-4d06-8b4d-97c2b83df6e5.png" alt="Sui Wallet" className="w-6 h-6" />
+            <img src="/lovable-uploads/a7083879-0396-4ae6-ab70-4c8ba2c768fc.png" alt="Sui Wallet" className="w-6 h-6" />
             <div className="flex flex-col">
               <span>Sui Wallet</span>
               {!getWalletStatus("sui") && (
@@ -61,7 +61,7 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
             )}
             disabled={!getWalletStatus("martian")}
           >
-            <img src="/lovable-uploads/a1fd43d4-26fa-4d06-8b4d-97c2b83df6e5.png" alt="Martian Sui Wallet" className="w-6 h-6" />
+            <img src="/lovable-uploads/d6b8c326-0ce6-4e60-9b88-d0aaedcf00f6.png" alt="Martian Sui Wallet" className="w-6 h-6" />
             <div className="flex flex-col">
               <span>Martian Sui Wallet</span>
               {!getWalletStatus("martian") && (
@@ -80,7 +80,7 @@ const WalletModal = ({ isOpen, onClose, onSelectWallet, availableWallets }: Wall
             )}
             disabled={!getWalletStatus("suiet")}
           >
-            <img src="/lovable-uploads/a1fd43d4-26fa-4d06-8b4d-97c2b83df6e5.png" alt="Suiet" className="w-6 h-6" />
+            <img src="/lovable-uploads/d96930e3-ce73-4d48-b9b4-76357fcee014.png" alt="Suiet" className="w-6 h-6" />
             <div className="flex flex-col">
               <span>Suiet</span>
               {!getWalletStatus("suiet") && (
