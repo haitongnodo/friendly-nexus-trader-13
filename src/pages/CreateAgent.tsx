@@ -24,7 +24,7 @@ const CreateAgent = () => {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="flex justify-between items-center"
+        className="flex justify-between items-center mt-[100px]"
       >
         <div className="space-y-2">
           <h1 className="text-4xl font-bold bg-gradient-to-r from-[#EC6E05] to-[#ECC705] bg-clip-text text-transparent">Create Your Agent</h1>
@@ -32,8 +32,8 @@ const CreateAgent = () => {
         </div>
         <div className="flex items-center gap-4">
           <span className="text-muted-foreground">My Balance</span>
-          <Button variant="outline" className="gap-2 glass hover:bg-[#222329]">
-            5000 <span className="text-[#EC6E05]">◎</span>
+          <Button variant="outline" className="gap-2 glass hover:bg-overlay-hover hover:shadow-glow-sm active:bg-overlay-active active:shadow-glow-sm active:border-primary transition-all duration-200">
+            5000 <span className="text-primary">◎</span>
           </Button>
         </div>
       </motion.div>
@@ -45,7 +45,7 @@ const CreateAgent = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-6 hover:bg-[#222329] transition-all duration-300 cursor-pointer transform hover:scale-105"
+            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-6 hover:bg-overlay-hover hover:shadow-glow-sm active:bg-overlay-active active:shadow-glow transition-all duration-200 cursor-pointer transform hover:scale-105"
           >
             <p className="text-sm text-muted-foreground">{stat.label}</p>
             <div className="flex items-end justify-between mt-3">
@@ -82,23 +82,23 @@ const CreateAgent = () => {
       <Card className="bg-[#16171E] border-[#222329] rounded-[16px]">
         <div className="p-8 space-y-6">
           <h2 className="text-xl font-semibold flex items-center gap-2">
-            <input type="checkbox" className="rounded border-gray-400" />
+            <input type="checkbox" className="rounded border-gray-400 hover:border-primary focus:border-primary active:border-primary" />
             Copy Trading
           </h2>
           <div className="space-y-4">
             <div className="relative">
               <Input 
                 placeholder="Enter wallet address to copy trades from" 
-                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]" 
+                className="bg-[#16171E] border-[#222329] hover:border-primary focus:border-primary active:border-primary hover:shadow-glow-sm focus:shadow-glow transition-all duration-200" 
               />
-              <Copy className="absolute right-3 top-3 text-muted-foreground cursor-pointer" />
+              <Copy className="absolute right-3 top-3 text-muted-foreground cursor-pointer hover:text-text-highlight active:text-primary transition-colors duration-200" />
             </div>
             <div className="relative">
               <Input 
                 placeholder="Enter token address to copy trades from" 
-                className="bg-[#16171E] border-[#222329] hover:border-[#FB7402] focus:border-[#FB7402]" 
+                className="bg-[#16171E] border-[#222329] hover:border-primary focus:border-primary active:border-primary hover:shadow-glow-sm focus:shadow-glow transition-all duration-200" 
               />
-              <Wallet className="absolute right-3 top-3 text-muted-foreground cursor-pointer" />
+              <Wallet className="absolute right-3 top-3 text-muted-foreground cursor-pointer hover:text-text-highlight active:text-primary transition-colors duration-200" />
             </div>
           </div>
         </div>
@@ -210,7 +210,7 @@ const CreateAgent = () => {
       </Card>
 
       <div className="flex justify-center pt-6">
-        <Button size="lg" className="bg-[#FB7402] hover:opacity-90 rounded-[16px]">
+        <Button size="lg" className="bg-primary hover:bg-primary-hover active:bg-primary-pressed text-primary-foreground hover:shadow-glow active:shadow-glow transition-all duration-200 rounded-[16px]">
           <Plus className="mr-2" /> CREATE AGENT
         </Button>
       </div>

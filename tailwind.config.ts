@@ -38,6 +38,7 @@ export default {
           secondary: "rgba(255, 255, 255, 0.82)",
           tertiary: "rgba(255, 255, 255, 0.65)",
           disabled: "rgba(255, 255, 255, 0.45)",
+          highlight: "#FFB366",
         },
         semantic: {
           success: "#2ECC71",
@@ -51,10 +52,11 @@ export default {
           subtle: "rgba(255, 255, 255, 0.06)",
           strong: "rgba(255, 255, 255, 0.08)",
           focus: "rgba(255, 122, 15, 0.5)",
+          active: "#FF7A0F",
         },
         overlay: {
-          hover: "rgba(255, 255, 255, 0.08)",
-          active: "rgba(255, 255, 255, 0.12)",
+          hover: "rgba(255, 122, 15, 0.2)",
+          active: "rgba(255, 122, 15, 0.15)",
           modal: "rgba(0, 0, 0, 0.7)",
         },
       },
@@ -62,34 +64,8 @@ export default {
         small: "0 1px 2px rgba(0, 0, 0, 0.3)",
         medium: "0 2px 4px rgba(0, 0, 0, 0.3), 0 1px 2px rgba(0, 0, 0, 0.2)",
         large: "0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)",
-      },
-      opacity: {
-        solid: "1",
-        semi: "0.8",
-        medium: "0.5",
-        light: "0.2",
-        subtle: "0.08",
-      },
-      transitionDuration: {
-        fast: "150ms",
-        normal: "200ms",
-        slow: "300ms",
-      },
-      transitionTimingFunction: {
-        DEFAULT: "ease",
-      },
-      ringWidth: {
-        DEFAULT: "2px",
-      },
-      ringOffsetWidth: {
-        DEFAULT: "2px",
-      },
-      ringColor: {
-        DEFAULT: "rgba(255, 122, 15, 0.35)",
-      },
-      backgroundImage: {
-        "primary-gradient": "linear-gradient(135deg, #FF7A0F 0%, #FF8D2E 100%)",
-        "surface-gradient": "linear-gradient(135deg, rgba(255, 122, 15, 0.05) 0%, rgba(255, 122, 15, 0.02) 100%)",
+        glow: "0 0 0 1px rgba(255, 122, 15, 0.3), 0 0 4px rgba(255, 122, 15, 0.2), 0 0 8px rgba(255, 122, 15, 0.1)",
+        "glow-sm": "0 0 0 1px rgba(255, 122, 15, 0.2), 0 0 2px rgba(255, 122, 15, 0.1)",
       },
     },
   },
