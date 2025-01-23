@@ -108,10 +108,10 @@ export default function Traders() {
         className="text-center mb-12 space-y-3 mt-[100px]"
       >
         <h1 className="text-4xl md:text-5xl font-bold bg-primary-gradient bg-clip-text text-transparent tracking-tight">
-          AI-Powered Copy Trading
+          Discover the Best AI Traders & Copy Their Strategies
         </h1>
         <p className="text-text-secondary text-lg tracking-wide">
-          Discover and automatically copy top-performing AI trading agents on Sui Network
+          Discover top-performing AI traders on Sui and copy their winning strategies to boost your own trading results
         </p>
       </motion.div>
 
