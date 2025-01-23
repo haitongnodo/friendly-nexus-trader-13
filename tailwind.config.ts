@@ -20,8 +20,8 @@ export default {
     extend: {
       colors: {
         nodo: {
-          orange: "#FF4D00",
-          "orange-light": "#FF6B33",
+          orange: "#FB7402",
+          "orange-light": "#FB7402",
         },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
