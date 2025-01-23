@@ -3,7 +3,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, Upload, Copy, Wallet, User, Robot } from "lucide-react";
+import { Plus, Upload, Copy, Wallet, User, Bot } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 
@@ -138,7 +138,7 @@ const CreateAgent = () => {
       <Card className="mb-8 bg-[#16171E] border-[#222329] rounded-[16px]">
         <div className="p-6">
           <h2 className="text-xl font-semibold mb-4 flex items-center gap-2">
-            <Robot className="text-blue-400" /> AI Trading Configuration
+            <Bot className="text-blue-400" /> AI Trading Configuration
           </h2>
           <div className="space-y-4">
             <div>
