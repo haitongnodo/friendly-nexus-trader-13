@@ -44,10 +44,10 @@ export default {
           highlight: "#FFB366",
         },
         semantic: {
-          success: "#2ECC71",
+          success: "#22C55E",
           "success-dark": "#25A85C",
           warning: "#E6B412",
-          error: "#E53E3E",
+          error: "#EF4444",
           info: "#3B82F6",
         },
         border: {
@@ -69,6 +69,19 @@ export default {
         large: "0 4px 6px rgba(0, 0, 0, 0.3), 0 2px 4px rgba(0, 0, 0, 0.2)",
         glow: "0 0 0 1px rgba(255, 122, 15, 0.3), 0 0 4px rgba(255, 122, 15, 0.2), 0 0 8px rgba(255, 122, 15, 0.1)",
         "glow-sm": "0 0 0 1px rgba(255, 122, 15, 0.2), 0 0 2px rgba(255, 122, 15, 0.1)",
+        "glow-lg": "0 0 0 2px rgba(255, 122, 15, 0.3), 0 0 8px rgba(255, 122, 15, 0.2), 0 0 16px rgba(255, 122, 15, 0.1)",
+        "neon": "0 0 5px rgba(255, 122, 15, 0.5), 0 0 20px rgba(255, 122, 15, 0.3), 0 0 40px rgba(255, 122, 15, 0.2)",
+        "neon-sm": "0 0 3px rgba(255, 122, 15, 0.4), 0 0 12px rgba(255, 122, 15, 0.2)",
+        "neon-lg": "0 0 8px rgba(255, 122, 15, 0.6), 0 0 30px rgba(255, 122, 15, 0.4), 0 0 60px rgba(255, 122, 15, 0.3)",
+      },
+      keyframes: {
+        "neon-pulse": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.8" },
+        },
+      },
+      animation: {
+        "neon-pulse": "neon-pulse 2s ease-in-out infinite",
       },
     },
   },
