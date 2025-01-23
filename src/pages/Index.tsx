@@ -68,7 +68,6 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-page-gradient">
-      {/* Content Container */}
       <div className="max-w-[800px] w-full mx-auto px-6">
         {/* Header Section */}
         <motion.div 
@@ -103,14 +102,14 @@ export default function Index() {
             "bg-[rgba(20,21,26,0.7)]"
           )}
         >
-          {/* Welcome Message - Sticky Top */}
-          <div className="flex-none sticky top-0 z-10 bg-inherit border-b border-border-subtle">
-            <div className="flex items-center justify-center h-[60px]">
+          {/* Welcome Message Section */}
+          <div className="flex-none bg-inherit border-b border-border-subtle">
+            <div className="flex items-center justify-center h-[56px] px-4">
               <motion.div 
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.3 }}
-                className="text-[20px] font-medium text-text-primary"
+                className="text-[18px] leading-6 font-medium text-text-primary text-center"
               >
                 How can I help you with trading today?
               </motion.div>
@@ -134,14 +133,14 @@ export default function Index() {
             )}
           </div>
 
-          {/* Input Area - Sticky Bottom */}
-          <div className="flex-none sticky bottom-0 p-4 border-t border-border-subtle bg-background-surface/80 backdrop-blur-sm">
+          {/* Input Section */}
+          <div className="flex-none p-4 border-t border-border-subtle bg-background-surface/80 backdrop-blur-sm">
             <form onSubmit={handleSubmit} className="relative w-full">
               <Input
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
                 placeholder="Message Nexus..."
-                className="h-[40px] pr-12 bg-background-elevated border-border-subtle 
+                className="h-[44px] pr-12 bg-background-elevated border-border-subtle 
                   placeholder:text-sm placeholder:text-text-disabled
                   focus:border-primary/30 focus:shadow-glow-sm focus:bg-background-surface
                   transition-all duration-200"
