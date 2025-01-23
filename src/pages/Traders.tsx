@@ -5,6 +5,8 @@ import { Input } from "@/components/ui/input";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from "@/components/ui/pagination";
 import { motion } from "framer-motion";
+import { useState, useMemo } from "react";
+import { generateTraders, type Trader } from "@/utils/mockTraderData";
 
 const statsData = [
   { label: "Top AI Agents", value: "156", change: "+12%" },
@@ -13,34 +15,82 @@ const statsData = [
   { label: "Active Copiers", value: "2,345", change: "+15%" },
 ];
 
-const tradingPairs = ["All Agents", "Top Gainers", "Most Copied", "Highest Win Rate", "BTC/USDT", "ETH/USDT", "SOL/USDT"];
+const tradingPairs = ["All Pairs", "BTC/USDT", "ETH/USDT", "SOL/USDT", "AVAX/USDT", "BNB/USDT", "ADA/USDT"];
+const strategies = ["All Strategies", "Momentum", "Mean Reversion", "Breakout", "Scalping", "Grid Trading"];
+const sortOptions = ["All Agents", "Top Gainers", "Most Copied", "Highest Win Rate"];
 
-const traders = Array(10).fill({
-  agent: "AI Agent #001",
-  address: "0x93B86aCC47D45935...626",
-  winRate: "71.2%",
-  pnl24h: "-$6,543",
-  pnl4d: "-$17,543",
-  volume: "$4,297,243",
-  copiers: "708",
-});
+// Generate 100 traders
+const allTraders = generateTraders(100);
 
-const containerAnimation = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-};
-
-const itemAnimation = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-};
+const ITEMS_PER_PAGE = 10;
 
 export default function Traders() {
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedPair, setSelectedPair] = useState("All Pairs");
+  const [selectedStrategy, setSelectedStrategy] = useState("All Strategies");
+  const [selectedSort, setSelectedSort] = useState("All Agents");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const filteredAndSortedTraders = useMemo(() => {
+    let filtered = allTraders;
+
+    // Apply search filter
+    if (searchTerm) {
+      const searchLower = searchTerm.toLowerCase();
+      filtered = filtered.filter(
+        trader => 
+          trader.agent.toLowerCase().includes(searchLower) ||
+          trader.address.toLowerCase().includes(searchLower) ||
+          trader.strategy.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Apply pair filter
+    if (selectedPair !== "All Pairs") {
+      filtered = filtered.filter(trader => trader.pairs.includes(selectedPair));
+    }
+
+    // Apply strategy filter
+    if (selectedStrategy !== "All Strategies") {
+      filtered = filtered.filter(trader => trader.strategy === selectedStrategy);
+    }
+
+    // Apply sorting
+    switch (selectedSort) {
+      case "Top Gainers":
+        filtered = [...filtered].sort((a, b) => 
+          parseFloat(b.pnl24h.replace(/[^0-9.-]/g, '')) - 
+          parseFloat(a.pnl24h.replace(/[^0-9.-]/g, ''))
+        );
+        break;
+      case "Most Copied":
+        filtered = [...filtered].sort((a, b) => parseInt(b.copiers) - parseInt(a.copiers));
+        break;
+      case "Highest Win Rate":
+        filtered = [...filtered].sort((a, b) => 
+          parseFloat(b.winRate.replace('%', '')) - 
+          parseFloat(a.winRate.replace('%', ''))
+        );
+        break;
+    }
+
+    return filtered;
+  }, [searchTerm, selectedPair, selectedStrategy, selectedSort]);
+
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredAndSortedTraders.length / ITEMS_PER_PAGE);
+  const paginatedTraders = filteredAndSortedTraders.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  );
+
+  // Generate page numbers for pagination
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const visiblePageNumbers = pageNumbers.slice(
+    Math.max(0, Math.min(currentPage - 2, totalPages - 4)),
+    Math.min(totalPages, Math.max(5, currentPage + 2))
+  );
+
   return (
     <div className="container mx-auto px-4 py-8">
       <motion.div 
@@ -95,9 +145,55 @@ export default function Traders() {
           <Input 
             placeholder="Search by agent name, wallet address or trading strategy..." 
             className="pl-10 glass rounded-[16px] border-[#222329] bg-[#16171E] transition-all duration-300 hover:border-[#FB7402]/50 focus:border-[#FB7402] focus:ring-[#FB7402]/20"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
         
+        <div className="flex flex-wrap gap-2">
+          {sortOptions.map((option) => (
+            <motion.div
+              key={option}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant={option === selectedSort ? "default" : "secondary"}
+                className={`transition-all duration-300 rounded-[16px] ${
+                  option === selectedSort 
+                    ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 shadow-lg hover:shadow-[#FB7402]/20" 
+                    : "glass hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
+                }`}
+                onClick={() => setSelectedSort(option)}
+              >
+                {option}
+              </Button>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="flex flex-wrap gap-2">
+          {strategies.map((strategy) => (
+            <motion.div
+              key={strategy}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                variant={strategy === selectedStrategy ? "default" : "secondary"}
+                className={`transition-all duration-300 rounded-[16px] ${
+                  strategy === selectedStrategy 
+                    ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 shadow-lg hover:shadow-[#FB7402]/20" 
+                    : "glass hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
+                }`}
+                onClick={() => setSelectedStrategy(strategy)}
+              >
+                {strategy}
+              </Button>
+            </motion.div>
+          ))}
+        </div>
+
         <div className="flex flex-wrap gap-2">
           {tradingPairs.map((pair) => (
             <motion.div
@@ -106,12 +202,13 @@ export default function Traders() {
               whileTap={{ scale: 0.95 }}
             >
               <Button
-                variant={pair === "All Agents" ? "default" : "secondary"}
+                variant={pair === selectedPair ? "default" : "secondary"}
                 className={`transition-all duration-300 rounded-[16px] ${
-                  pair === "All Agents" 
+                  pair === selectedPair 
                     ? "bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 shadow-lg hover:shadow-[#FB7402]/20" 
                     : "glass hover:bg-[#1a1f2a] hover:border-[#FB7402]/20"
                 }`}
+                onClick={() => setSelectedPair(pair)}
               >
                 {pair}
               </Button>
@@ -130,6 +227,8 @@ export default function Traders() {
             <TableHeader>
               <TableRow className="hover:bg-transparent">
                 <TableHead className="text-white">AGENT</TableHead>
+                <TableHead className="text-white">STRATEGY</TableHead>
+                <TableHead className="text-white">PAIRS</TableHead>
                 <TableHead className="text-white">WIN RATE</TableHead>
                 <TableHead className="text-white">24H PNL</TableHead>
                 <TableHead className="text-white">4D PNL</TableHead>
@@ -139,19 +238,25 @@ export default function Traders() {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {traders.map((trader, index) => (
-                <TableRow key={index} className="group hover:bg-[#1a1f2a] transition-colors duration-300">
+              {paginatedTraders.map((trader) => (
+                <TableRow key={trader.id} className="group hover:bg-[#1a1f2a] transition-colors duration-300">
                   <TableCell className="font-medium">
                     <div className="flex flex-col">
                       <span className="group-hover:text-[#FB7402] transition-colors duration-300">{trader.agent}</span>
                       <span className="text-sm text-muted-foreground">{trader.address}</span>
                     </div>
                   </TableCell>
+                  <TableCell>{trader.strategy}</TableCell>
+                  <TableCell>{trader.pairs.join(", ")}</TableCell>
                   <TableCell>
                     <span className="text-green-500">{trader.winRate}</span>
                   </TableCell>
-                  <TableCell className="text-red-500">{trader.pnl24h}</TableCell>
-                  <TableCell className="text-red-500">{trader.pnl4d}</TableCell>
+                  <TableCell className={trader.pnl24h.includes('+') ? 'text-green-500' : 'text-red-500'}>
+                    {trader.pnl24h}
+                  </TableCell>
+                  <TableCell className={trader.pnl4d.includes('+') ? 'text-green-500' : 'text-red-500'}>
+                    {trader.pnl4d}
+                  </TableCell>
                   <TableCell>{trader.volume}</TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
@@ -175,7 +280,7 @@ export default function Traders() {
                           variant="secondary" 
                           size="sm"
                           className="glass hover:bg-[#1a1f2a] rounded-[16px] border border-[#222329] hover:border-[#FB7402]/20"
-                          onClick={() => window.location.href = `/traders/${trader.agent.replace(/[^0-9]/g, '')}`}
+                          onClick={() => window.location.href = `/traders/${trader.id}`}
                         >
                           Profile
                         </Button>
@@ -190,24 +295,40 @@ export default function Traders() {
 
         <div className="flex items-center justify-between mt-4">
           <p className="text-sm text-muted-foreground">
-            Showing 1-10 of 50 agents
+            Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1}-{Math.min(currentPage * ITEMS_PER_PAGE, filteredAndSortedTraders.length)} of {filteredAndSortedTraders.length} agents
           </p>
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious className="hover:bg-[#1a1f2a] transition-colors duration-300" />
+                <PaginationPrevious 
+                  className="hover:bg-[#1a1f2a] transition-colors duration-300"
+                  onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
+                  disabled={currentPage === 1}
+                />
               </PaginationItem>
+              
+              {visiblePageNumbers.map((pageNum) => (
+                <PaginationItem key={pageNum}>
+                  <PaginationLink
+                    href="#"
+                    isActive={pageNum === currentPage}
+                    className="hover:bg-[#1a1f2a] transition-colors duration-300"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setCurrentPage(pageNum);
+                    }}
+                  >
+                    {pageNum}
+                  </PaginationLink>
+                </PaginationItem>
+              ))}
+              
               <PaginationItem>
-                <PaginationLink href="#" isActive className="hover:bg-[#1a1f2a] transition-colors duration-300">1</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" className="hover:bg-[#1a1f2a] transition-colors duration-300">2</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationLink href="#" className="hover:bg-[#1a1f2a] transition-colors duration-300">3</PaginationLink>
-              </PaginationItem>
-              <PaginationItem>
-                <PaginationNext className="hover:bg-[#1a1f2a] transition-colors duration-300" />
+                <PaginationNext 
+                  className="hover:bg-[#1a1f2a] transition-colors duration-300"
+                  onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
+                  disabled={currentPage === totalPages}
+                />
               </PaginationItem>
             </PaginationContent>
           </Pagination>
