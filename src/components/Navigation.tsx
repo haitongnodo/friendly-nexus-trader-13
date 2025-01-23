@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { MessageSquare, Users, Plus, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { connectWallet } from "@/utils/wallet";
 
 const Navigation = () => {
   const location = useLocation();
   const [isWalletConnected, setIsWalletConnected] = useState(false);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   const navItems = [
     { icon: MessageSquare, label: "Chat", path: "/chat" },
@@ -14,9 +16,12 @@ const Navigation = () => {
     { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
-  const handleConnectWallet = () => {
-    setIsWalletConnected(true);
-    // TODO: Implement actual wallet connection
+  const handleConnectWallet = async () => {
+    const address = await connectWallet();
+    if (address) {
+      setIsWalletConnected(true);
+      setWalletAddress(address);
+    }
   };
 
   return (
@@ -51,7 +56,9 @@ const Navigation = () => {
               : "orange-gradient text-white hover:opacity-90"
           )}
         >
-          {isWalletConnected ? "Connected" : "Connect Wallet"}
+          {isWalletConnected 
+            ? `${walletAddress?.slice(0, 6)}...${walletAddress?.slice(-4)}`
+            : "Connect Wallet"}
         </button>
       </div>
     </nav>

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import { getBirdeyeApiKey } from "@/config/api";
 
 interface TraderData {
   address: string;
@@ -21,49 +22,65 @@ interface TokenData {
 }
 
 const fetchTraderData = async (): Promise<TraderData> => {
-  // Note: Replace with actual Birdeye API endpoint and key
-  const response = await axios.get('https://public-api.birdeye.so/public/trader_stats', {
-    headers: {
-      'X-API-KEY': 'your-birdeye-api-key'
-    }
-  });
+  const apiKey = getBirdeyeApiKey();
+  if (!apiKey) {
+    throw new Error('Please set your Birdeye API key');
+  }
   
-  return {
-    address: "0x14e76daeb9aa0498b6cbcce57ee55c68dc401c2edf9fb042649a3f965013c6cb",
-    pnl: "+$223.08K",
-    volume: "$1.97M",
-    trades: 60
-  };
+  try {
+    const response = await axios.get('https://public-api.birdeye.so/public/trader_stats', {
+      headers: {
+        'X-API-KEY': apiKey
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching trader data:', error);
+    return {
+      address: "0x14e76daeb9aa0498b6cbcce57ee55c68dc401c2edf9fb042649a3f965013c6cb",
+      pnl: "+$223.08K",
+      volume: "$1.97M",
+      trades: 60
+    };
+  }
 };
 
 const fetchTrendingTokens = async (): Promise<TokenData[]> => {
-  // Note: Replace with actual Birdeye API endpoint and key
-  const response = await axios.get('https://public-api.birdeye.so/public/trending_tokens', {
-    headers: {
-      'X-API-KEY': 'your-birdeye-api-key'
-    }
-  });
+  const apiKey = getBirdeyeApiKey();
+  if (!apiKey) {
+    throw new Error('Please set your Birdeye API key');
+  }
   
-  return [
-    {
-      symbol: "SOL",
-      price: "$123.45",
-      change24h: "+5.67%",
-      volume24h: "$1.23B"
-    },
-    {
-      symbol: "BONK",
-      price: "$0.00001234",
-      change24h: "+12.34%",
-      volume24h: "$456.78M"
-    },
-    {
-      symbol: "JTO",
-      price: "$2.34",
-      change24h: "+3.45%",
-      volume24h: "$789.12M"
-    }
-  ];
+  try {
+    const response = await axios.get('https://public-api.birdeye.so/public/trending_tokens', {
+      headers: {
+        'X-API-KEY': apiKey
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching trending tokens:', error);
+    return [
+      {
+        symbol: "SOL",
+        price: "$123.45",
+        change24h: "+5.67%",
+        volume24h: "$1.23B"
+      },
+      {
+        symbol: "BONK",
+        price: "$0.00001234",
+        change24h: "+12.34%",
+        volume24h: "$456.78M"
+      },
+      {
+        symbol: "JTO",
+        price: "$2.34",
+        change24h: "+3.45%",
+        volume24h: "$789.12M"
+      }
+    ];
+  }
 };
 
 const Index = () => {
