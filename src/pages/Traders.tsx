@@ -50,7 +50,7 @@ export default function Traders() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="glass rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105"
+            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105"
           >
             <div className="space-y-2">
               <p className="text-sm text-muted-foreground">{stat.label}</p>
@@ -103,7 +103,7 @@ export default function Traders() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <Card className="glass rounded-[16px]">
+        <Card className="bg-[#16171E] border border-[#222329] rounded-[16px]">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent">
@@ -142,14 +142,14 @@ export default function Traders() {
                       <Button 
                         variant="default" 
                         size="sm"
-                        className="bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]"
+                        className="bg-[#FB7402] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]"
                       >
                         Copy
                       </Button>
                       <Button 
                         variant="secondary" 
                         size="sm"
-                        className="glass hover:bg-[#1a1f2a] rounded-[16px]"
+                        className="bg-[#16171E] border border-[#222329] hover:bg-[#222329] rounded-[16px]"
                       >
                         Profile
                       </Button>

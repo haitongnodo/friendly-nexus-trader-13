@@ -31,7 +31,7 @@ const CreateAgent = () => {
         </div>
         <div className="flex items-center gap-4">
           <span className="text-muted-foreground">My Balance</span>
-          <Button variant="outline" className="gap-2 glass hover:bg-[#1a1f2a]">
+          <Button variant="outline" className="gap-2 glass hover:bg-[#222329]">
             5000 <span className="text-[#EC6E05]">◎</span>
           </Button>
         </div>
@@ -44,7 +44,7 @@ const CreateAgent = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.3, delay: index * 0.1 }}
-            className="glass rounded-[16px] p-4 hover:bg-[#1a1f2a] transition-all duration-300 cursor-pointer transform hover:scale-105"
+            className="bg-[#16171E] border border-[#222329] rounded-[16px] p-4 hover:bg-[#222329] transition-all duration-300 cursor-pointer transform hover:scale-105"
           >
             <p className="text-sm text-muted-foreground">{stat.label}</p>
             <div className="flex items-end justify-between mt-2">
@@ -68,7 +68,7 @@ const CreateAgent = () => {
                 <div className="text-sm opacity-80">Fee: SUI/N 25,000 NODO + Pool Fee</div>
               </div>
             </Button>
-            <Button variant="outline" className="h-20 glass hover:bg-[#1a1f2a] rounded-[16px]">
+            <Button variant="outline" className="h-20 glass hover:bg-[#222329] rounded-[16px]">
               <div>
                 <div className="font-semibold">Use Existing Agent</div>
                 <div className="text-sm opacity-80">Fee: SUI/N 4,000 NODO</div>
@@ -86,11 +86,11 @@ const CreateAgent = () => {
           </h2>
           <div className="space-y-4">
             <div className="relative">
-              <Input placeholder="Enter wallet address to copy trades from" className="glass" />
+              <Input placeholder="Enter wallet address to copy trades from" className="bg-[#16171E] border border-[#222329]" />
               <Copy className="absolute right-3 top-3 text-muted-foreground cursor-pointer" />
             </div>
             <div className="relative">
-              <Input placeholder="Enter token address to copy trades from" className="glass" />
+              <Input placeholder="Enter token address to copy trades from" className="bg-[#16171E] border border-[#222329]" />
               <Wallet className="absolute right-3 top-3 text-muted-foreground cursor-pointer" />
             </div>
           </div>
@@ -105,7 +105,7 @@ const CreateAgent = () => {
           <div className="space-y-4">
             <div>
               <label className="block text-sm font-medium mb-1">Name <span className="text-red-500">*</span></label>
-              <Input placeholder="Enter agent name" className="glass" />
+              <Input placeholder="Enter agent name" className="bg-[#16171E] border border-[#222329]" />
             </div>
             <div>
               <label className="block text-sm font-medium mb-1">Description</label>
@@ -132,7 +132,7 @@ const CreateAgent = () => {
             <div>
               <label className="block text-sm font-medium mb-1">Trading Type</label>
               <Select>
-                <SelectTrigger className="glass">
+                <SelectTrigger className="bg-[#16171E] border border-[#222329]">
                   <SelectValue placeholder="Select trading type" />
                 </SelectTrigger>
                 <SelectContent>
@@ -145,7 +145,7 @@ const CreateAgent = () => {
             <div>
               <label className="block text-sm font-medium mb-1">Trading Strategy</label>
               <Select>
-                <SelectTrigger className="glass">
+                <SelectTrigger className="bg-[#16171E] border border-[#222329]">
                   <SelectValue placeholder="Select trading strategy" />
                 </SelectTrigger>
                 <SelectContent>
@@ -158,15 +158,15 @@ const CreateAgent = () => {
             <div>
               <label className="block text-sm font-medium mb-1">Trading Strategy</label>
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">
+                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#222329]">
                   <span className="w-2 h-2 rounded-full bg-red-500 mr-2"></span>
                   BTC
                 </Button>
-                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">
+                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#222329]">
                   <span className="w-2 h-2 rounded-full bg-blue-500 mr-2"></span>
                   ETH
                 </Button>
-                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">
+                <Button variant="outline" size="sm" className="rounded-full glass hover:bg-[#222329]">
                   <span className="w-2 h-2 rounded-full bg-green-500 mr-2"></span>
                   USDT
                 </Button>
@@ -175,11 +175,11 @@ const CreateAgent = () => {
             <div>
               <label className="block text-sm font-medium mb-1">Personality Traits</label>
               <div className="flex flex-wrap gap-2">
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">Conservative</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">Aggressive</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">Balanced</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">Data-Driven</Button>
-                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#1a1f2a]">Risk-Averse</Button>
+                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Conservative</Button>
+                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Aggressive</Button>
+                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Balanced</Button>
+                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Data-Driven</Button>
+                <Button variant="secondary" size="sm" className="rounded-full glass hover:bg-[#222329]">Risk-Averse</Button>
               </div>
             </div>
           </div>
@@ -187,7 +187,7 @@ const CreateAgent = () => {
       </Card>
 
       <div className="flex justify-center">
-        <Button size="lg" className="bg-gradient-to-r from-[#EC6E05] to-[#ECC705] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]">
+        <Button size="lg" className="bg-[#FB7402] hover:from-[#EC6E05]/90 hover:to-[#ECC705]/90 rounded-[16px]">
           <Plus className="mr-2" /> CREATE AGENT
         </Button>
       </div>
