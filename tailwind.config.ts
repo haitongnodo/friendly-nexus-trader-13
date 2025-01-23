@@ -45,17 +45,18 @@ export default {
         'hover-gradient': 'linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02))',
         'page-gradient': `
           radial-gradient(
-            circle at bottom,
-            rgba(255, 144, 70, 0.3) 0%,
-            rgba(128, 0, 255, 0.2) 20%,
-            rgba(0, 102, 255, 0.15) 40%,
-            rgba(255, 0, 128, 0.1) 60%,
-            rgba(0, 0, 0, 0.4) 90%
+            circle at 50% 100%,
+            rgba(255, 126, 0, 0.4) 0%,
+            rgba(255, 170, 0, 0.35) 20%,
+            rgba(255, 84, 0, 0.3) 40%,
+            rgba(191, 64, 0, 0.25) 60%,
+            rgba(88, 0, 255, 0.15) 80%,
+            rgba(0, 0, 0, 0.4) 100%
           ),
           linear-gradient(
             180deg,
             transparent 0%,
-            rgba(255, 144, 70, 0.1) 100%
+            rgba(255, 144, 70, 0.2) 100%
           )
         `,
       },
