@@ -46,17 +46,16 @@ export default {
         'page-gradient': `
           radial-gradient(
             circle at 50% 100%,
-            rgba(255, 126, 0, 0.4) 0%,
-            rgba(255, 170, 0, 0.35) 20%,
-            rgba(255, 84, 0, 0.3) 40%,
-            rgba(191, 64, 0, 0.25) 60%,
-            rgba(88, 0, 255, 0.15) 80%,
-            rgba(0, 0, 0, 0.4) 100%
+            rgba(255, 96, 0, 0.6) 0%,
+            rgba(255, 55, 0, 0.5) 15%,
+            rgba(0, 0, 0, 0.8) 40%,
+            rgba(5, 5, 15, 0.9) 70%,
+            rgb(13, 14, 19) 100%
           ),
           linear-gradient(
             180deg,
             transparent 0%,
-            rgba(255, 144, 70, 0.2) 100%
+            rgba(255, 120, 0, 0.7) 100%
           )
         `,
       },
