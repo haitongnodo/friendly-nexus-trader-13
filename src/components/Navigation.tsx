@@ -23,14 +23,12 @@ const Navigation = () => {
     { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
-  // Check wallet status on component mount
   useEffect(() => {
     const wallets = checkWalletStatus();
     setAvailableWallets(wallets);
     console.log('Available wallets:', wallets);
   }, []);
 
-  // Load sidebar state from localStorage
   useEffect(() => {
     const savedState = localStorage.getItem('sidebarCollapsed');
     if (savedState !== null) {
@@ -38,7 +36,6 @@ const Navigation = () => {
     }
   }, []);
 
-  // Save sidebar state to localStorage
   useEffect(() => {
     localStorage.setItem('sidebarCollapsed', JSON.stringify(isCollapsed));
   }, [isCollapsed]);
@@ -152,18 +149,15 @@ const Navigation = () => {
       </aside>
 
       <main className={cn(
-        "transition-all duration-200 ease-in-out",
+        "transition-all duration-200 ease-in-out min-h-screen bg-background",
         isCollapsed ? "ml-16" : "ml-60"
       )}>
-        {/* Wrap the existing content */}
-        <div className="min-h-screen bg-background">
-          <WalletModal
-            isOpen={isWalletModalOpen}
-            onClose={() => setIsWalletModalOpen(false)}
-            onSelectWallet={handleSelectWallet}
-            availableWallets={availableWallets}
-          />
-        </div>
+        <WalletModal
+          isOpen={isWalletModalOpen}
+          onClose={() => setIsWalletModalOpen(false)}
+          onSelectWallet={handleSelectWallet}
+          availableWallets={availableWallets}
+        />
       </main>
     </>
   );
