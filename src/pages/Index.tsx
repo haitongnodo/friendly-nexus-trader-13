@@ -76,7 +76,7 @@ export default function Index() {
       <div className="fixed bottom-0 left-0 w-[500px] h-[500px] bg-primary/[0.03] blur-[120px] pointer-events-none mix-blend-soft-light" />
       
       {/* Content */}
-      <div className="max-w-chat mx-auto px-6 relative">
+      <div className="max-w-[620px] mx-auto px-6 relative">
         {/* Header Section */}
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
@@ -96,7 +96,7 @@ export default function Index() {
         <motion.div 
           animate={{ height: isExpanded ? 400 : 100 }}
           transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
-          className="w-full max-w-chat mx-auto bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden"
+          className="w-full bg-background-surface/60 backdrop-blur-md rounded-xl border border-border-subtle shadow-large overflow-hidden"
         >
           <div className="flex flex-col h-full">
             {/* Welcome Message */}
