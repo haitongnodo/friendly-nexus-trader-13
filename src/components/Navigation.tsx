@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { MessageSquare, Users, Plus, Settings, Menu } from "lucide-react";
+import { MessageSquare, Users, Plus, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { connectWallet, checkWalletStatus, disconnectWallet } from "@/utils/wallet";
 import { useToast } from "@/hooks/use-toast";
@@ -14,7 +14,6 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarProvider,
-  SidebarTrigger,
 } from "@/components/ui/sidebar";
 
 const Navigation = () => {
@@ -148,13 +147,11 @@ const Navigation = () => {
   return (
     <>
       <SidebarProvider defaultOpen>
-        <div className="min-h-screen flex w-full">
+        <div className="flex min-h-screen w-full">
           <AppSidebar />
-          <main className="flex-1 pt-0">
+          <main className="flex-1">
             <div className="container mx-auto px-6">
-              <div className="flex items-center justify-between py-4">
-                <SidebarTrigger />
-              </div>
+              {/* Removed the SidebarTrigger and unnecessary padding */}
             </div>
           </main>
         </div>
