@@ -32,7 +32,6 @@ const Navigation = () => {
     { icon: Settings, label: "Settings", path: "/settings" },
   ];
 
-  // Check wallet status on component mount
   useEffect(() => {
     const wallets = checkWalletStatus();
     setAvailableWallets(wallets);
@@ -147,13 +146,8 @@ const Navigation = () => {
   return (
     <>
       <SidebarProvider defaultOpen>
-        <div className="flex min-h-screen w-full">
+        <div className="flex h-full">
           <AppSidebar />
-          <main className="flex-1">
-            <div className="container mx-auto px-6">
-              {/* Removed the SidebarTrigger and unnecessary padding */}
-            </div>
-          </main>
         </div>
       </SidebarProvider>
 
