@@ -28,15 +28,15 @@ const App: React.FC = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen flex w-full">
+            <div className="min-h-screen w-full bg-[#13141b]">
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route
                   path="/*"
                   element={
-                    <div className="flex w-full">
+                    <div className="flex min-h-screen">
                       <Navigation />
-                      <main className="flex-1 flex flex-col">
+                      <main className="flex-1 p-6">
                         <Routes>
                           <Route path="/" element={<Navigate to="/chat" replace />} />
                           <Route path="/chat" element={<Index />} />

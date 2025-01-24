@@ -44,11 +44,11 @@
   }
   
   html, body {
-    @apply h-full;
+    @apply h-full bg-[#13141b];
   }
 
   body {
-    @apply bg-background-base text-text-primary font-['Inter'];
+    @apply text-text-primary font-['Inter'];
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
