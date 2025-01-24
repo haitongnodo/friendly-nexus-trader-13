@@ -28,7 +28,7 @@ const App: React.FC = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="flex min-h-screen bg-background">
+            <div className="flex min-h-screen">
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route
@@ -36,7 +36,7 @@ const App: React.FC = () => {
                   element={
                     <>
                       <Navigation />
-                      <div className="flex-1">
+                      <main className="flex-1 bg-background">
                         <Routes>
                           <Route path="/" element={<Navigate to="/chat" replace />} />
                           <Route path="/chat" element={<Index />} />
@@ -44,7 +44,7 @@ const App: React.FC = () => {
                           <Route path="/traders/:id" element={<TraderProfile />} />
                           <Route path="/create-agent" element={<CreateAgent />} />
                         </Routes>
-                      </div>
+                      </main>
                     </>
                   }
                 />

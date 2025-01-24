@@ -75,7 +75,7 @@ const Navigation = () => {
 
   const AppSidebar = () => {
     return (
-      <Sidebar>
+      <Sidebar className="border-r border-border-subtle">
         <SidebarHeader className="p-4">
           <Link to="/" className="flex items-center">
             <svg width="93" height="40" viewBox="0 0 93 40" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-24">
@@ -146,7 +146,7 @@ const Navigation = () => {
   return (
     <>
       <SidebarProvider defaultOpen>
-        <div className="flex h-full">
+        <div className="h-full">
           <AppSidebar />
         </div>
       </SidebarProvider>
