@@ -36,7 +36,7 @@ const App: React.FC = () => {
                   element={
                     <>
                       <Navigation />
-                      <main className="flex-1 bg-background">
+                      <main className="flex-1 bg-background-base">
                         <Routes>
                           <Route path="/" element={<Navigate to="/chat" replace />} />
                           <Route path="/chat" element={<Index />} />
