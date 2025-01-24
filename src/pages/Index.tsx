@@ -67,7 +67,7 @@ export default function Index() {
   };
 
   return (
-    <div className="flex-1 bg-page-gradient">
+    <div className="min-h-screen bg-page-gradient">
       <div className="max-w-[800px] w-full mx-auto px-6">
         {/* Header Section */}
         <motion.div 

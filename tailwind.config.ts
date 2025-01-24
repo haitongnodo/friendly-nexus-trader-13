@@ -24,7 +24,6 @@ export default {
           subtle: "rgba(255, 255, 255, 0.1)",
         },
         background: {
-          DEFAULT: "hsl(var(--background))",
           base: "hsl(var(--background))",
           surface: "hsl(var(--card))",
           elevated: "hsl(var(--popover))",

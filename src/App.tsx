@@ -28,15 +28,15 @@ const App: React.FC = () => {
           <Toaster />
           <Sonner />
           <BrowserRouter>
-            <div className="min-h-screen w-full bg-[#13141b]">
+            <div className="min-h-screen bg-background">
               <Routes>
                 <Route path="/login" element={<Login />} />
                 <Route
                   path="/*"
                   element={
-                    <div className="flex min-h-screen">
+                    <>
                       <Navigation />
-                      <main className="flex-1 p-6">
+                      <div className="pt-16">
                         <Routes>
                           <Route path="/" element={<Navigate to="/chat" replace />} />
                           <Route path="/chat" element={<Index />} />
@@ -44,8 +44,8 @@ const App: React.FC = () => {
                           <Route path="/traders/:id" element={<TraderProfile />} />
                           <Route path="/create-agent" element={<CreateAgent />} />
                         </Routes>
-                      </main>
-                    </div>
+                      </div>
+                    </>
                   }
                 />
               </Routes>
