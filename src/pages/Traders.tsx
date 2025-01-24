@@ -162,17 +162,17 @@ export default function Traders() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className="container mx-auto px-6 py-8">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center mb-12 space-y-3 mt-[100px]"
+        className="text-center mb-12 space-y-4 mt-[100px]"
       >
-        <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent tracking-tight">
+        <h1 className="text-[32px] font-semibold bg-primary-gradient bg-clip-text text-transparent tracking-tight leading-tight">
           Discover the Best AI Traders & Copy Their Strategies
         </h1>
-        <p className="text-[16px] text-text-secondary tracking-wide">
+        <p className="text-[16px] text-text-secondary tracking-wide max-w-2xl mx-auto leading-relaxed">
           Discover top-performing AI traders on Sui and copy their winning strategies to boost your own trading results
         </p>
       </motion.div>
@@ -181,7 +181,7 @@ export default function Traders() {
         variants={containerAnimation}
         initial="hidden"
         animate="show"
-        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
       >
         {statsData.map((stat, index) => (
           <motion.div
@@ -189,16 +189,19 @@ export default function Traders() {
             variants={itemAnimation}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            className="bg-background-surface border border-border-subtle rounded-[16px] p-6 flex flex-col items-center justify-center space-y-2 transition-all duration-normal cursor-pointer hover:bg-background-elevated hover:border-primary/20"
+            className="bg-background-surface/50 backdrop-blur-sm border border-border-subtle rounded-[16px] p-6 
+              flex flex-col items-center justify-center space-y-3 transition-all duration-300 
+              hover:bg-background-elevated hover:border-primary/20 hover:shadow-lg"
           >
-            <div className="space-y-2">
-              <p className="text-text-tertiary text-sm">{stat.label}</p>
-              <div className="flex items-center justify-between">
-                <span className="text-2xl font-bold text-text-primary">{stat.value}</span>
-                <span className={`text-sm ${stat.change.startsWith('+') ? 'text-semantic-success' : 'text-semantic-error'}`}>
-                  {stat.change}
-                </span>
-              </div>
+            <p className="text-text-tertiary text-sm font-medium">{stat.label}</p>
+            <div className="flex items-center justify-between w-full">
+              <span className="text-2xl font-bold text-text-primary font-mono">{stat.value}</span>
+              <span className={cn(
+                "text-sm font-medium",
+                stat.change.startsWith('+') ? 'text-semantic-success' : 'text-semantic-error'
+              )}>
+                {stat.change}
+              </span>
             </div>
           </motion.div>
         ))}
@@ -208,126 +211,144 @@ export default function Traders() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
-        className="space-y-4 mb-8"
+        className="space-y-6 mb-8"
       >
-        <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary h-4 w-4 transition-colors group-hover:text-primary" />
-          <Input 
-            placeholder="Search by agent name, wallet address or trading strategy..." 
-            className="pl-10 bg-background-surface border-border-subtle rounded-lg transition-all duration-200
-              hover:border-primary/50 hover:bg-[rgba(255,122,15,0.2)] hover:shadow-glow
-              focus:border-[#FF7A0F] focus:border-2 focus:bg-[rgba(255,122,15,0.15)] focus:text-[#FFB366] 
-              focus:shadow-[0_0_0_1px_rgba(255,122,15,0.3),0_0_4px_rgba(255,122,15,0.2),0_0_8px_rgba(255,122,15,0.1)]"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-        </div>
-        
-        <div className="flex items-center gap-2">
-          <Select value={selectedSort} onValueChange={setSelectedSort}>
-            <SelectTrigger 
-              className="w-[160px] h-10 bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] 
-                hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
-                data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
-            >
-              <SelectValue placeholder="Sort by" />
-            </SelectTrigger>
-            <SelectContent className="bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] max-h-[280px]">
-              {sortOptions.map((option) => (
-                <SelectItem 
-                  key={option} 
-                  value={option}
-                  className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
-                >
-                  {option}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+        <div className="flex flex-col md:flex-row md:items-center gap-4">
+          <div className="relative flex-1">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-text-tertiary h-4 w-4 
+              transition-colors group-hover:text-primary" />
+            <Input 
+              placeholder="Search by agent name, wallet address or trading strategy..." 
+              className="pl-10 bg-background-surface/50 backdrop-blur-sm border-border-subtle rounded-lg 
+                transition-all duration-200 h-11
+                hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] hover:shadow-glow
+                focus:border-primary focus:bg-[rgba(255,122,15,0.15)] focus:text-primary-foreground"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+          </div>
+          
+          <div className="flex items-center gap-3 flex-wrap md:flex-nowrap">
+            <Select value={selectedSort} onValueChange={setSelectedSort}>
+              <SelectTrigger 
+                className="w-[160px] h-11 bg-background-surface/50 backdrop-blur-sm border-border-subtle
+                  hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
+                  data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
+              >
+                <SelectValue placeholder="Sort by" />
+              </SelectTrigger>
+              <SelectContent className="bg-background-surface/95 backdrop-blur-md border-border-subtle">
+                {sortOptions.map((option) => (
+                  <SelectItem 
+                    key={option} 
+                    value={option}
+                    className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
+                  >
+                    {option}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          <Select value={selectedStrategy} onValueChange={setSelectedStrategy}>
-            <SelectTrigger 
-              className="w-[160px] h-10 bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)]
-                hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
-                data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
-            >
-              <SelectValue placeholder="Strategy" />
-            </SelectTrigger>
-            <SelectContent className="bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] max-h-[280px]">
-              {strategies.map((strategy) => (
-                <SelectItem 
-                  key={strategy} 
-                  value={strategy}
-                  className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
-                >
-                  {strategy}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <Select value={selectedStrategy} onValueChange={setSelectedStrategy}>
+              <SelectTrigger 
+                className="w-[160px] h-11 bg-background-surface/50 backdrop-blur-sm border-border-subtle
+                  hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
+                  data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
+              >
+                <SelectValue placeholder="Strategy" />
+              </SelectTrigger>
+              <SelectContent className="bg-background-surface/95 backdrop-blur-md border-border-subtle">
+                {strategies.map((strategy) => (
+                  <SelectItem 
+                    key={strategy} 
+                    value={strategy}
+                    className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
+                  >
+                    {strategy}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          <Select value={selectedPair} onValueChange={setSelectedPair}>
-            <SelectTrigger 
-              className="w-[160px] h-10 bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)]
-                hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
-                data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
-            >
-              <SelectValue placeholder="Trading pair" />
-            </SelectTrigger>
-            <SelectContent className="bg-[rgba(0,0,0,0.8)] border-[rgba(255,255,255,0.1)] max-h-[280px]">
-              {tradingPairs.map((pair) => (
-                <SelectItem 
-                  key={pair} 
-                  value={pair}
-                  className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
-                >
-                  {pair}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <Select value={selectedPair} onValueChange={setSelectedPair}>
+              <SelectTrigger 
+                className="w-[160px] h-11 bg-background-surface/50 backdrop-blur-sm border-border-subtle
+                  hover:border-primary/50 hover:bg-[rgba(255,122,15,0.1)] transition-all duration-200
+                  data-[state=open]:border-primary data-[state=open]:bg-[rgba(255,122,15,0.15)]"
+              >
+                <SelectValue placeholder="Trading pair" />
+              </SelectTrigger>
+              <SelectContent className="bg-background-surface/95 backdrop-blur-md border-border-subtle">
+                {tradingPairs.map((pair) => (
+                  <SelectItem 
+                    key={pair} 
+                    value={pair}
+                    className="hover:bg-[rgba(255,122,15,0.1)] focus:bg-[rgba(255,122,15,0.15)]"
+                  >
+                    {pair}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
         </div>
 
         <ActiveFilters />
 
-        <Card className="bg-background-surface border border-border-subtle rounded-[16px] overflow-hidden transition-all duration-normal hover:border-primary/20">
+        <Card className="bg-background-surface/50 backdrop-blur-sm border-border-subtle rounded-[16px] 
+          overflow-hidden transition-all duration-300 hover:border-primary/20">
           <Table>
             <TableHeader>
               <TableRow className="hover:bg-transparent border-border-subtle">
-                <TableHead className="text-text-primary">AGENT</TableHead>
-                <TableHead className="text-text-primary">STRATEGY</TableHead>
-                <TableHead className="text-text-primary">PAIRS</TableHead>
-                <TableHead className="text-text-primary">WIN RATE</TableHead>
-                <TableHead className="text-text-primary">24H PNL</TableHead>
-                <TableHead className="text-text-primary">4D PNL</TableHead>
-                <TableHead className="text-text-primary">VOLUME</TableHead>
-                <TableHead className="text-text-primary">COPIERS</TableHead>
-                <TableHead className="text-text-primary">ACTION</TableHead>
+                <TableHead className="text-text-primary font-semibold">AGENT</TableHead>
+                <TableHead className="text-text-primary font-semibold">STRATEGY</TableHead>
+                <TableHead className="text-text-primary font-semibold">PAIRS</TableHead>
+                <TableHead className="text-text-primary font-semibold">WIN RATE</TableHead>
+                <TableHead className="text-text-primary font-semibold">24H PNL</TableHead>
+                <TableHead className="text-text-primary font-semibold">4D PNL</TableHead>
+                <TableHead className="text-text-primary font-semibold">VOLUME</TableHead>
+                <TableHead className="text-text-primary font-semibold">COPIERS</TableHead>
+                <TableHead className="text-text-primary font-semibold">ACTION</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {paginatedTraders.map((trader) => (
-                <TableRow key={trader.id} className="group hover:bg-background-elevated transition-colors duration-normal border-border-subtle">
+                <TableRow 
+                  key={trader.id} 
+                  className="group hover:bg-background-elevated/50 transition-all duration-200 
+                    border-border-subtle backdrop-blur-sm"
+                >
                   <TableCell className="font-medium">
                     <div className="flex flex-col">
-                      <span className="group-hover:text-primary transition-colors duration-normal">{trader.agent}</span>
-                      <span className="text-sm text-text-tertiary">{trader.address}</span>
+                      <span className="group-hover:text-primary transition-colors duration-200 text-[15px]">
+                        {trader.agent}
+                      </span>
+                      <span className="text-sm text-text-tertiary font-mono">
+                        {trader.address}
+                      </span>
                     </div>
                   </TableCell>
-                  <TableCell className="text-text-secondary">{trader.strategy}</TableCell>
-                  <TableCell className="text-text-secondary">{trader.pairs.join(", ")}</TableCell>
+                  <TableCell className="text-text-secondary text-[14px]">{trader.strategy}</TableCell>
+                  <TableCell className="text-text-secondary text-[14px]">{trader.pairs.join(", ")}</TableCell>
                   <TableCell>
-                    <span className="text-semantic-success">{trader.winRate}</span>
+                    <span className="text-semantic-success text-[14px] font-medium">{trader.winRate}</span>
                   </TableCell>
-                  <TableCell className={trader.pnl24h.includes('+') ? 'text-semantic-success' : 'text-semantic-error'}>
+                  <TableCell className={cn(
+                    "text-[14px] font-medium",
+                    trader.pnl24h.includes('+') ? 'text-semantic-success' : 'text-semantic-error'
+                  )}>
                     {trader.pnl24h}
                   </TableCell>
-                  <TableCell className={trader.pnl4d.includes('+') ? 'text-semantic-success' : 'text-semantic-error'}>
+                  <TableCell className={cn(
+                    "text-[14px] font-medium",
+                    trader.pnl4d.includes('+') ? 'text-semantic-success' : 'text-semantic-error'
+                  )}>
                     {trader.pnl4d}
                   </TableCell>
-                  <TableCell className="text-text-secondary">{trader.volume}</TableCell>
+                  <TableCell className="text-text-secondary text-[14px] font-mono">{trader.volume}</TableCell>
                   <TableCell>
-                    <div className="flex items-center gap-1 text-text-secondary">
+                    <div className="flex items-center gap-1 text-text-secondary text-[14px]">
                       {trader.copiers}
                       <span className="text-primary animate-pulse">🔥</span>
                     </div>
@@ -338,7 +359,8 @@ export default function Traders() {
                         <Button 
                           variant="default" 
                           size="sm"
-                          className="bg-primary-gradient hover:opacity-90 rounded-[16px] shadow-small hover:shadow-medium"
+                          className="bg-primary-gradient hover:opacity-90 rounded-[16px] shadow-sm 
+                            hover:shadow-glow transition-all duration-200"
                         >
                           Copy
                         </Button>
@@ -347,7 +369,8 @@ export default function Traders() {
                         <Button 
                           variant="secondary" 
                           size="sm"
-                          className="glass hover:bg-background-elevated rounded-[16px] border border-border-subtle hover:border-primary/20"
+                          className="glass hover:bg-background-elevated rounded-[16px] border border-border-subtle 
+                            hover:border-primary/20 transition-all duration-200"
                           onClick={() => window.location.href = `/traders/${trader.id}`}
                         >
                           Profile
@@ -361,7 +384,7 @@ export default function Traders() {
           </Table>
         </Card>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex items-center justify-between mt-6">
           <p className="text-sm text-text-tertiary">
             Showing {((currentPage - 1) * ITEMS_PER_PAGE) + 1}-{Math.min(currentPage * ITEMS_PER_PAGE, filteredAndSortedTraders.length)} of {filteredAndSortedTraders.length} agents
           </p>
@@ -369,7 +392,7 @@ export default function Traders() {
             <PaginationContent>
               <PaginationItem>
                 <PaginationPrevious 
-                  className="hover:bg-background-elevated transition-colors duration-normal"
+                  className="hover:bg-background-elevated transition-colors duration-200"
                   onClick={() => setCurrentPage(prev => Math.max(1, prev - 1))}
                   disabled={currentPage === 1}
                 />
@@ -380,7 +403,7 @@ export default function Traders() {
                   <PaginationLink
                     href="#"
                     isActive={pageNum === currentPage}
-                    className="hover:bg-background-elevated transition-colors duration-normal"
+                    className="hover:bg-background-elevated transition-colors duration-200"
                     onClick={(e) => {
                       e.preventDefault();
                       setCurrentPage(pageNum);
@@ -393,7 +416,7 @@ export default function Traders() {
               
               <PaginationItem>
                 <PaginationNext 
-                  className="hover:bg-background-elevated transition-colors duration-normal"
+                  className="hover:bg-background-elevated transition-colors duration-200"
                   onClick={() => setCurrentPage(prev => Math.min(totalPages, prev + 1))}
                   disabled={currentPage === totalPages}
                 />
